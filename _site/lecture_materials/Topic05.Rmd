@@ -1,0 +1,312 @@
+---
+title: "Inference"
+subtitle: "Don't panic"
+author: "Enrico Manlapig"
+institute: "Westmont College"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: 16:9
+    seal: FALSE
+---
+background-image: url("images/topic05/amusement_park_attraction.jpg")
+class: top, right
+
+.pull-right[
+# `r rmarkdown::metadata$title`
+
+### `r rmarkdown::metadata$subtitle`
+
+### `r rmarkdown::metadata$author`
+
+### `r rmarkdown::metadata$institute`
+
+### `r rmarkdown::metadata$date`
+]
+```{r broadcast, echo=FALSE}
+xaringanExtra::use_broadcast()
+```
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(results = "hide", 
+                      fig.height = 6,
+                      warning = FALSE,
+                      error = FALSE,
+                      message = FALSE)
+
+library(dplyr)
+library(ggplot2)
+library(palmerpenguins)
+library(emojifont)
+library(flipbookr)
+library(fontawesome)
+library(xaringanExtra)
+use_xaringan_extra(c("panelset"))
+```
+
+---
+# Random variables and probability
+
+.pull-left[
+- A random variable is a variable whose value cannot be predicted with certainty
+
+- Random variables can be Discrete or Continuous
+]
+
+
+.pull-right[
+- The chance of particular outcomes or groups of outcomes occuring are the probabilities of those events happening 
+
+  
+- A probability distribution, $\mathbb{P}(X)$ for a discrete random variable $X$, is an assignment of probabilities to all of its possible outcomes
+
+]
+
+???
+* Discrete A discrete random variable has a countable number of values
+* Continuous A continuous random variable can take on any value in an interval
+
+For example:
+* Number of heads in 3 coin tosses
+* My average gas mileage over the last 7 days
+* Percent increase in GDP next year
+
+Notice:
+While outcomes cannot be known, the chance of those outcomes can be!
+For this reason, we can talk about the *distribution* of the random variable. 
+Indeed, what we do today is discuss different ways of summarizing distributions instead of talking about random variables themselves. 
+
+For now, let's write down some distributions. To do this, we will use an example.
+
+
+
+
+---
+name: eg1
+class: middle, center
+## Example 1 `r emoji("game_die")`
+
+### A fair six-sided die has six equally likely outcomes.  Each side has a 1/6 probability of occurring.  $$\mathbb{P}(X=1)=\mathbb{P}(X=2)=\cdots=\mathbb{P}(X=6)=\frac{1}{6}$$
+
+???
+How can we do this in R?
+
+
+---
+name: dice_dist
+## Example 1
+
+.pull-left[
+```{r dice_dist, fig.show = "hide"}
+# Define the data
+
+outcomes <- c(1:6) 
+
+probs <- c(1/6, 1/6, 1/6, 
+           1/6, 1/6, 1/6) 
+
+
+# Combine into a dataframe
+
+df <- data.frame(outcomes, probs)
+
+
+# Tidyverse magic!
+
+df %>% 
+  
+  ggplot(
+    aes(x = outcomes,
+        y = probs)) +
+  
+  geom_col()
+```
+]
+
+.pull-right[
+```{r ref.label = "dice_dist", echo = FALSE}
+
+```
+]
+
+???
+* Distributions are governed by parameters. This dice has 6 possible outcomes. The probability of each outcome is 1/6
+* The normal distribution has 2 parameters: Means and SD
+* t-dist has 1 parameter, df
+
+
+
+
+---
+name: your_turn
+background-image: url(images/topic05/amusement_park_ride.jpg)
+background-position: bottom right
+background-size: 40%
+
+# `r fa("check-square")` Your turn
+
+
+---
+template: your_turn
+
+### Try visualizing the probability distribution of a fair coin 
+1. Create a vector of outcomes
+1. Create a vector of probabilities
+1. Create dataframe to hold the outcomes and probabilities
+1. Use `ggplot` to draw a column chart
+
+
+---
+class: center, middle
+
+# Suppose we repeat the experiment "10 coin tosses" 1000 times. Which outcomes do you expect to occur more frequently? 
+
+# `r emoji("thinking")`
+
+## 1 head or 4 heads? 
+## 6 heads or 5 heads? 
+## 9 heads or 2 heads?
+
+--
+
+
+
+???
+The distribution of number of heads is called the Binomial distribution!
+$$ \mathbb{P}(X = x) = (^n _x) p^x (1-p)^{(n-x)}$$ where $(^n _x) = \frac{n!}{x!}(n-x)!$
+
+
+---
+# Let's simulate! `r emoji("dizzy_face")`
+
+.pull-left[
+```{r coin_sim, fig.show = "hide"}
+# Simulate coin tosses
+
+set.seed(seed = 1)
+coin_tosses <- rbinom(n = 1000, #<<
+                      size = 10, #<<
+                      p = 0.5) #<<
+
+# Combine into dataframe
+
+df <- data.frame(coin_tosses)
+
+
+# Tidyverse wizardry!
+
+df %>% 
+  
+  ggplot(aes(x = coin_tosses)) +
+  
+  geom_histogram()
+```
+]
+
+.pull-right[
+```{r ref.label = "coin_sim", echo = FALSE}
+
+```
+
+]
+
+---
+class: center middle
+# `r emoji("muscle")` The Law of Large Numbers `r emoji("muscle")`
+
+## The Law of Large Numbers describes the tendency of the empirical frequency approaches the true relative frequency as the number of trials becomes large
+
+???
+
+I Let’s explore with some simulated some dice rolling.
+I Roll a 6-six sided die 50 times and plot its empirical frequency
+I Increase the number of simulations
+
+
+---
+
+
+template: your_turn
+.pull-left[
+### Let's explore the Law of Large Numbers
+1. Have a look at the function `sample()` and use it to simulate 50 rolls of a 6-sided die
+
+1. Use `ggplot` to visualize your data
+
+1. Increase the number of simulations and rerun your simulation - what do you observe?
+]
+
+
+
+
+---
+class: center middle
+
+# Properties of distributions
+
+---
+class: center middle
+
+# Let $X$ be a random variable that can take $N$ possible values.  Its expectation is given by
+## $$\mathbb{E}X = x_1 \mathbb{P}(x_1) + x_2 \mathbb{P}(x_2) + \cdots + x_N \mathbb{P}(x_N)$$
+
+### Math symbol = `r emoji("no_good")` ? 
+### Think of expectation like an average! `r emoji("ok_woman")` 
+
+???
+The expectation, or mean, of a random variable measures its probability weighted average value
+
+
+---
+
+# Example
+
+.pull-left[
+You are playing a game with the following outcomes:
+
+* Win $1000 with probability 0.25
+* Win $100 with probability 0.5
+* Lose $300 with probability 0.25
+
+What are your expected winnings from playing this game?
+]
+
+
+---
+template: your_turn
+
+.pull-left[
+The U.S. economy is on the brink of a recovery. For next
+quarter:
+
+* There is a 2/6 chance that unemployment will rise to 10%
+* There is a 1/6 chance that unemployment will fall 2%
+* There is a 3/6 chance that unemployment will remain constant at 5%
+
+What is the expected unemployment rate next quarter?
+]
+
+
+---
+
+# Expectation rules
+
+.pull-left[
+Let $X$ be a random variable and let $a$ and $b$ be constants, then
+
+* $\mathbb{E}a = a$
+* $\mathbb{E}(aX+b) = a\mathbb{E}X+b$
+]
+
+--
+
+Let $Y$ be another random variable, then
+* $\mathbb{E}(X+Y) = \mathbb{E}X + \mathbb{E}Y$
+* $\mathbb{E}(aX+bY) = a\mathbb{E}X+b\mathbb{E}Y$
+

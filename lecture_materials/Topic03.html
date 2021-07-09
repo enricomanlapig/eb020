@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Welcome to the Tidyverse</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Enrico Manlapig" />
+    <meta name="date" content="2021-07-07" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+class: middle
+
+.pull-left[
+
+# Welcome to the Tidyverse
+
+### Introducing `dplyr`
+
+### Enrico Manlapig
+
+### Westmont College
+
+### `r Sys.Date()`
+]
+
+.pull-right[
+![](images/topic03/dplyr_hex.png)
+]
+
+
+---
+background-image: url("./images/topic03/tidyverse-packages.png")
+background-size: contain
+background-color: #E8E7E9
+class: top, center
+
+
+.right[Source: [RStudio](https://education.rstudio.com/blog/2020/07/teaching-the-tidyverse-in-2020-part-1-getting-started/)]
+
+---
+
+class: middle center
+
+# Installation
+
+
+```r
+*install.packages("tidyverse")
+```
+
+
+
+---
+class: middle center
+
+
+
+# Attaching DPLYR
+
+
+```r
+install.packages("tidyverse") 
+*library(dplyr)
+```
+
+--
+
+
+Alternatively...
+
+```r
+*library(tidyverse)
+```
+
+---
+
+
+
+# The data 
+
+
+```r
+*library(palmerpenguins)
+```
+
+
+&lt;img src="./images/topic03/penguins.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+.footnote[[Artwork by @allison_horst](https://allisonhorst.github.io/palmerpenguins/)]
+
+
+
+
+
+
+
+
+---
+class: top, center
+
+
+&lt;a href = "https://www.rstudio.com/resources/cheatsheets/"&gt;
+  &lt;img src="./images/topic03/dplyr_cheatsheet.png" alt="cheatsheet" width="75%"/&gt;
+&lt;/a&gt;
+
+
+
+
+---
+
+
+## `dplyr::select()` means "pick columns to keep or exclude"
+
+
+.left-column[
+
+### `select`
+
+]
+
+
+
+.right-column[
+
+1. Pick variables `species` and `island` from the dataset penguins
+  
+  ```r
+  head(penguins) # Take a peek first
+  *select(penguins, species, island)
+  ```
+
+1. Pick all variables except `island` and `bill_length_mm`
+  
+  ```r
+  *select(penguins, -species, -island)
+  ```
+]
+
+
+
+???
+
+
+```r
+names(penguins)
+```
+
+The main job of `dplyr::select()` is to help you pick which **columns** to keep or exclude.
+
+While making subsets of variables is rarely *necessary* for analyses (and is often unadvised), it can make large data sets with many variables more manageable.
+
+
+
+---
+class: center, middle
+
+# Piping `%&gt;%` 
+
+
+
+```r
+select(penguins, species, island)
+```
+
+... is equivalent to...
+
+
+```r
+penguins %&gt;% select(species, island)
+```
+
+???
+The pipe passes a dataframe to the first argument
+You can assign here, too, but I don't usually do this unless I really need the object
+https://fontawesome.com/v4.7/icon/check-square-o
+
+
+
+---
+name: your_turn
+background-image: url(images/topic03/penguin_illustration.jpg)
+background-position: bottom right
+background-size: 35%
+
+# <svg aria-hidden="true" role="img" viewBox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M400 480H48c-26.51 0-48-21.49-48-48V80c0-26.51 21.49-48 48-48h352c26.51 0 48 21.49 48 48v352c0 26.51-21.49 48-48 48zm-204.686-98.059l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.248-16.379-6.249-22.628 0L184 302.745l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.25 16.379 6.25 22.628.001z"/></svg> Your turn
+
+---
+template: your_turn
+
+### Use `select()` to...
+
+1. Choose `island`, `sex`, `year`
+
+1. Choose `species`, `bill_length_mm`, `flipper_depth_mm`
+
+1. Choose everything (i.e. drop!) except `flipper_length`
+
+1. Choose everything except `flipper_length` and `year`
+
+    1. Now drop `sex`
+    1. Now drop `island`
+    1. Now drop `species` and `flipper_length_mm`
+    1. What's left?
+
+---
+
+
+
+## `dplyr::mutate()` means "create new columns"
+
+
+.left-column[
+
+### `select`
+### `mutate` 
+]
+
+
+
+.right-column[
+![illustration](images/topic03/dplyr_mutate.png)
+]
+
+
+---
+
+name: mutate_demo
+## `dplyr::mutate()` means "create new columns"
+
+
+
+.left-column[
+
+### `select`
+### `mutate` 
+]
+
+
+
+.right-column[
+
+.panelset.sideways[
+
+.panel[.panel-name[Compute body mass in kg]
+
+```r
+penguins %&gt;%
+  mutate(
+*   body_mass_kg = body_mass_g / 1000
+  )
+```
+]
+
+.panel[.panel-name[Compute flipper length in cm]
+
+
+```r
+penguins %&gt;%
+  mutate(
+*   flipper_length_cm = flipper_length_mm / 10
+  )
+```
+]
+
+.panel[.panel-name[Create record number]
+
+
+```r
+penguins %&gt;%
+  mutate(
+*   record_id = 1:n()
+  )
+```
+]
+
+
+
+.panel[.panel-name[Combination move]
+
+
+```r
+penguins %&gt;%
+* mutate(
+*   body_mass_kg = body_mass_g / 1000,
+*   body_mass_lbs = body_mass_kg / 2.2,
+*   record_id = 1:n()
+  )
+```
+
+![demon elmo gif](https://media.giphy.com/media/1n4iuWZFnTeN6qvdpD/giphy.gif)
+]
+
+]
+
+]
+
+
+
+
+???
+`mutate` reads sequentially so you can operate on things you created earlier!
+
+---
+template: your_turn
+
+## Use `mutate()` to:
+
+
+1. Compute bill ratio as the ratio of bill length to depth
+
+1. Compute body mass in lbs (1 gram = 0.0022 lb)
+
+1. Use `tolower()` to convert `island` to lower case
+
+1. Use `as.character()` to convert `species` from factor to character
+
+
+
+---
+
+
+## `dplyr::arrange()` Sort the rows of the dataframe by a column
+
+.left-column[
+### `select`
+### `mutate`
+### `arrange`
+]
+
+.right-column[
+
+Arrange the penguins...
+.panelset.sideways[
+.panel[.panel-name[...from lightest to heaviest]
+
+```r
+penguins %&gt;%
+* arrange(body_mass_g)
+```
+]
+
+.panel[.panel-name[...from heaviest to lightest]
+
+```r
+penguins %&gt;%
+* arrange(-body_mass_g)
+```
+
+You can also use `desc()` to arrange descending
+
+```r
+penguins %&gt;%
+* arrange(desc(body_mass_g))
+```
+]
+
+.panel[.panel-name[...from heaviest to lightest and by year]
+
+```r
+penguins %&gt;%
+* arrange(-body_mass_g, year)
+```
+]
+
+
+]
+
+
+]
+
+---
+template: your_turn
+
+
+
+1. Sort the dataframe according to bill ratio (ratio of bill length to depth)
+1. Use `head()` to report data from the top 30 heaviest penguins
+1. Create a [ranking index](#mutate_demo) of top 10 heaviest Gentoo penguins
+
+
+
+---
+
+
+## `dplyr::filter()` Choose rows of a dataframe 
+
+.left-column[
+### `select`
+### `mutate`
+### `arrange`
+### `filter`
+]
+
+.right-column[
+
+Find all of the penguins...
+
+.panelset.sideways[
+.panel[.panel-name[...of name Gentoo]
+
+```r
+penguins %&gt;%
+* filter(species == "Gentoo")
+```
+👀 Notice how `==` is for equals.  
+
+👀 Other useful ones are `!=`, `%in%`, `&gt;=`, and `&lt;=`
+]
+
+.panel[.panel-name[...of name Gentoo and female]
+
+```r
+penguins %&gt;%
+* filter(species == "Gentoo" |
+*          sex == "female")
+```
+👀  Using `&amp;` requires both conditions to make the ✂️ 
+
+👀  Using `|` only requires  one.
+
+
+]
+
+.panel[.panel-name[...observed in years 2007 or 2009]
+
+```r
+penguins %&gt;%
+* filter(year %in% c(2007, 2009))
+```
+
+☝️ This is the same as
+
+```r
+penguins %&gt;%
+* filter(year == 2007 | year == 2009)
+```
+but much shorter!
+]
+
+
+]
+
+
+]
+
+
+
+???
+filter restricts the dataframe to only those rows that satisfy a set of conditions
+
+---
+template: your_turn
+
+.pull-left[
+1. Filter the dataset to females of the Adelie species.  How many do you observe?
+
+1. Further filter the dataset to those with body mass between 3kg and 4kg.  How many rows do you observe?
+
+1. Suppose you restrict the dataset on weight before you restrict sex and species.  Show that you get the same number of rows?
+
+1. Create a dataset with females weighing less than 3kg and males weighing more than 4kg
+
+]
+
+
+---
+
+
+## `dplyr::summarise()` Describe the data &lt;br&gt;with a ~~statistic😱~~ single value 
+
+.left-column[
+### `select`
+### `mutate`
+### `arrange`
+### `filter`
+### `summarise`
+]
+
+.right-column[
+
+
+
+.panelset.sideways[
+
+.panel[.panel-name[What is the weight of the heaviest penguin?]
+
+```r
+penguins %&gt;%
+* summarise(max_weight = mean(body_mass_g))
+```
+
+So many choices!
+* `max()` maximum
+* `min()` minimum
+* `iqr()` interquartile range
+* `median()` median
+* `mean()` average*
+* `sd()` standard deviation*
+* `var()` variance*
+
+\* Careful with these.  Inspect your data!
+]
+
+
+
+.panel[.panel-name[Two (or more) at a time]
+
+```r
+penguins %&gt;%
+* summarise(min_weight = min(body_mass_g),
+*           max_weight = max(body_mass_g),
+*           iqr_weight = iqr(body_mass_g),
+*           mean_bill_length = mean(bill_length_mm,
+*                                   na.rm = TRUE))
+```
+
+]
+
+
+.panel[.panel-name[Focus only on Gentoo]
+
+```r
+penguins %&gt;%
+* filter(species == "Gentoo") %&gt;%
+  summarise(min_weight = min(body_mass_g),
+            max_weight = max(body_mass_g),
+            iqr_weight = iqr(body_mass_g),
+            mean_bill_length = mean(bill_length_mm, 
+                                    na.rm = TRUE))
+```
+
+]
+
+]
+
+]
+
+
+
+
+
+???
+Summarise aggregates or summarises many rows into a single row.
+Be careful with `mean` and `sd` because they won't operate on missing data.
+
+
+
+---
+template: your_turn
+
+.pull-left[
+1. Compute the median, min, and max of `flipper_length_mm`
+
+1. Use `filter` `n()` to count the number of observations on `Dream` island in 2008 and 2009
+
+1. What is the average weight of the penguins observe on `Dream` island in 2008 and 2009?
+
+1. How many observations have missing `sex`?
+]
+
+
+---
+class: middle, center
+
+# By the way... can we talk about **Types of Data**? 
+# 🙊 
+
+## Qualitative vs Quantitative
+
+---
+class: middle, center
+
+# By the way... Can we talk about measures of **Central Tendency**? 
+# 🙊 
+
+## Mean vs Median vs Mode
+
+---
+class: middle, center
+
+# By the way... Can we talk about measures of **Dispersion**? 
+# 🙊 
+
+## Variance 
+## Standard deviation 
+## Range 
+## Inter-quartile range
+
+---
+class: middle, center
+
+# By the way... Can we talk about measures of **Co-Movement**? 
+# 🙊 
+
+## Covariance
+## Correlation
+
+
+
+
+
+
+
+
+---
+
+## `dplyr::group_by()` Break your dataset into groups 
+
+.left-column[
+### `select`
+### `mutate`
+### `arrange`
+### `filter`
+### `summarise`
+### `group_by`
+]
+
+.right-column[
+
+
+
+.panelset.sideways[
+
+.panel[.panel-name[By sex]
+Compare...
+
+
+```r
+penguins %&gt;%
+  summarise(num_obs = n())
+```
+
+with...
+
+
+```r
+penguins %&gt;%
+* group_by(sex) %&gt;%
+  summarise(num_obs = n()) 
+```
+
+
+]
+
+
+.panel[.panel-name[By sex and year]
+Compare...
+
+
+```r
+penguins %&gt;%
+  summarise(num_obs = n())
+```
+
+with...
+
+
+```r
+penguins %&gt;%
+* group_by(sex, year) %&gt;%
+  summarise(num_obs = n())
+```
+
+]
+
+
+.panel[.panel-name[Find the heaviest species on each island]
+Compare...
+
+
+```r
+penguins %&gt;%
+  filter(!is.na(sex)) %&gt;%
+  
+  # Find the mean weight by species and island
+  
+* group_by(island, species) %&gt;%
+  summarise(mean_weight = 
+              mean(body_mass_g, na.rm = TRUE)) %&gt;%
+
+  # Find the largest average by island
+    
+* group_by(island) %&gt;%
+  mutate(max_mean_weight = max(mean_weight)) %&gt;%
+  filter(max_mean_weight == mean_weight)
+```
+
+
+
+]
+
+
+]
+
+
+
+]
+
+
+
+
+
+???
+`group_by` is for batch processing.  Used with summarised.
+If summarise produces 1 line, how many will it produce if you group by `sex`?
+Notice that the grouping variable is kept as are the summarising variables
+
+There are probably more efficient ways of doing this last one!
+
+
+---
+template: your_turn
+
+1. How many observations of each `sex` are in the dataset?
+
+1. How does the distribution of each `sex` vary across islands?
+
+1. How does the distribution of each `species` vary across islands?
+
+1. How have sex species counts varied over time?
+
+---
+
+class: center, middle
+
+&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/p8Py9C8iq2s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

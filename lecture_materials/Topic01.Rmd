@@ -1,0 +1,480 @@
+---
+title: "Topic 01: Introducing R"
+description: "Brief introduction to the R language"
+author: "Enrico Manlapig"
+institute: "Westmont College"
+date: 
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+name: installing
+class: middle, center
+
+# Installing things
+
+.pull-left[
+## The Compiler
+
+### [The Comprehensive R Archive Network (CRAN)](https://cran.r-project.org/)
+]
+
+--
+
+.pull-right[
+## The Integrated Development Environment (IDE)
+
+### [RStudio](https://www.rstudio.com)
+]
+
+
+???
+From R4DS Section 8.1
+With your R scripts (and your data files), you can recreate the environment. It’s much harder to recreate your R scripts from your environment! You’ll either have to retype a lot of code from memory (making mistakes all the way) or you’ll have to carefully mine your R history.
+
+To foster this behaviour, I highly recommend that you instruct RStudio not to preserve your workspace between sessions:
+
+Tools > GLOBAL OPTIONS > 
+Disable Restore .RData
+Do not save .RData on exit
+
+This will cause you some short-term pain, because now when you restart RStudio it will not remember the results of the code that you ran last time. But this short-term pain will save you long-term agony because it forces you to capture all important interactions in your code. There’s nothing worse than discovering three months after the fact that you’ve only stored the results of an important calculation in your workspace, not the calculation itself in your code.
+
+There is a great pair of keyboard shortcuts that will work together to make sure you’ve captured the important parts of your code in the editor:
+
+Press Cmd/Ctrl + Shift + F10 to restart RStudio.
+Press Cmd/Ctrl + Shift + S to rerun the current script.
+I use this pattern hundreds of times a week.
+
+---
+
+# R as a calculator
+## Arithmetic
+
+Addition, subtraction, and other arithmetic operations behave in the usual way. 
+
+```{r, eval=FALSE}
+2+4
+
+4*3+2
+
+5^2
+
+log(2)
+
+exp(4)
+```
+
+???
+Notice how everything after the `#` mark is ignored. This is for commenting your R code chunks.  
+Commenting is always a good idea: it helps you and other users know what you are doing. 
+
+---
+# Naming things
+
+.pull-left[
+
+Left assign
+
+```{r, eval=FALSE}
+x <- 3
+
+y <- 4+3  
+       
+x + y
+```
+]
+
+--
+
+.pull-right[
+
+Right assign works too
+
+```{r}
+5 -> z
+```
+
+]
+???
+Values are assigned with this arrow symbol but are not printed to the screen
+
+Objects can be assigned names so they can be recalled later.  This includes numbers, data sets, graphics, and even code itself (functions).
+
+Vectors are the basic building block in R.
+
+---
+# Different types of R data
+
+# Vectors
+
+Vectors must have to have the same **type** of object in them
+
+
+### Numeric
+
+```{r, eval=FALSE}
+c(1,4,6) 
+  
+
+seq(from = 1, to = 20, by = 3) 
+ 
+
+1:5
+```
+
+???
+Try assign these vectors a name
+The three main objects you will encounter in this course are vectors, dataframes, and lists.  
+
+---
+# Different types of R data
+
+Vectors must have to have the same **type** of object in them
+
+### Characters
+
+```{r, eval=FALSE}
+c("cat", "dog", "fish", "bird")
+
+c("F2020", "S2021", "F2021", "S2022")
+
+c(1, 2, 3, "four")
+```
+
+???
+Give these vectors some names
+
+---
+
+# Different types of R data
+
+Some other types of data
+
+### Logicals
+```{r, eval=FALSE}
+c(FALSE, FALSE, FALSE, TRUE) 
+```
+
+
+### Factors
+```{r, eval=FALSE}
+factor(c("blue", "blue", "red", "blue", "red"))
+
+factor(levels = c("eb", "E&B", "da"),
+       labels = c("E&B", "E&B", "Data"))
+
+semesters <- c("F2020", "S2021", "F2021", "S2022")
+factor(semesters,
+       levels = semesters)
+```
+???
+Notice that these are reserved words.
+No quotes
+
+Factors are stored as numbers
+Try including ordered = TRUE for the semesters
+
+
+---
+
+name: class_and_structure
+
+# Querying class and structure
+
+It is always helpful to know what you're working with
+
+.pull-left[
+```{r, eval=FALSE}
+what_is_this <- factor(semesters, 
+                       levels = semesters)
+
+how_about_this <- c(1, 3, 6)
+
+be_careful <- c(FALSE, TRUE)
+
+tricky_one <- c(how_about_this, be_careful)
+
+super_tricky <- c(tricky_one, "Fish")
+
+a_bit_naughty <- c(tricky_one, "FALSE")
+```
+]
+
+.pull-right[
+```{r, eval = FALSE}
+str(what_is_this)
+
+class(what_is_this)
+
+summary(what_is_this)
+
+is.numeric(how_about_this)
+
+is.logical(be_careful)
+```
+]
+
+---
+name: vector_operations
+# Operating on vectors
+
+.pull-left[
+
+Arithmetic on vectors is elementwise *if they have the right shape*
+```{r, eval=FALSE}
+x <- c(1:5) 
+y <- c(3:8)
+
+x + y
+
+x * y
+
+y - x
+
+x + c(y, 12)
+```
+]
+
+.pull-right[
+
+Comparisons also work on vectors.
+```{r, eval=FALSE}
+x <= 2 
+
+x <= y
+
+any(x <= y)
+
+all(x <= y)
+```
+]
+
+???
+1. Both have 5 elements
+2. Oops!  The first one is shorter than the second!
+3. Elementwise multiplication
+4. The result of a logical test will be a vector containing either TRUE or FALSE.
+
+Comparison:
+Which elements are less than or qual to 2?
+Which elements of x are leq than y?
+Are any elements of x leq y?
+Are all elements of x leq y?
+
+---
+name: indexing_vectors
+# Indexing vectors
+
+Index elements of a vector with square brackets
+
+```{r, eval=FALSE}
+x
+
+x[2]  # Just one element
+
+x[2:3]  # More than one element
+
+x[c(1,4)] # First and fourth elements only
+
+x[x <= 3] # Only those elements where x<=3
+```
+
+---
+name: dataframes
+# Dataframes
+
+* Dataframes are where data is stored
+* Dataframes are made up of variables or fields and observations
+
+```{r, eval=FALSE}
+my_dataframe <- data.frame(x = 1:100, 
+                           y = runif(100))
+
+dim(my_dataframe) 
+
+head(my_dataframe) # also tail()
+```
+
+* Try using `str()` and `class()` to confirm that this is a dataframe
+
+???
+* Fields behave like vectors insofar as every element has to be of the same type
+* `runif` is for generating uniform random numbers
+* `dim` shows that this df has 10 obs and 2 vars
+
+
+---
+name:indexing_dataframes
+# Indexing dataframes
+
+
+
+.pull-left[
+To index a dataframe, you can ask for an observation/row with the same square bracket.
+
+```{r, eval=FALSE}
+my_dataframe[4,] # Before the comma is rows (observations), after the comma is columns (fields)
+my_dataframe[3:5,] # Asking for rows 3 to 5, all fields
+```
+
+]
+
+
+.pull-right[
+We can also ask for individual fields or columns. All these statements return the same thing. 
+
+```{r, eval=FALSE}
+my_dataframe[3:5,2]  # Asking for column as the second argument
+my_dataframe[3:5,"y"]  # Asking for column as the second argument
+my_dataframe$y[3:5]  # Requesting the variable first and treating it like a vector
+```
+]
+???
+There is a movement towards "tibbles", which are optimized versions of data frames.  We won't deal with them here.
+
+---
+# Lists
+
+Lists are even more flexible collections of objects.  Lists can contain dataframes, vectors, and even other lists.  
+
+```{r, eval=FALSE}
+my.list <- list(first_element = my_dataframe, second_element = 1:5)
+str(my.list) # Query structure
+
+my.list$first_element # Index first object
+str(my.list$first_element) # Notice that first object is a dataframe
+```
+
+???
+Lots of R output is returned as a list.
+
+---
+
+# Indexing lists
+
+You can also access elements of lists with double square brackets.
+
+```{r, eval=FALSE}
+my.list[[1]]  # Access the first element of the list
+my.list[[1]][3, ]  # Access a single observation
+```
+
+---
+name: some_functions
+# Some handy functions
+
+"Base R" has lots of built in functions that take inputs and return outputs.
+
+.pull-left[
+```{r, eval=FALSE}
+x <- 1:10 # Create data vector
+
+sum(x) # Sum
+
+length(x) # Number of elements
+
+sd(x) # Sample standard deviation
+
+var(x) # Sample variance
+
+mean(x) # Mean
+
+median(x) # Median
+```
+]
+
+.pull-right[
+```{r, eval=FALSE}
+min(x) # Minimum
+
+max(x) # Max
+
+length(x) # Number of elements
+
+sd(x) # Sample standard deviation
+
+var(x) # Sample variance
+
+iqr(x) # Inter-quartile range
+```
+
+]
+
+---
+
+# Your turn
+ 
+Base R has some built in data sets to practice applying functions with.  Let's work with `mtcars`
+
+
+
+1. Try exploring its [class and structure](#class_and_structure) with `class`, `str`, and `summary`
+  
+1. Use `$` or `[]` to [index](#indexing_dataframes) a specific variable
+  
+1. Try using `mean`, `median` to find the [average and median](#some_functions) miles per gallon, `mpg`
+
+1. Try `min` and `max` to compute the [min and max](#some_functions) `disp`
+
+---
+
+
+# So much to explore!
+
+1. Try using `head()` and `tail` to [peek](#dataframes) at your data
+
+1. Use [indexing](#indexing_dataframes) and [vector comparison](#vector_operations) to identify which cars have 8 cylinders (`cyl`)?
+
+1.  How many cars displace more than 300 (`disp`) cubic inches?
+    
+1.  How many cars have straight cylinders? (`vs == 1`)
+
+1. Try applying `hist()` to miles per gallon, `mpg`
+    
+1. Try using `plot(x=, y =)` to plot displacement (`disp`) against quarter mile time (`qsec`)
+
+
+???
+
+This function, `hist` is part of Base R.  We will look at some more flexible plots later.  For now, notice that the output list contains some elements that are numeric, integer, character, and logical.  This can be important to know especially when you're using someone else's data.
+
+---
+
+# Installing and attaching new libraries
+
+New functions can be added by attaching libraries
+
+.pull-left[
+First we have install them
+```{r, eval=FALSE}
+install.packages("tidyverse") 
+install.packages("rmarkdown") 
+install.packages("palmerpenguins")
+```
+]
+
+.pull-right[
+Then we "attach" them to make their goodies available to us
+
+```{r, eval=FALSE}
+library(tidyverse)
+library(markdown)
+library(palmerpenguins)
+```
+]
+
+???
+We will look more at these packages soon.

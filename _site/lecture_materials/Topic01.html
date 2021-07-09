@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Topic 01: Introducing R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Enrico Manlapig" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Topic 01: Introducing R
+### Enrico Manlapig
+### Westmont College
+
+---
+
+
+
+
+
+
+name: installing
+class: middle, center
+
+# Installing things
+
+.pull-left[
+## The Compiler
+
+### [The Comprehensive R Archive Network (CRAN)](https://cran.r-project.org/)
+]
+
+--
+
+.pull-right[
+## The Integrated Development Environment (IDE)
+
+### [RStudio](https://www.rstudio.com)
+]
+
+
+???
+From R4DS Section 8.1
+With your R scripts (and your data files), you can recreate the environment. It’s much harder to recreate your R scripts from your environment! You’ll either have to retype a lot of code from memory (making mistakes all the way) or you’ll have to carefully mine your R history.
+
+To foster this behaviour, I highly recommend that you instruct RStudio not to preserve your workspace between sessions:
+
+Tools &gt; GLOBAL OPTIONS &gt; 
+Disable Restore .RData
+Do not save .RData on exit
+
+This will cause you some short-term pain, because now when you restart RStudio it will not remember the results of the code that you ran last time. But this short-term pain will save you long-term agony because it forces you to capture all important interactions in your code. There’s nothing worse than discovering three months after the fact that you’ve only stored the results of an important calculation in your workspace, not the calculation itself in your code.
+
+There is a great pair of keyboard shortcuts that will work together to make sure you’ve captured the important parts of your code in the editor:
+
+Press Cmd/Ctrl + Shift + F10 to restart RStudio.
+Press Cmd/Ctrl + Shift + S to rerun the current script.
+I use this pattern hundreds of times a week.
+
+---
+
+# R as a calculator
+## Arithmetic
+
+Addition, subtraction, and other arithmetic operations behave in the usual way. 
+
+
+```r
+2+4
+
+4*3+2
+
+5^2
+
+log(2)
+
+exp(4)
+```
+
+???
+Notice how everything after the `#` mark is ignored. This is for commenting your R code chunks.  
+Commenting is always a good idea: it helps you and other users know what you are doing. 
+
+---
+# Naming things
+
+.pull-left[
+
+Left assign
+
+
+```r
+x &lt;- 3
+
+y &lt;- 4+3  
+       
+x + y
+```
+]
+
+--
+
+.pull-right[
+
+Right assign works too
+
+
+```r
+5 -&gt; z
+```
+
+]
+???
+Values are assigned with this arrow symbol but are not printed to the screen
+
+Objects can be assigned names so they can be recalled later.  This includes numbers, data sets, graphics, and even code itself (functions).
+
+Vectors are the basic building block in R.
+
+---
+# Different types of R data
+
+# Vectors
+
+Vectors must have to have the same **type** of object in them
+
+
+### Numeric
+
+
+```r
+c(1,4,6) 
+  
+
+seq(from = 1, to = 20, by = 3) 
+ 
+
+1:5
+```
+
+???
+Try assign these vectors a name
+The three main objects you will encounter in this course are vectors, dataframes, and lists.  
+
+---
+# Different types of R data
+
+Vectors must have to have the same **type** of object in them
+
+### Characters
+
+
+```r
+c("cat", "dog", "fish", "bird")
+
+c("F2020", "S2021", "F2021", "S2022")
+
+c(1, 2, 3, "four")
+```
+
+???
+Give these vectors some names
+
+---
+
+# Different types of R data
+
+Some other types of data
+
+### Logicals
+
+```r
+c(FALSE, FALSE, FALSE, TRUE) 
+```
+
+
+### Factors
+
+```r
+factor(c("blue", "blue", "red", "blue", "red"))
+
+factor(levels = c("eb", "E&amp;B", "da"),
+       labels = c("E&amp;B", "E&amp;B", "Data"))
+
+semesters &lt;- c("F2020", "S2021", "F2021", "S2022")
+factor(semesters,
+       levels = semesters)
+```
+???
+Notice that these are reserved words.
+No quotes
+
+Factors are stored as numbers
+Try including ordered = TRUE for the semesters
+
+
+---
+
+name: class_and_structure
+
+# Querying class and structure
+
+It is always helpful to know what you're working with
+
+.pull-left[
+
+```r
+what_is_this &lt;- factor(semesters, 
+                       levels = semesters)
+
+how_about_this &lt;- c(1, 3, 6)
+
+be_careful &lt;- c(FALSE, TRUE)
+
+tricky_one &lt;- c(how_about_this, be_careful)
+
+super_tricky &lt;- c(tricky_one, "Fish")
+
+a_bit_naughty &lt;- c(tricky_one, "FALSE")
+```
+]
+
+.pull-right[
+
+```r
+str(what_is_this)
+
+class(what_is_this)
+
+summary(what_is_this)
+
+is.numeric(how_about_this)
+
+is.logical(be_careful)
+```
+]
+
+---
+name: vector_operations
+# Operating on vectors
+
+.pull-left[
+
+Arithmetic on vectors is elementwise *if they have the right shape*
+
+```r
+x &lt;- c(1:5) 
+y &lt;- c(3:8)
+
+x + y
+
+x * y
+
+y - x
+
+x + c(y, 12)
+```
+]
+
+.pull-right[
+
+Comparisons also work on vectors.
+
+```r
+x &lt;= 2 
+
+x &lt;= y
+
+any(x &lt;= y)
+
+all(x &lt;= y)
+```
+]
+
+???
+1. Both have 5 elements
+2. Oops!  The first one is shorter than the second!
+3. Elementwise multiplication
+4. The result of a logical test will be a vector containing either TRUE or FALSE.
+
+Comparison:
+Which elements are less than or qual to 2?
+Which elements of x are leq than y?
+Are any elements of x leq y?
+Are all elements of x leq y?
+
+---
+name: indexing_vectors
+# Indexing vectors
+
+Index elements of a vector with square brackets
+
+
+```r
+x
+
+x[2]  # Just one element
+
+x[2:3]  # More than one element
+
+x[c(1,4)] # First and fourth elements only
+
+x[x &lt;= 3] # Only those elements where x&lt;=3
+```
+
+---
+name: dataframes
+# Dataframes
+
+* Dataframes are where data is stored
+* Dataframes are made up of variables or fields and observations
+
+
+```r
+my_dataframe &lt;- data.frame(x = 1:100, 
+                           y = runif(100))
+
+dim(my_dataframe) 
+
+head(my_dataframe) # also tail()
+```
+
+* Try using `str()` and `class()` to confirm that this is a dataframe
+
+???
+* Fields behave like vectors insofar as every element has to be of the same type
+* `runif` is for generating uniform random numbers
+* `dim` shows that this df has 10 obs and 2 vars
+
+
+---
+name:indexing_dataframes
+# Indexing dataframes
+
+
+
+.pull-left[
+To index a dataframe, you can ask for an observation/row with the same square bracket.
+
+
+```r
+my_dataframe[4,] # Before the comma is rows (observations), after the comma is columns (fields)
+my_dataframe[3:5,] # Asking for rows 3 to 5, all fields
+```
+
+]
+
+
+.pull-right[
+We can also ask for individual fields or columns. All these statements return the same thing. 
+
+
+```r
+my_dataframe[3:5,2]  # Asking for column as the second argument
+my_dataframe[3:5,"y"]  # Asking for column as the second argument
+my_dataframe$y[3:5]  # Requesting the variable first and treating it like a vector
+```
+]
+???
+There is a movement towards "tibbles", which are optimized versions of data frames.  We won't deal with them here.
+
+---
+# Lists
+
+Lists are even more flexible collections of objects.  Lists can contain dataframes, vectors, and even other lists.  
+
+
+```r
+my.list &lt;- list(first_element = my_dataframe, second_element = 1:5)
+str(my.list) # Query structure
+
+my.list$first_element # Index first object
+str(my.list$first_element) # Notice that first object is a dataframe
+```
+
+???
+Lots of R output is returned as a list.
+
+---
+
+# Indexing lists
+
+You can also access elements of lists with double square brackets.
+
+
+```r
+my.list[[1]]  # Access the first element of the list
+my.list[[1]][3, ]  # Access a single observation
+```
+
+---
+name: some_functions
+# Some handy functions
+
+"Base R" has lots of built in functions that take inputs and return outputs.
+
+.pull-left[
+
+```r
+x &lt;- 1:10 # Create data vector
+
+sum(x) # Sum
+
+length(x) # Number of elements
+
+sd(x) # Sample standard deviation
+
+var(x) # Sample variance
+
+mean(x) # Mean
+
+median(x) # Median
+```
+]
+
+.pull-right[
+
+```r
+min(x) # Minimum
+
+max(x) # Max
+
+length(x) # Number of elements
+
+sd(x) # Sample standard deviation
+
+var(x) # Sample variance
+
+iqr(x) # Inter-quartile range
+```
+
+]
+
+---
+
+# Your turn
+ 
+Base R has some built in data sets to practice applying functions with.  Let's work with `mtcars`
+
+
+
+1. Try exploring its [class and structure](#class_and_structure) with `class`, `str`, and `summary`
+  
+1. Use `$` or `[]` to [index](#indexing_dataframes) a specific variable
+  
+1. Try using `mean`, `median` to find the [average and median](#some_functions) miles per gallon, `mpg`
+
+1. Try `min` and `max` to compute the [min and max](#some_functions) `disp`
+
+---
+
+
+# So much to explore!
+
+1. Try using `head()` and `tail` to [peek](#dataframes) at your data
+
+1. Use [indexing](#indexing_dataframes) and [vector comparison](#vector_operations) to identify which cars have 8 cylinders (`cyl`)?
+
+1.  How many cars displace more than 300 (`disp`) cubic inches?
+    
+1.  How many cars have straight cylinders? (`vs == 1`)
+
+1. Try applying `hist()` to miles per gallon, `mpg`
+    
+1. Try using `plot(x=, y =)` to plot displacement (`disp`) against quarter mile time (`qsec`)
+
+
+???
+
+This function, `hist` is part of Base R.  We will look at some more flexible plots later.  For now, notice that the output list contains some elements that are numeric, integer, character, and logical.  This can be important to know especially when you're using someone else's data.
+
+---
+
+# Installing and attaching new libraries
+
+New functions can be added by attaching libraries
+
+.pull-left[
+First we have install them
+
+```r
+install.packages("tidyverse") 
+install.packages("rmarkdown") 
+install.packages("palmerpenguins")
+```
+]
+
+.pull-right[
+Then we "attach" them to make their goodies available to us
+
+
+```r
+library(tidyverse)
+library(markdown)
+library(palmerpenguins)
+```
+]
+
+???
+We will look more at these packages soon.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

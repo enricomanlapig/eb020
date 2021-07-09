@@ -1,0 +1,126 @@
+---
+title: "Problem set 1"
+author: "Enrico Manlapig"
+output:
+  html_document:
+    theme: cosmo
+
+---
+
+```{r,echo = FALSE}
+include_solutions <- FALSE
+```
+
+```{r, echo=include_solutions, eval = include_solutions}
+long_object <- seq(0, 200, by = 2) 
+
+letters <- sample(LETTERS, 100, replace = TRUE) # vector
+
+who_likes_animals <- 
+  data.frame(size = sample(c("tiny", "regular", "big", "enormous"),
+                           prob = c(0.245, 0.5, 0.25, 0.005),
+                           size = 300, replace = TRUE),
+             date_of_birth = Sys.Date() - runif(300) * 3000,
+             species = as.factor(sample(c("cat",
+                                        "dog",
+                                        "fish",
+                                        "snake",
+                                        "bunny"),
+                                 prob = c(0.4, 0.4, 0.1, 0.05, 0.05),
+                                 size = 300, replace = TRUE)))
+
+what_is_this <- list(long_object, 
+                     letters,
+                     who_likes_animals)
+
+save(long_object, letters, who_likes_animals, what_is_this,
+     file = "../data/Topic01.RData")
+```
+
+
+Download the dataset `Topic01.RData` and put it in the root directory of your Load the dataset `Topic01.RData` by including the following chunk at the beginning of your RMarkdown file.  
+```{r, echo=include_solutions, eval = include_solutions}
+load("../datasets/Topic01.RData")
+```
+
+
+
+
+### Problem 1
+
+1. Use R to determine the types of the following objects
+
+    a. `who_likes_animals` 
+    a. `what_is_this[[2]]`
+    a. `what_is_this[[3]][3]`
+    a. `letters`
+    a. `long_object`
+    
+```{r echo=include_solutions, eval = include_solutions}
+class(who_likes_animals)
+
+class(what_is_this[[2]])
+
+class(what_is_this[[3]][3])
+
+class(letters)
+
+class(long_object)
+```
+
+
+2. What are their dimensions?
+```{r, echo=include_solutions, eval = include_solutions}
+dim(who_likes_animals)
+
+dim(what_is_this[[2]])
+
+dim(what_is_this[[3]][3])
+
+dim(letters)
+
+dim(long_object)
+```
+
+
+3. What is the value in the 2nd row and 3rd column of `who_likes_animals`?
+```{r, echo=include_solutions, eval = include_solutions}
+who_likes_animals[2,3]
+```
+
+
+4. Show the first 15 rows of `who_likes_animals`
+
+```{r, echo=include_solutions, eval = include_solutions}
+head(who_likes_animals, 15)
+```
+
+
+5. Show the last 10 rows of `who_likes_animals`
+
+```{r, echo=include_solutions, eval = include_solutions}
+tail(who_likes_animals, 10)
+```
+
+
+
+###  Problem 2
+
+Use R Markdown to describe your weekly schedule.   Use heading sections,  bullets, and numbered lists to describe your various activities.  Use different fonts to refer to specific class, building, and instructor names.
+
+
+### Problem 3
+
+Suppose you are want to make meal with your friends.  Write a short paragraph indicating what you would make and who you would invite.  Use bullets and enumeration to create the following:
+
+1. A (character) vector of ingredients you want in your meal (ingredients)
+1. A (numeric) vector of how many of each item you need (units)
+1. A (numeric) vector of estimated unit prices of each item (price)
+1. A data frame that combines the three vectors together (data)
+1. A new column equal to the product of units and price columns (cost)
+1. Sum this new column to estimate the total cost of the meal
+
+### Problem 4
+
+1. Knit your work into an HTML and Word document
+1. Upload your knitted documents to Canvas

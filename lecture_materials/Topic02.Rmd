@@ -1,0 +1,221 @@
+---
+title: "Introducing RMarkdown"
+author: "Enrico Manlapig"
+date: "01-01-2021"
+output:
+  html_document
+---
+
+<!-- 
+This stuff is called the YAML 
+    toc: TRUE
+    toc_float: TRUE
+    fig_caption: TRUE
+    theme: cerulean
+-->
+# What is RMarkdown?
+
+RMarkdown combines three distinct elements:
+
+1. *markdown* - a language for typesetting
+2. *knitr* - an package for creating documents from markdown
+3. *pandoc* - a tool for converting one format into another
+
+
+# Cheatsheet
+![Come and get it!](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
+
+# Writing text 
+
+Here is some text.
+
+Here is some *italicized* text.  Here is some **bold** text.  How about ***bold and italicized!*** No underlining unfortunately.
+
+Here's a [link to a fun webpage](https://littlealchemy2.com/)
+
+Let's write something very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, 
+very, 
+very, 
+very, 
+very, 
+very, 
+long.
+It's all in the same paragraph!
+
+This is a new paragraph because there's a blank line between the two blocks of text. 
+
+
+
+
+
+
+
+
+
+
+Markdown doesn't care if there are a few lines between the text, it just starts a new paragraph.
+
+Here's a pretty picture!
+
+![Captions are nice: Sleepy koala image. ](images/topic02/sleepy_koala.jpg)
+
+
+
+
+
+
+
+
+# Projects
+
+Now is a good time to talk about folders/directories and projects.
+
+You *could* use `setwd()` to set a working directory.  But it makes sharing hard because everyone organizes their folders/directories/work differently. Working in projects ensures that everyone gets the same folder structures and relative references are preserved. 
+
+TL;DR Use projects
+
+
+
+
+# Comments
+
+Comments are helpful for sending messages and reminders to your future readers (and self!)
+
+<!-- Here is short comment -->
+
+
+<!-- 
+A 
+
+very
+
+long
+
+comment 
+-->
+
+
+# Headers 
+## Slightly smaller header (Header 2)
+
+### Header 3 ()
+
+
+
+### Some ordered lists
+
+Here is a numbered list.
+
+1. Here is a numbered item
+1. Another one
+    1. Sub number
+        1. Add 2x TABS to begin a new sub-list
+        2. Woo hoo!
+    2. Next number
+2. Here is another item
+3. I wrote this third
+1000. Markdown isn't actually paying attention to the numbers.
+
+
+a. It does however begin new lists if there are letter items.
+a. But then it stops paying attention again
+
+
+25. You can start new lists at any arbitrary number or letter
+39. But what follows is sequential
+
+
+### Unordered lists
+
+Here is bulleted list:
+
+* Is *bulleted* a word?
+* Here is ~~a bulleted item~~ an item with a first level bullet
+* RMarkdown recognizes '*', '+', and '-' for bullets
+- And once you've started ,it doesn't care what you use
+
+    + It cares about **indentation**
+    + A second level item
+        - A third level item
+        
+
+
+
+
+### Including R code
+
+Let's allow for some R code
+
+Default version:
+
+```{r, eval = FALSE}
+3+2
+```
+
+We can use a chunk options like `echo = FALSE` to prevent code from appearing in the output.
+```{r, echo=FALSE}
+25+10
+```
+
+This is especially helpful when you are drawing charts or presenting statistics.  No one needs to see all that.
+
+```{r, echo = FALSE}
+random.numbers <- rnorm(100, mean=0, sd=1)
+
+hist(random.numbers)
+
+summary(random.numbers)
+```
+
+
+For class, I like to include (echo) the code, but I don't want it to evaluate so I set `eval = FALSE`.
+```{r, eval=FALSE}
+50+20
+```
+
+You can also include inline calculations.  What is the square-root of two? Easy peasy. `r sqrt(2)`. R never includes the code itself inline, just the output.
+
+By the way, you can output your work as a PDF, Word Document, or HTML note book.  You can even make slides.  
+
+
+# Tables
+
+Tables aren't much fun.  It's much more convenient to use `kable` (from `knitr`) to format your dataframes.
+
+```{r, eval = FALSE}
+library(knitr)
+kable(head(mtcars))
+```
+
+Notice how we used `head()` there?  It's so we don't take up the whole page with a table!
+
+We can create paged tables using `paged_table()` from the `rmarkdown` package
+
+```{r, eval = FALSE}
+library(rmarkdown)
+paged_table(mtcars)
+```
+
+Notice the sideways scrolling action, too.
+
+
+# Just for fun
+
+I'm getting into emojis.
+
+```{r, eval = FALSE}
+library(emojifont)
+search_emoji("smile")
+```
+
+```{r, echo = FALSE, warning = FALSE}
+library(emojifont)
+```
+
+R makes me `r emoji("smile")` `r emoji("smiley")` `r emoji("sweat_smile")` like a `r emoji("smiley_cat")` who is `r emoji("smile_cat")`
+
+
+# Your turn
+
+Create a new RMarkdown document to describe your last vacation.  Be sure to try out the headers, include some different style fonts, and ~~bulleted lists~~ lists with bullets.  Try including a picture and some math.  
+
