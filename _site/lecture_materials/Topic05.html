@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Inference</title>
+    <title>Reviewing random variables</title>
     <meta charset="utf-8" />
     <meta name="author" content="Enrico Manlapig" />
-    <meta name="date" content="2021-07-08" />
+    <meta name="date" content="2021-07-09" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <script src="libs/js-cookie/js.cookie.js"></script>
+    <script src="libs/peerjs/peerjs.min.js"></script>
+    <script src="libs/tiny.toast/toast.min.js"></script>
+    <link href="libs/xaringanExtra-broadcast/broadcast.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-broadcast/broadcast.js"></script>
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
   </head>
   <body>
     <textarea id="source">
@@ -16,9 +23,9 @@ background-image: url("images/topic05/amusement_park_attraction.jpg")
 class: top, right
 
 .pull-right[
-# Inference
+# Reviewing random variables
 
-### Don't panic
+### 
 
 ### Enrico Manlapig
 
@@ -72,7 +79,8 @@ name: eg1
 class: middle, center
 ## Example 1 🎲
 
-### A fair six-sided die has six equally likely outcomes.  Each side has a 1/6 probability of occurring.  `$$\mathbb{P}(X=1)=\mathbb{P}(X=2)=\cdots=\mathbb{P}(X=6)=\frac{1}{6}$$`
+### A fair six-sided die has six equally likely outcomes.  Each side has a 1/6 probability of occurring. 
+### `$$\mathbb{P}(X=1)=\mathbb{P}(X=2)=\cdots=\mathbb{P}(X=6)=\frac{1}{6}$$`
 
 ???
 How can we do this in R?
@@ -200,12 +208,15 @@ class: center middle
 
 ## The Law of Large Numbers describes the tendency of the empirical frequency approaches the true relative frequency as the number of trials becomes large
 
+.footnote[Technically, this is Borel's Law of Large Numbers!]
+
 ???
 
 I Let’s explore with some simulated some dice rolling.
 I Roll a 6-six sided die 50 times and plot its empirical frequency
 I Increase the number of simulations
 
+The usual (Weak and Strong) Law of Large Numbers say that the sample average from each trial converges to the mean as the sample becomes large. Strong is almost sure convergence. Weak is convergence in probability.
 
 ---
 
@@ -245,16 +256,25 @@ The expectation, or mean, of a random variable measures its probability weighted
 
 # Example
 
-.pull-left[
-You are playing a game with the following outcomes:
+
+Imagine you are playing a game with the following outcomes:
 
 * Win $1000 with probability 0.25
 * Win $100 with probability 0.5
 * Lose $300 with probability 0.25
 
 What are your expected winnings from playing this game?
-]
 
+???
+
+
+```r
+1000/4 + 100/2 - 300/4
+```
+
+```
+## [1] 225
+```
 
 ---
 template: your_turn
@@ -264,13 +284,22 @@ The U.S. economy is on the brink of a recovery. For next
 quarter:
 
 * There is a 2/6 chance that unemployment will rise to 10%
-* There is a 1/6 chance that unemployment will fall 2%
+* There is a 1/6 chance that unemployment will fall to 2%
 * There is a 3/6 chance that unemployment will remain constant at 5%
 
 What is the expected unemployment rate next quarter?
 ]
 
+???
 
+
+```r
+10 * 2/6 + 2 * 1/6 + 5 * 3/6
+```
+
+```
+## [1] 6.166667
+```
 ---
 
 # Expectation rules
@@ -278,15 +307,697 @@ What is the expected unemployment rate next quarter?
 .pull-left[
 Let `\(X\)` be a random variable and let `\(a\)` and `\(b\)` be constants, then
 
-* `\(\mathbb{E}a = a\)`
+* `\(\mathbb{E}a = a\)` 
+
 * `\(\mathbb{E}(aX+b) = a\mathbb{E}X+b\)`
+
+]
+
+--
+.pull-right[
+Let `\(Y\)` be another random variable, then
+* `\(\mathbb{E}(X+Y) = \mathbb{E}X + \mathbb{E}Y\)`
+
+* `\(\mathbb{E}(aX+bY) = a\mathbb{E}X+b\mathbb{E}Y\)`
+
 ]
 
 --
 
-Let `\(Y\)` be another random variable, then
-* `\(\mathbb{E}(X+Y) = \mathbb{E}X + \mathbb{E}Y\)`
-* `\(\mathbb{E}(aX+bY) = a\mathbb{E}X+b\mathbb{E}Y\)`
+.footnote[
+But beware! 😬
+
+* `\(\mathbb{E}(XY)\neq\mathbb{E}(X)\times\mathbb{E}(Y)\)`
+
+* `\(\mathbb{E}(X^{2})\neq\mathbb{E}(X)^{2}\)`
+]
+
+---
+class: center, middle
+
+# Some important expectations
+
+
+--
+.pull-left[
+#### The Mean &lt;br&gt; `\(\mu = \mathbb{E}(X)\)`
+]
+--
+.pull-left[
+#### Variance&lt;br&gt; `\(\mbox{Var}(X) = \sigma^2_X=\mathbb{E}(X-\mu)^{2}\quad\)`
+]
+--
+.pull-left[
+#### Standard Deviation &lt;br&gt; `\(\sigma = \sqrt{\mbox{Var}(X)}\)` 
+]
+--
+.pull-left[
+#### Covariance &lt;br&gt; `\(\mbox{Cov}(X,Y) = \sigma_{X,Y} =\mathbb{E}(X-\mu_{X})(Y-\mu_{Y})\)`
+]
+--
+.pull-left[
+#### Correlation &lt;br&gt; `\(\mbox{Cor}(X,Y) = \rho_{X,Y} = \frac{\sigma_{X,Y}}{\sigma_X \sigma_Y}\)`
+]
+
+
+???
+Remember: These are properties of the random variable.  You usually don't know them.  But they're out there!
+
+---
+
+
+
+
+# Important variance rules
+
+Let `\(X\)` and `\(Y\)` be random variables and let `\(a\)` and `\(b\)` be constants, then
+
+- `\(\mbox{Var}(a)=0\)`
+
+- `\(\mbox{Var}(aX)=a^{2}\mbox{Var}(X)\)`
+
+- `\(\mbox{Var}(aX+bY)=a \mbox{Var}(X)+b \mbox{Var}(Y)+2ab\mbox{Cov}(X,Y)\)`
+
+
+---
+class: center, middle
+# 😵 😡 😾
+# Who cares???
+
+
+---
+# Expectations matter!
+
+Suppose you hold two stocks, A and B with the following features:
+
+* Stock A's returns, `\(R_A\)`, are Normally distributed with `\(\mu_A = 5\%\)` and volatility `\(\sigma_A = 25\%\)` (we say, `\(R_A \sim N(0.05, 0.25)\)`)
+
+* Stock B's returns, `\(R_B\)`, are Normally distributed with a `\(\mu_B = 15\%\)` and volatility `\(\sigma_B = 45\%\)` (we say, `\(R_B \sim N(0.15, 0.45)\)`)
+
+* The two stock returns are negatively correlated with `\(\mu = -0.8\)`
+
+If 2/3 of your portfolio is invested in stock A, while 1/3 is invested in stock B, how much do you expect to earn next year? What is the volatility of your portfolio?
+
+???
+
+
+```r
+expected_returns &lt;- c(0.05, 0.15)
+
+volatilities &lt;- c(0.25, 0.45)
+
+cross_correlation &lt;- -0.8
+
+weights &lt;- c(2/3, 1/3)
+
+num_sims &lt;- 2000
+
+correlation_matrix &lt;- 
+  matrix(c(1, cross_correlation,
+           cross_correlation, 1),
+         nrow = 2, byrow = TRUE)
+```
+
+
+
+
+
+
+
+---
+# Let's simulate this portfolio
+.pull-left[
+### Define the data
+
+```r
+expected_returns &lt;- c(0.05, 0.15)
+
+volatilities &lt;- c(0.25, 0.45)
+
+cross_correlation &lt;- -0.8
+
+weights &lt;- c(2/3, 1/3)
+
+num_sims &lt;- 2000
+
+correlation_matrix &lt;- 
+  matrix(c(1, cross_correlation,
+           cross_correlation, 1),
+         nrow = 2, byrow = TRUE)
+```
+]
+
+.pull-right[
+### Simulate returns
+
+```r
+cholesky_factor &lt;- chol(correlation_matrix)
+  # For correlating things
+
+random_numbers &lt;- matrix(
+  rnorm(num_sims * 2), ncol = 2)
+  # Uncorrelated things
+
+returns &lt;- random_numbers %*% 
+  cholesky_factor
+  # Correlate them!
+
+colMeans(returns)
+sd(returns[,1])
+sd(returns[,2])
+  # Just checking
+```
+]
+
+---
+# Keep going!
+
+.pull-left[
+### Adjust returns for mean and standard deviation
+
+```r
+returns[,1] &lt;- 
+  returns[,1] * volatilities[1] + 
+  expected_returns[1]
+
+returns[,2] &lt;- 
+  returns[,2] * volatilities[2] + 
+  expected_returns[2]
+
+colMeans(returns)
+sd(returns[,1])
+sd(returns[,2])
+  # Check again
+```
+]
+
+
+.pull-right[
+### Create the portfolio
+
+```r
+df_returns &lt;- data.frame(returns)
+names(df_returns) &lt;- c("return_a", "return_b")
+  # Assign nicer names
+
+df_returns %&gt;% 
+  mutate(
+    return_p = weights[1] * return_a + 
+      weights[2] * return_b
+  ) -&gt; df_returns
+```
+]
+
+---
+# BOOM! 💥
+
+
+.panelset[
+
+.panel[.panel-name[Individual asset returns]
+
+.pull-left[
+
+```r
+df_returns %&gt;% 
+  
+  ggplot(aes(x = return_a, 
+             y = return_b)) + 
+  
+  geom_point(alpha = 0.3,
+             color = "blue") +
+  
+  labs(
+    title = "Simulated returns",
+    x = "Returns on Asset A",
+    y = "Returns on Asset B") +
+  
+  theme_minimal()
+```
+]
+
+
+.pull-right[
+![](Topic05_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+]
+
+
+]
+
+
+
+
+.panel[.panel-name[Portfolio returns]
+
+.pull-left[
+
+
+
+```r
+df_returns %&gt;% 
+  
+  ggplot(aes(x = return_p)) + 
+  
+  geom_histogram() +
+  
+  labs(
+    title = "Empirical distribution of simulated portfolio returns",
+    x = "Portfolio returns",
+    y = "Count") +
+  
+  theme_minimal()
+```
+]
+
+.pull-right[
+![](Topic05_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+]
+
+]
+
+
+
+
+
+.panel[.panel-name[Summary]
+.pull-left[
+
+```r
+df_returns %&gt;%
+  
+  summarise(
+    mean_ret_a = round(mean(return_a), 3),
+    mean_ret_b = round(mean(return_b), 3),
+    mean_ret_p = round(mean(return_p), 3),
+    
+    vol_a = round(sd(return_a), 3),
+    vol_b = round(sd(return_b), 3),
+    vol_p = round(sd(return_p), 3)
+
+  ) %&gt;% 
+  
+  glimpse()
+```
+]
+.pull-right[
+
+```
+## Rows: 1
+## Columns: 6
+## $ mean_ret_a &lt;dbl&gt; 0.046
+## $ mean_ret_b &lt;dbl&gt; 0.16
+## $ mean_ret_p &lt;dbl&gt; 0.084
+## $ vol_a      &lt;dbl&gt; 0.261
+## $ vol_b      &lt;dbl&gt; 0.464
+## $ vol_p      &lt;dbl&gt; 0.104
+```
+
+]
+
+
+]
+
+]
+
+---
+
+### Truth vs Facts
+
+
+
+
+.panelset[
+.panel[.panel-name[Density]
+
+
+&lt;img src="Topic05_files/figure-html/density_plot-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+.panel[.panel-name[Cumulative Distribution]
+&lt;img src="Topic05_files/figure-html/distribution_plot-1.png" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+]
+
+
+
+???
+Interpret these carefully!
+
+
+
+
+
+
+---
+
+
+### So many distributions!!! Here are some useful ones 😎
+
+.panelset[
+
+.panel[.panel-name[Uniform]
+
+.pull-left[
+
+What's the density of a uniform distribution at 3 with mean 2 and max 5
+
+```r
+dunif(x = 3,
+      min = 2,
+      max = 5)
+```
+
+```
+## [1] 0.3333333
+```
+
+What is the probability of observing less than 3?
+
+```r
+punif(q = 3,
+      min = 2,
+      max = 5)
+```
+
+```
+## [1] 0.3333333
+```
+]
+
+.pull-right[
+
+*Below what value* would I observe 70% of the time?
+
+```r
+qunif(p = 0.7,
+      min = 2,
+      max = 5)
+```
+
+```
+## [1] 4.1
+```
+
+*Simulate* 3 random numbers from this distribution
+
+```r
+runif(n = 3,
+      min = 2,
+      max = 5)
+```
+
+```
+## [1] 2.923298 2.773018 3.656967
+```
+]
+
+]
+
+
+
+
+
+.panel[.panel-name[Normal]
+
+.pull-left[
+
+A stock return is normally distributed with mean 15% and sd 25%.  What's the *density* of the distribution at a return of exactly 20%?
+
+```r
+dnorm(x = 0.2,
+      mean = 0.15,
+      sd = 0.25)
+```
+
+```
+## [1] 1.564171
+```
+
+What is the probability of a return *below* 20%?
+
+```r
+pnorm(q = 0.2,
+      mean = 0.15,
+      sd = 0.25)
+```
+
+```
+## [1] 0.5792597
+```
+]
+
+.pull-right[
+
+*Below what return* would I earn 70% of the time?
+
+```r
+qnorm(p = 0.7,
+      mean = 0.15,
+      sd = 0.25)
+```
+
+```
+## [1] 0.2811001
+```
+
+*Simulate* 3 stock returns
+
+```r
+rnorm(n = 3,
+      mean = 0.15,
+      sd = 0.25)
+```
+
+```
+## [1] -0.24647025  0.13982701  0.06724887
+```
+]
+
+]
+
+
+
+
+
+.panel[.panel-name[Binomial]
+
+.pull-left[
+
+What is the probability of *exactly* 7 correct on an exam with 20 MCQs?
+
+```r
+dbinom(x = 7,
+       size = 20, 
+       prob = 0.25) # 4 choices
+```
+
+```
+## [1] 0.1124062
+```
+
+What is the probability of *at most* 7 correct?
+
+```r
+pbinom(q = 7,
+       size = 20, 
+       prob = 0.25) # 4 choices
+```
+
+```
+## [1] 0.8981881
+```
+]
+
+.pull-right[
+
+*Below what score* would I earn 60% of the time?
+
+```r
+qbinom(p = 0.6,
+       size = 20, 
+       prob = 0.25) # 4 choices
+```
+
+```
+## [1] 5
+```
+
+*Simulate* my performance on 4 exams
+
+```r
+rbinom(n = 4,
+       size = 20, 
+       prob = 0.25) # 4 choices
+```
+
+```
+## [1] 3 6 7 4
+```
+]
+
+]
+
+
+
+
+
+
+
+.panel[.panel-name[Poisson]
+
+.pull-left[
+
+If 10 people arrive at the DC every minute on average, what is the probability that exactly 15 people arrive? 
+
+```r
+dpois(x = 15,
+      lambda = 10) 
+```
+
+```
+## [1] 0.03471807
+```
+
+What is the probability that *at most* 15 people arrive
+
+```r
+ppois(q = 15,
+      lambda = 10)
+```
+
+```
+## [1] 0.9512596
+```
+]
+
+.pull-right[
+
+*Below what number* of people will arrive 60% of the time?
+
+```r
+qpois(p = 0.6,
+      lambda = 10)
+```
+
+```
+## [1] 11
+```
+
+*Simulate* 4x 1 minute periods
+
+```r
+rpois(n = 4,
+      lambda = 10)
+```
+
+```
+## [1]  9 11  8 11
+```
+]
+
+]
+
+
+
+
+
+
+
+.panel[.panel-name[Students' t]
+
+
+
+
+What is the probability of obtaining `\(t\leq -2\)` from a `\(t\)` distribution with 20 degrees of freedom
+
+```r
+pt(q = -2,
+   df = 20) 
+```
+
+```
+## [1] 0.02963277
+```
+
+What value of `\(t\)` do you observe scores below with probability 0.025?
+
+```r
+qt(p = 0.025,
+   df = 20)
+```
+
+```
+## [1] -2.085963
+```
+
+
+
+
+]
+
+
+
+
+.panel[.panel-name[F]
+
+
+What is the probability of obtaining `\(F \geq 4\)` from an `\(F\)` distribution with 5 and 20 degrees of freedom
+
+```r
+pf(q = 4,
+   df1 = 5, df2 = 20,
+   lower.tail = FALSE) 
+```
+
+```
+## [1] 0.01118375
+```
+
+What value of `\(F\)` do you observe scores above with probability 0.025?
+
+```r
+qf(p = 0.025,
+   df1 = 5,
+   df2 = 20,
+   lower.tail = FALSE)
+```
+
+```
+## [1] 3.289056
+```
+
+
+
+]
+
+]
+
+---
+class: middle center
+# Wrapping up 🎢
+
+.pull-left[
+### Random variables
+
+### Expectations
+
+### Important expectations
+
+### Expectation rules
+]
+
+.pull-right[
+
+
+### The Law of Large Numbers
+
+### The magic of diversification
+
+### Useful distributions
+]
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>

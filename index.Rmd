@@ -29,5 +29,9 @@ knitr::opts_chunk$set(echo = FALSE)
 
     - [R4DS Data visualization chapter](https://r4ds.had.co.nz/data-visualisation.html)
     
+* [Topic 05 - Random variables](lecture_materials/Topic05.html)
+
+    - [R4DS Data visualization chapter](https://r4ds.had.co.nz/data-visualisation.html)
+    
     
 

@@ -251,6 +251,8 @@ penguins %>%
     size = "Body mass (g)") + #BREAK
   
   theme_dark() #BREAK
+
+
 ```
 
 
@@ -575,10 +577,13 @@ template: your_turn
 .pull-left[
 ```{r facet_wrap_code, fig.show = "hide"}
 penguins %>%
+  
   ggplot(aes(x = species,
              y = body_mass_g)) +
+  
   geom_violin() + 
-  facet_wrap(vars(islands))
+  
+  facet_wrap(vars(island)) #<<
 ```
 ]
 .pull-right[
@@ -599,7 +604,7 @@ penguins %>%
   ggplot(aes(x = sex,
              y = body_mass_g)) +
   geom_violin() + 
-  facet_grid(islands ~ species)
+  facet_grid(island ~ species) #<<
 ```
 ]
 .pull-right[

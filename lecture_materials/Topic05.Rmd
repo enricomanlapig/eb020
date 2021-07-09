@@ -1,6 +1,5 @@
 ---
-title: "Inference"
-subtitle: "Don't panic"
+title: "Reviewing random variables"
 author: "Enrico Manlapig"
 institute: "Westmont College"
 date: "`r Sys.Date()`"
@@ -92,7 +91,8 @@ name: eg1
 class: middle, center
 ## Example 1 `r emoji("game_die")`
 
-### A fair six-sided die has six equally likely outcomes.  Each side has a 1/6 probability of occurring.  $$\mathbb{P}(X=1)=\mathbb{P}(X=2)=\cdots=\mathbb{P}(X=6)=\frac{1}{6}$$
+### A fair six-sided die has six equally likely outcomes.  Each side has a 1/6 probability of occurring. 
+### $$\mathbb{P}(X=1)=\mathbb{P}(X=2)=\cdots=\mathbb{P}(X=6)=\frac{1}{6}$$
 
 ???
 How can we do this in R?
@@ -270,16 +270,20 @@ The expectation, or mean, of a random variable measures its probability weighted
 
 # Example
 
-.pull-left[
-You are playing a game with the following outcomes:
+
+Imagine you are playing a game with the following outcomes:
 
 * Win $1000 with probability 0.25
 * Win $100 with probability 0.5
 * Lose $300 with probability 0.25
 
 What are your expected winnings from playing this game?
-]
 
+???
+
+```{r eval = TRUE, results = "markup"}
+1000/4 + 100/2 - 300/4
+```
 
 ---
 template: your_turn
@@ -289,13 +293,17 @@ The U.S. economy is on the brink of a recovery. For next
 quarter:
 
 * There is a 2/6 chance that unemployment will rise to 10%
-* There is a 1/6 chance that unemployment will fall 2%
+* There is a 1/6 chance that unemployment will fall to 2%
 * There is a 3/6 chance that unemployment will remain constant at 5%
 
 What is the expected unemployment rate next quarter?
 ]
 
+???
 
+```{r eval = TRUE, results = "markup"}
+10 * 2/6 + 2 * 1/6 + 5 * 3/6
+```
 ---
 
 # Expectation rules
@@ -335,26 +343,35 @@ class: center, middle
 
 
 --
-
-### The Mean: $\mu = \mathbb{E}(X)$
-
+.pull-left[
+#### The Mean <br> $\mu = \mathbb{E}(X)$
+]
 --
-
-### Variance: $\mbox{Var} = \sigma^2_X=\mathbb{E}(X-\mu)^{2}\quad$
-
+.pull-left[
+#### Variance<br> $\mbox{Var}(X) = \sigma^2_X=\mathbb{E}(X-\mu)^{2}\quad$
+]
 --
-
-### Standard Deviation: $\sigma = \sqrt{\mbox{Var}(X)}$ 
-
+.pull-left[
+#### Standard Deviation <br> $\sigma = \sqrt{\mbox{Var}(X)}$ 
+]
 --
-
-### Covariance: $\mbox{Cov}(X,Y) = \sigma_{X,Y}=\mathbb{E}(X-\mu_{X})(Y-\mu_{Y})$
-
+.pull-left[
+#### Covariance <br> $\mbox{Cov}(X,Y) = \sigma_{X,Y} =\mathbb{E}(X-\mu_{X})(Y-\mu_{Y})$
+]
 --
+.pull-left[
+#### Correlation <br> $\mbox{Cor}(X,Y) = \rho_{X,Y} = \frac{\sigma_{X,Y}}{\sigma_X \sigma_Y}$
+]
 
-### Correlation: $\mbox{Cor}(X,Y) = \rho_{X,Y} = \frac{\sigma_{X,Y}}{\sigma_X \sigma_Y}$
+
+???
+Remember: These are properties of the random variable.  You usually don't know them.  But they're out there!
 
 ---
+
+
+
+
 # Important variance rules
 
 Let $X$ and $Y$ be random variables and let $a$ and $b$ be constants, then
@@ -368,7 +385,7 @@ Let $X$ and $Y$ be random variables and let $a$ and $b$ be constants, then
 
 ---
 class: center, middle
-# `r emoji("dizzy_face")``r emoji("pouting_cat")` `r emoji("rage")`
+# `r emoji("dizzy_face")` `r emoji("rage")` `r emoji("pouting_cat")`
 # Who cares???
 
 
@@ -377,25 +394,24 @@ class: center, middle
 
 Suppose you hold two stocks, A and B with the following features:
 
-* Stock A's returns, $R_A$, are Normally distributed with a mean (expected) return of 5% and volatility (standard deviation) of 25% (we say, $R_A \sim N(0.05, 0.25)$)
+* Stock A's returns, $R_A$, are Normally distributed with $\mu_A = 5\%$ and volatility $\sigma_A = 25\%$ (we say, $R_A \sim N(0.05, 0.25)$)
 
-* Stock B's returns, $R_B$, are Normally distributed with a mean (expected) return of 15% and volatility (standard deviation) of 45% (we say, $R_B \sim N(0.15, 0.45)$)
+* Stock B's returns, $R_B$, are Normally distributed with a $\mu_B = 15\%$ and volatility $\sigma_B = 45\%$ (we say, $R_B \sim N(0.15, 0.45)$)
 
-* The two stock returns are negatively correlated with correlation of -80%
+* The two stock returns are negatively correlated with $\mu = -0.8$
 
-If 2/3 of your portfolio is invested in stock A, while 1/3 is invested in stock B, how much can you expect to earn next year?
+If 2/3 of your portfolio is invested in stock A, while 1/3 is invested in stock B, how much do you expect to earn next year? What is the volatility of your portfolio?
 
+???
 
----
-# Let's simulate this portfolio
-.pull-left[
-Define the data
 ```{r stock_data}
 expected_returns <- c(0.05, 0.15)
 
 volatilities <- c(0.25, 0.45)
 
 cross_correlation <- -0.8
+
+weights <- c(2/3, 1/3)
 
 num_sims <- 2000
 
@@ -404,10 +420,31 @@ correlation_matrix <-
            cross_correlation, 1),
          nrow = 2, byrow = TRUE)
 ```
+
+
+```{r compute_theoretical, echo = FALSE}
+portfolio_return <- weights[1] * expected_returns[1] + weights[2] * expected_returns[2]
+
+portfolio_var <- weights[1]^2 * volatilities[1]^2 +
+  weights[2]^2 * volatilities[2]^2 +
+  2*weights[1]*weights[2]*cross_correlation*volatilities[1]*volatilities[2]
+portfolio_sd <- sqrt(portfolio_var)
+```
+
+
+
+
+---
+# Let's simulate this portfolio
+.pull-left[
+### Define the data
+```{r ref.label = "stock_data", echo = TRUE}
+
+```
 ]
 
 .pull-right[
-Simulate returns
+### Simulate returns
 ```{r correlation_sim}
 cholesky_factor <- chol(correlation_matrix)
   # For correlating things
@@ -453,12 +490,13 @@ sd(returns[,2])
 ### Create the portfolio
 ```{r construct_portfolio}
 df_returns <- data.frame(returns)
-names(df_returns) <- c("ret_a", "ret_b")
+names(df_returns) <- c("return_a", "return_b")
   # Assign nicer names
 
 df_returns %>% 
   mutate(
-    ret_p = 2/3 * ret_a + 1/3 * ret_b
+    return_p = weights[1] * return_a + 
+      weights[2] * return_b
   ) -> df_returns
 ```
 ]
@@ -475,8 +513,8 @@ df_returns %>%
 ```{r return_scatter, fig.show = "hide"}
 df_returns %>% 
   
-  ggplot(aes(x = ret_a, 
-             y = ret_b)) + 
+  ggplot(aes(x = return_a, 
+             y = return_b)) + 
   
   geom_point(alpha = 0.3,
              color = "blue") +
@@ -506,10 +544,14 @@ df_returns %>%
 .panel[.panel-name[Portfolio returns]
 
 .pull-left[
+```{r, echo = FALSE}
+set.seed(100)
+```
+
 ```{r portfolio_histogram, fig.show = "hide"}
 df_returns %>% 
   
-  ggplot(aes(x = ret_p)) + 
+  ggplot(aes(x = return_p)) + 
   
   geom_histogram() +
   
@@ -540,13 +582,13 @@ df_returns %>%
 df_returns %>%
   
   summarise(
-    mean_ret_a = round(mean(ret_a), 3),
-    mean_ret_b = round(mean(ret_b), 3),
-    mean_ret_p = round(mean(ret_p), 3),
+    mean_ret_a = round(mean(return_a), 3),
+    mean_ret_b = round(mean(return_b), 3),
+    mean_ret_p = round(mean(return_p), 3),
     
-    vol_a = round(sd(ret_a), 3),
-    vol_b = round(sd(ret_b), 3),
-    vol_p = round(sd(ret_p), 3)
+    vol_a = round(sd(return_a), 3),
+    vol_b = round(sd(return_b), 3),
+    vol_p = round(sd(return_p), 3)
 
   ) %>% 
   
@@ -567,26 +609,320 @@ df_returns %>%
 ]
 
 ---
-class: middle 
-# Wrapping up `r emoji("roller_coaster")`
 
-In this topic, we've reviewed...
+### Truth vs Facts
+
+
+
+
+.panelset[
+.panel[.panel-name[Density]
+
+
+```{r density_plot, echo = FALSE, fig.height = 6, fig.width = 14, fig.align='center'}
+df_returns %>%
+ggplot(aes(x = return_p)) + 
+
+  geom_function(aes(color = "Theoretical"), 
+                fun = dnorm, 
+                args = list(mean = portfolio_return, 
+                            sd = portfolio_sd), 
+                size = 4,
+                alpha = 0.5) +
+  
+  geom_density(aes(color = "Empirical"), size = 1.5) + 
+
+  theme_minimal() + 
+  scale_color_manual(name = "",
+    values = c("Empirical" = "red", 
+                                "Theoretical" = "blue")) + 
+  labs(title = "Empirical vs Theoretical Density of Stock Returns",
+       x = "Portfolio return",
+       y = "Density")
+```
+]
+
+.panel[.panel-name[Cumulative Distribution]
+```{r distribution_plot, echo = FALSE, fig.height = 6, fig.width = 14, fig.align='center'}
+df_returns %>%
+ggplot(aes(x = return_p)) + 
+  geom_function(aes(color = "Theoretical"), 
+                fun = pnorm, 
+                args = list(mean = portfolio_return, 
+                            sd = portfolio_sd), 
+                size = 4,
+                alpha = 0.5) +
+  stat_ecdf(aes(color = "Empirical"), size = 1.5) + 
+
+  theme_minimal() + 
+  scale_color_manual(name = "",
+                     values = c("Empirical" = "red", 
+                                "Theoretical" = "blue")) + 
+  labs(title = "Empirical vs Theoretical Distribution of Stock Returns",
+       x = "Portfolio return",
+       y = "Pr(X<x)")
+```
+
+]
+
+
+]
+
+
+
+???
+Interpret these carefully!
+
+
+
+
+
+
+---
+
+
+### So many distributions!!! Here are some useful ones `r emoji("sunglasses")`
+
+.panelset[
+
+.panel[.panel-name[Uniform]
 
 .pull-left[
-* Random variables
 
-* Probability distributions
+What's the density of a uniform distribution at 3 with mean 2 and max 5
+```{r results = "markup"}
+dunif(x = 3,
+      min = 2,
+      max = 5)
+```
 
-* Expectations
-
-* Important expectations
+What is the probability of observing less than 3?
+```{r results = "markup"}
+punif(q = 3,
+      min = 2,
+      max = 5)
+```
 ]
 
 .pull-right[
-* Expectation rules
 
-* The Law of Large Numbers
+*Below what value* would I observe 70% of the time?
+```{r results = "markup"}
+qunif(p = 0.7,
+      min = 2,
+      max = 5)
+```
 
-* The magic of diversification
+*Simulate* 3 random numbers from this distribution
+```{r results = "markup"}
+runif(n = 3,
+      min = 2,
+      max = 5)
+```
+]
+
+]
+
+
+
+
+
+.panel[.panel-name[Normal]
+
+.pull-left[
+
+A stock return is normally distributed with mean 15% and sd 25%.  What's the *density* of the distribution at a return of exactly 20%?
+```{r results = "markup"}
+dnorm(x = 0.2,
+      mean = 0.15,
+      sd = 0.25)
+```
+
+What is the probability of a return *below* 20%?
+```{r results = "markup"}
+pnorm(q = 0.2,
+      mean = 0.15,
+      sd = 0.25)
+```
+]
+
+.pull-right[
+
+*Below what return* would I earn 70% of the time?
+```{r results = "markup"}
+qnorm(p = 0.7,
+      mean = 0.15,
+      sd = 0.25)
+```
+
+*Simulate* 3 stock returns
+```{r results = "markup"}
+rnorm(n = 3,
+      mean = 0.15,
+      sd = 0.25)
+```
+]
+
+]
+
+
+
+
+
+.panel[.panel-name[Binomial]
+
+.pull-left[
+
+What is the probability of *exactly* 7 correct on an exam with 20 MCQs?
+```{r results = "markup"}
+dbinom(x = 7,
+       size = 20, 
+       prob = 0.25) # 4 choices
+```
+
+What is the probability of *at most* 7 correct?
+```{r results = "markup"}
+pbinom(q = 7,
+       size = 20, 
+       prob = 0.25) # 4 choices
+```
+]
+
+.pull-right[
+
+*Below what score* would I earn 60% of the time?
+```{r results = "markup"}
+qbinom(p = 0.6,
+       size = 20, 
+       prob = 0.25) # 4 choices
+```
+
+*Simulate* my performance on 4 exams
+```{r results = "markup"}
+rbinom(n = 4,
+       size = 20, 
+       prob = 0.25) # 4 choices
+```
+]
+
+]
+
+
+
+
+
+
+
+.panel[.panel-name[Poisson]
+
+.pull-left[
+
+If 10 people arrive at the DC every minute on average, what is the probability that exactly 15 people arrive? 
+```{r results = "markup"}
+dpois(x = 15,
+      lambda = 10) 
+```
+
+What is the probability that *at most* 15 people arrive
+```{r results = "markup"}
+ppois(q = 15,
+      lambda = 10)
+```
+]
+
+.pull-right[
+
+*Below what number* of people will arrive 60% of the time?
+```{r results = "markup"}
+qpois(p = 0.6,
+      lambda = 10)
+```
+
+*Simulate* 4x 1 minute periods
+```{r results = "markup"}
+rpois(n = 4,
+      lambda = 10)
+```
+]
+
+]
+
+
+
+
+
+
+
+.panel[.panel-name[Students' t]
+
+
+
+
+What is the probability of obtaining $t\leq -2$ from a $t$ distribution with 20 degrees of freedom
+```{r results = "markup"}
+pt(q = -2,
+   df = 20) 
+```
+
+What value of $t$ do you observe scores below with probability 0.025?
+```{r results = "markup"}
+qt(p = 0.025,
+   df = 20)
+```
+
+
+
+
+]
+
+
+
+
+.panel[.panel-name[F]
+
+
+What is the probability of obtaining $F \geq 4$ from an $F$ distribution with 5 and 20 degrees of freedom
+```{r results = "markup"}
+pf(q = 4,
+   df1 = 5, df2 = 20,
+   lower.tail = FALSE) 
+```
+
+What value of $F$ do you observe scores above with probability 0.025?
+```{r results = "markup"}
+qf(p = 0.025,
+   df1 = 5,
+   df2 = 20,
+   lower.tail = FALSE)
+```
+
+
+
+]
+
+]
+
+---
+class: middle center
+# Wrapping up `r emoji("roller_coaster")`
+
+.pull-left[
+### Random variables
+
+### Expectations
+
+### Important expectations
+
+### Expectation rules
+]
+
+.pull-right[
+
+
+### The Law of Large Numbers
+
+### Useful distributions
+
+### The magic of diversification
 ]
 

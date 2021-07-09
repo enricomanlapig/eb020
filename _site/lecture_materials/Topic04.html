@@ -4,10 +4,12 @@
     <title>Welcome to the Tidyverse</title>
     <meta charset="utf-8" />
     <meta name="author" content="Enrico Manlapig" />
-    <meta name="date" content="2021-07-07" />
+    <meta name="date" content="2021-07-09" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
   </head>
   <body>
     <textarea id="source">
@@ -568,6 +570,40 @@ penguins %&gt;%
 ![](Topic04_files/figure-html/theme_plot_user_02_output-1.png)&lt;!-- --&gt;
 ]
 
+---
+count: false
+ 
+# Applying a theme
+.panel1-theme_plot-user[
+
+```r
+penguins %&gt;%
+
+  ggplot(
+    aes(x = bill_length_mm,
+        y = bill_depth_mm)) +
+
+  geom_point(
+    aes(color = species,
+        size = body_mass_g),
+    alpha = 0.5) +
+
+  labs(
+    title = "Bill depth and length",
+    subtitle = "By species",
+    y = "Bill depth (mm)",
+    x = "Bill length (mm)",
+    color = "Species",
+    size = "Body mass (g)") +
+
+  theme_dark()
+```
+]
+ 
+.panel2-theme_plot-user[
+![](Topic04_files/figure-html/theme_plot_user_03_output-1.png)&lt;!-- --&gt;
+]
+
 &lt;style&gt;
 .panel1-theme_plot-user {
   color: black;
@@ -986,9 +1022,19 @@ template: your_turn
 .panel[.panel-name[facet-wrap]
 .pull-left[
 
+```r
+penguins %&gt;%
+  
+  ggplot(aes(x = species,
+             y = body_mass_g)) +
+  
+  geom_violin() + 
+  
+* facet_wrap(vars(island))
+```
 ]
 .pull-right[
-
+![](Topic04_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
 ]
 
 ]
@@ -999,9 +1045,16 @@ template: your_turn
 .panel[.panel-name[facet-grid]
 .pull-left[
 
+```r
+penguins %&gt;%
+  ggplot(aes(x = sex,
+             y = body_mass_g)) +
+  geom_violin() + 
+* facet_grid(island ~ species)
+```
 ]
 .pull-right[
-
+![](Topic04_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
 ]
 
 ]
