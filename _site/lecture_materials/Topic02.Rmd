@@ -3,7 +3,7 @@ title: "Introducing RMarkdown"
 author: "Enrico Manlapig"
 date: "01-01-2021"
 output:
-  html_document
+  html_notebook
 ---
 
 <!-- 

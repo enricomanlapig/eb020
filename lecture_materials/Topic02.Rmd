@@ -3,7 +3,7 @@ title: "Introducing RMarkdown"
 author: "Enrico Manlapig"
 date: "01-01-2021"
 output:
-  html_document
+  html_notebook
 ---
 
 <!-- 
@@ -23,7 +23,7 @@ RMarkdown combines three distinct elements:
 
 
 # Cheatsheet
-![Come and get it!](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
+[Come and get it!](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
 
 # Writing text 
 
