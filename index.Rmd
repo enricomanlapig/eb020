@@ -17,7 +17,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 * [Topic 01 - Introducing R](lecture_materials/Topic01.html)
 
-* [Topic 02 - Introducing RMarkdown](lecture_materials/Topic02.nb.html)
+* [Topic 02 - Introducing RMarkdown](lecture_materials/Topic02.html)
 
     - [R4DS RMarkdown chapter](https://r4ds.had.co.nz/r-markdown.html)
 
