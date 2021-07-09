@@ -6,7 +6,7 @@
       "description": "Some additional details about the website",
       "author": [],
       "contents": "\r\n\r\n\r\n\r\n",
-      "last_modified": "2021-07-09T14:27:40-07:00"
+      "last_modified": "2021-07-09T14:39:34-07:00"
     },
     {
       "path": "index.html",
@@ -14,7 +14,7 @@
       "description": "Welcome to the website. I hope you enjoy it!\n",
       "author": [],
       "contents": "\r\nLecture materials\r\nTopic 01 - Introducing R\r\nTopic 02 - Introducing RMarkdown\r\nR4DS RMarkdown chapter\r\n\r\nTopic 03 - Introducing dplyr\r\nR4DS Transformation chapter\r\n\r\nTopic 04 - Introducing ggplot\r\nR4DS Data visualization chapter\r\n\r\nTopic 05 - Random variables\r\nR4DS Data visualization chapter\r\n\r\n\r\n\r\n\r\n",
-      "last_modified": "2021-07-09T14:27:40-07:00"
+      "last_modified": "2021-07-09T14:39:34-07:00"
     }
   ],
   "collections": []
