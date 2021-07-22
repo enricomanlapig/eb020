@@ -1,0 +1,134 @@
+---
+title: "EB020 Syllabus"
+description: |
+  What is this course about?
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+# Course objectives
+
+The overarching goal of this course is to promote a critical attitude towards analytical inquiry in Economics and Business. The course focuses on quantitative analytical methods using specialized software. 
+
+Other objectives of the course include:
+
+* Developing students' analytical, quantitative reasoning, and communication skills
+
+* Encourage critical thinking about data and analysis
+
+* Prepare students for future careers in data business and economics
+
+* To prepare students to engage upper level economics and business courses
+
+Broadly, the course is organized into three sections. 
+
+1. **Review of Probability and Statistics** The course will begin where Introduction to Statistics (MA005 or equivalent) ended. The review covers descriptive statistics, probability theory, and inferential statistics in one and two variables. It servers also as a platform for learning R, which is a language and environment for statistical computing and graphics.
+
+2. **Linear Regression** The main statistical technique in this course is Ordinary Least Squares (OLS), which is a common tool for modeling economic systems and generating forecasts.  In addition to building, interpreting, evaluating OLS regressions, this part of the course explores situations where OLS regression is inappropriate or otherwise inadequate. 
+
+3. **Calculus** The final part of the course will introduce calculus. This section facilitates future classes in the Economics & Business major.
+
+By the end of this course, students will also be able to perform basic data wrangling and visualization tasks. students will also be able to build and interpret OLS regressions using R. Students will appreciate the common failures of the linear model and be able to detect and correct for them. Students will able to use linear regression models to generate forecasts. 
+
+# Resources
+
+1. *This site* Lecture materials and problem sets will be posted to this site.  There will be a link to this page on the [Westmont Canvas site](http://canvas.westmont.edu/) and another link on my [homepage](https://emanlapig.net). 
+
+2. *Gradescope* Problem sets will be submitted to [Gradescope](https://gradescope.com)
+
+3. *Textbooks* This class will rely upon two texts. 
+
+    * The introduction to R will come from the (free) text [R4DS](https://r4ds.had.co.nz/)
+    * The material covering will be from Econometrics 6th ed. by A.H. Studenmund and published by Addison-Wesley, which is available at the bookstore
+    * The calculus material will not rely upon a textbook and many excellent texts exist - please [contact the  instructor](mailto://emanlapig@westmont) for recommendations
+
+4. *Lectures* The main ideas, techniques, and worked examples will be presented during lectures in a workshop style. Students will need a laptop in each class meeting
+
+5. *Office hours* [Make an appointment](https://calendar.x.ai/enricomanlapig)
+
+
+
+
+# Assessment
+
+## Examinations (70%) 
+
+Students will sit three exams (two midterms plus a final) corresponding to the three sections in the course. Examinations are not intended to be cumulative but because the course builds on itself, repetition is unavoidable. Dates, times, locations, and format will be advised although general timing is indicated in the tentative topic schedule below. Examinations are weighted as follows:
+
+1. Probability & Statistics Review: 30%
+
+2. Linear regression: 30%
+
+3. Calculus: 10% (Pass or fail)
+
+
+## Problem sets (30%) 
+
+To encourage continuous engagement with the material, students will complete (approximately) two problem sets each week. Students are encouraged to work on these in groups but you must submit individual work. 
+
+
+1. **Formative problem sets** (worth 12.5%) *will not* be graded for correctness, but rather for both effort and completion
+
+2. **Summative problem sets** (worth 12.5%) *will* be graded for for correctness
+
+
+## Participation (5%)
+
+To ensure regular accountability and create a welcoming learning community, students will participate in several group activities throughout the semester.  These activities will vary from week to week be may include submitting work to public forums, interacting with community partners, and working with groups.
+
+
+# Tentative schedule
+
+* Week 1: Introduction
+    - Base R and packages 
+    
+* Week 2: Introduction to descriptive descriptive statistics
+    - Packages for data manipulation and visualization
+    - Web scraping
+    
+* Week 3: Reviewing probability theory
+    - Key theorems in probability theory
+    - Monte-carlo simulation
+    - Quantitative finance
+    
+* Week 4: Reviewing inferential statistics
+    - Introduces estimators and their properties
+    
+* Week 5: Mid-semester Examination 1
+
+* Week 6: OLS and the Gauss Markov Theorem
+    - Simple and multiple regression
+    - Variance decomposition
+    - OLS
+    
+* Week 7: Hypothesis testing and forecasting
+    - Model evaluation
+    - Significance testing
+    
+* Week 8: Modeling skills
+    - Dummy variables
+    - Log forms
+    - Interaction
+    
+* Week 9: When Gauss Markov fails Part 1
+    - Multi-collinearity
+    - Heteroskedasticity
+    - Serial-correlation
+    
+* Week 10: Spring Break
+
+* Week 11: Selected topics
+    - Categorical data, time series, and/or Endogeneity
+    
+* Week 12: Selected topics
+
+* Week 13: Mid-semester Examination 2
+
+* Week 14: Calculus
+
+* Week 15: Calculus
+
+* Week 16: Calculus
