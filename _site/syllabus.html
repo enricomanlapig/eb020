@@ -86,29 +86,29 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </style>
 
   <!--radix_placeholder_meta_tags-->
-  <title>EB020 Research &amp; Forecasting: EB020 Syllabus</title>
+  <title>EB020: EB020 Syllabus</title>
 
-  <meta property="description" itemprop="description" content="What is this course about?"/>
+  <meta property="description" itemprop="description" content="What does this course involve?"/>
 
 
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="EB020 Research &amp; Forecasting: EB020 Syllabus"/>
+  <meta property="og:title" content="EB020: EB020 Syllabus"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="What is this course about?"/>
+  <meta property="og:description" content="What does this course involve?"/>
   <meta property="og:locale" content="en_US"/>
-  <meta property="og:site_name" content="EB020 Research &amp; Forecasting"/>
+  <meta property="og:site_name" content="EB020"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="EB020 Research &amp; Forecasting: EB020 Syllabus"/>
-  <meta property="twitter:description" content="What is this course about?"/>
+  <meta property="twitter:title" content="EB020: EB020 Syllabus"/>
+  <meta property="twitter:description" content="What does this course involve?"/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description"]}},"value":[{"type":"character","attributes":{},"value":["EB020 Syllabus"]},{"type":"character","attributes":{},"value":["What is this course about?"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","output"]}},"value":[{"type":"character","attributes":{},"value":["EB020 Syllabus"]},{"type":"character","attributes":{},"value":["What does this course involve?\n"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","toc_float"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2032,6 +2032,318 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
   </script>
 
+  <style type="text/css">
+  /* base variables */
+
+  /* Edit the CSS properties in this file to create a custom
+     Distill theme. Only edit values in the right column
+     for each row; values shown are the CSS defaults.
+     To return any property to the default,
+     you may set its value to: unset
+     All rows must end with a semi-colon.                      */
+
+  /* Optional: embed custom fonts here with `@import`          */
+  /* This must remain at the top of this file.                 */
+
+
+
+  html {
+    /*-- Main font sizes --*/
+    --title-size:      50px;
+    --body-size:       1.06rem;
+    --code-size:       14px;
+    --aside-size:      12px;
+    --fig-cap-size:    13px;
+    /*-- Main font colors --*/
+    --title-color:     #000000;
+    --header-color:    rgba(0, 0, 0, 0.8);
+    --body-color:      rgba(0, 0, 0, 0.8);
+    --aside-color:     rgba(0, 0, 0, 0.6);
+    --fig-cap-color:   rgba(0, 0, 0, 0.6);
+    /*-- Specify custom fonts ~~~ must be imported above   --*/
+    --heading-font:    sans-serif;
+    --mono-font:       monospace;
+    --body-font:       sans-serif;
+    --navbar-font:     sans-serif;  /* websites + blogs only */
+  }
+
+  /*-- ARTICLE METADATA --*/
+  d-byline {
+    --heading-size:    0.6rem;
+    --heading-color:   rgba(0, 0, 0, 0.5);
+    --body-size:       0.8rem;
+    --body-color:      rgba(0, 0, 0, 0.8);
+  }
+
+  /*-- ARTICLE TABLE OF CONTENTS --*/
+  .d-contents {
+    --heading-size:    18px;
+    --contents-size:   13px;
+  }
+
+  /*-- ARTICLE APPENDIX --*/
+  d-appendix {
+    --heading-size:    15px;
+    --heading-color:   rgba(0, 0, 0, 0.65);
+    --text-size:       0.8em;
+    --text-color:      rgba(0, 0, 0, 0.5);
+  }
+
+  /*-- WEBSITE HEADER + FOOTER --*/
+  /* These properties only apply to Distill sites and blogs  */
+
+  .distill-site-header {
+    --title-size:       18px;
+    --text-color:       rgba(255, 255, 255, 0.8);
+    --text-size:        15px;
+    --hover-color:      white;
+    --bkgd-color:       #0F2E3D;
+  }
+
+  .distill-site-footer {
+    --text-color:       rgba(255, 255, 255, 0.8);
+    --text-size:        15px;
+    --hover-color:      white;
+    --bkgd-color:       #0F2E3D;
+  }
+
+  /*-- Additional custom styles --*/
+  /* Add any additional CSS rules below                      */
+  </style>
+  <style type="text/css">
+  /* base variables */
+
+  /* Edit the CSS properties in this file to create a custom
+     Distill theme. Only edit values in the right column
+     for each row; values shown are the CSS defaults.
+     To return any property to the default,
+     you may set its value to: unset
+     All rows must end with a semi-colon.                      */
+
+  /* Optional: embed custom fonts here with `@import`          */
+  /* This must remain at the top of this file.                 */
+  @import url('https://fonts.googleapis.com/css2?family=Amiri');
+  @import url('https://fonts.googleapis.com/css2?family=Bitter');
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono');
+
+
+  html {
+    /*-- Main font sizes --*/
+    --title-size:      50px;
+    --body-size:       1.06rem;
+    --code-size:       14px;
+    --aside-size:      12px;
+    --fig-cap-size:    13px;
+    /*-- Main font colors --*/
+    --title-color:     #F23044;
+    --header-color:    #F23044;
+    --body-color:      rgba(0, 0, 0, 0.8);
+    --aside-color:     rgba(0, 0, 0, 0.6);
+    --fig-cap-color:   rgba(0, 0, 0, 0.6);
+    /*-- Specify custom fonts ~~~ must be imported above   --*/
+    --heading-font:    "Amiri", serif;
+    --mono-font:       "DM Mono", monospace;
+    --body-font:       "Bitter", sans-serif;
+    --navbar-font:     "Amiri", serif;
+  }
+
+  /*-- ARTICLE METADATA --*/
+  d-byline {
+    --heading-size:    0.6rem;
+    --heading-color:   rgba(0, 0, 0, 0.5);
+    --body-size:       0.8rem;
+    --body-color:      rgba(0, 0, 0, 0.8);
+  }
+
+  /*-- ARTICLE TABLE OF CONTENTS --*/
+  .d-contents {
+    --heading-size:    18px;
+    --contents-size:   13px;
+  }
+
+  /*-- ARTICLE APPENDIX --*/
+  d-appendix {
+    --heading-size:    15px;
+    --heading-color:   rgba(0, 0, 0, 0.65);
+    --text-size:       0.8em;
+    --text-color:      rgba(0, 0, 0, 0.5);
+  }
+
+  /*-- WEBSITE HEADER + FOOTER --*/
+  /* These properties only apply to Distill sites and blogs  */
+
+  .distill-site-header {
+    --title-size:       18px;
+    --text-color:       rgba(255, 255, 255, 0.8);
+    --text-size:        15px;
+    --hover-color:      white;
+    --bkgd-color:       #40415E;
+  }
+
+  .distill-site-footer {
+    --text-color:       rgba(255, 255, 255, 0.8);
+    --text-size:        15px;
+    --hover-color:      white;
+    --bkgd-color:       #42535E;
+  }
+
+  /*-- Additional custom styles --*/
+  /* Add any additional CSS rules below                      */
+  </style>
+  <style type="text/css">
+  /* base style */
+
+  /* FONT FAMILIES */
+
+  :root {
+    --heading-default: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    --mono-default: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    --body-default: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  body,
+  .posts-list .post-preview p,
+  .posts-list .description p {
+    font-family: var(--body-font), var(--body-default);
+  }
+
+  h1, h2, h3, h4, h5, h6,
+  .posts-list .post-preview h2,
+  .posts-list .description h2 {
+    font-family: var(--heading-font), var(--heading-default);
+  }
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: var(--mono-font), var(--mono-default);
+  }
+
+
+  /*-- TITLE --*/
+  d-title h1,
+  .posts-list > h1 {
+    color: var(--title-color, black);
+  }
+
+  d-title h1 {
+    font-size: var(--title-size, 50px);
+  }
+
+  /*-- HEADERS --*/
+  d-article h1,
+  d-article h2,
+  d-article h3,
+  d-article h4,
+  d-article h5,
+  d-article h6 {
+    color: var(--header-color, rgba(0, 0, 0, 0.8));
+  }
+
+  /*-- BODY --*/
+  d-article > p,  /* only text inside of <p> tags */
+  d-article > ul, /* lists */
+  d-article > ol {
+    color: var(--body-color, rgba(0, 0, 0, 0.8));
+    font-size: var(--body-size, 1.06rem);
+  }
+
+
+  /*-- CODE --*/
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-size: var(--code-size, 14px);
+  }
+
+  /*-- ASIDE --*/
+  d-article aside {
+    font-size: var(--aside-size, 12px);
+    color: var(--aside-color, rgba(0, 0, 0, 0.6));
+  }
+
+  /*-- FIGURE CAPTIONS --*/
+  figure .caption,
+  figure figcaption,
+  .figure .caption {
+    font-size: var(--fig-cap-size, 13px);
+    color: var(--fig-cap-color, rgba(0, 0, 0, 0.6));
+  }
+
+  /*-- METADATA --*/
+  d-byline h3 {
+    font-size: var(--heading-size, 0.6rem);
+    color: var(--heading-color, rgba(0, 0, 0, 0.5));
+  }
+
+  d-byline {
+    font-size: var(--body-size, 0.8rem);
+    color: var(--body-color, rgba(0, 0, 0, 0.8));
+  }
+
+  d-byline a,
+  d-article d-byline a {
+    color: var(--body-color, rgba(0, 0, 0, 0.8));
+  }
+
+  /*-- TABLE OF CONTENTS --*/
+  .d-contents nav h3 {
+    font-size: var(--heading-size, 18px);
+  }
+
+  .d-contents nav a {
+    font-size: var(--contents-size, 13px);
+  }
+
+  /*-- APPENDIX --*/
+  d-appendix h3 {
+    font-size: var(--heading-size, 15px);
+    color: var(--heading-color, rgba(0, 0, 0, 0.65));
+  }
+
+  d-appendix {
+    font-size: var(--text-size, 0.8em);
+    color: var(--text-color, rgba(0, 0, 0, 0.5));
+  }
+
+  d-appendix d-footnote-list a.footnote-backlink {
+    color: var(--text-color, rgba(0, 0, 0, 0.5));
+  }
+
+  /*-- WEBSITE HEADER + FOOTER --*/
+  .distill-site-header .title {
+    font-size: var(--title-size, 18px);
+    font-family: var(--navbar-font), var(--heading-default);
+  }
+
+  .distill-site-header a,
+  .nav-dropdown .nav-dropbtn {
+    font-family: var(--navbar-font), var(--heading-default);
+  }
+
+  .nav-dropdown .nav-dropbtn {
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
+    font-size: var(--text-size, 15px);
+  }
+
+  .distill-site-header a:hover,
+  .nav-dropdown:hover .nav-dropbtn {
+    color: var(--hover-color, white);
+  }
+
+  .distill-site-header {
+    font-size: var(--text-size, 15px);
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
+    background-color: var(--bkgd-color, #0F2E3D);
+  }
+
+  .distill-site-footer {
+    font-size: var(--text-size, 15px);
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
+    background-color: var(--bkgd-color, #0F2E3D);
+  }
+
+  .distill-site-footer a:hover {
+    color: var(--hover-color, white);
+  }</style>
   <!--/radix_placeholder_distill-->
   <script src="site_libs/header-attrs-2.9/header-attrs.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
@@ -2053,7 +2365,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"EB020 Syllabus","description":"What is this course about?","authors":[]}
+{"title":"EB020 Syllabus","description":"What does this course involve?","authors":[]}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2061,7 +2373,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <header class="header header--fixed" role="banner">
 <nav class="distill-site-nav distill-site-header">
 <div class="nav-left">
-<a href="index.html" class="title">EB020 Research &amp; Forecasting</a>
+<a href="index.html" class="title">EB020</a>
 </div>
 <div class="nav-right">
 <a href="index.html">Home</a>
@@ -2078,17 +2390,40 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <h1>EB020 Syllabus</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>What is this course about?</p></p>
+<p><p>What does this course involve?</p></p>
 </div>
 
 
 <div class="d-article">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#course-objectives">Course objectives</a></li>
+<li><a href="#prerequisites">Prerequisites</a></li>
+<li><a href="#resources">Resources</a></li>
+<li><a href="#assessment">Assessment</a>
+<ul>
+<li><a href="#examinations">Examinations</a></li>
+<li><a href="#problem-sets">Problem sets</a></li>
+<li><a href="#participation">Participation</a></li>
+</ul></li>
+<li><a href="#tentative-schedule">Tentative schedule</a></li>
+<li><a href="#policies">Policies</a>
+<ul>
+<li><a href="#attendance">Attendance</a></li>
+<li><a href="#academic-integrity">Academic integrity</a></li>
+<li><a href="#academic-accommodations">Academic accommodations</a></li>
+</ul></li>
+</ul>
+</nav>
+</div>
 <h1 id="course-objectives">Course objectives</h1>
-<p>The overarching goal of this course is to promote a critical attitude towards analytical inquiry in Economics and Business. The course focuses on quantitative analytical methods using specialized software.</p>
+<p>The overarching goal of this course is to promote a critical attitude towards analytical inquiry in Economics and Business. It introduces students industry standard tools and fundamental ideas so they can engage with different kinds of data in appropriately rigorous ways.</p>
 <p>Other objectives of the course include:</p>
 <ul>
 <li><p>Developing students’ analytical, quantitative reasoning, and communication skills</p></li>
-<li><p>Encourage critical thinking about data and analysis</p></li>
+<li><p>Encourage critical thinking about data and analytical methods</p></li>
 <li><p>Prepare students for future careers in data business and economics</p></li>
 <li><p>To prepare students to engage upper level economics and business courses</p></li>
 </ul>
@@ -2099,91 +2434,106 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <li><p><strong>Calculus</strong> The final part of the course will introduce calculus. This section facilitates future classes in the Economics &amp; Business major.</p></li>
 </ol>
 <p>By the end of this course, students will also be able to perform basic data wrangling and visualization tasks. students will also be able to build and interpret OLS regressions using R. Students will appreciate the common failures of the linear model and be able to detect and correct for them. Students will able to use linear regression models to generate forecasts.</p>
+<h1 id="prerequisites">Prerequisites</h1>
+<p>Students must have taken MA005, Introduction to Statistics or equivalent in its entirety.</p>
 <h1 id="resources">Resources</h1>
 <ol type="1">
-<li><p><em>This site</em> Lecture materials and problem sets will be posted to this site. There will be a link to this page on the <a href="http://canvas.westmont.edu/">Westmont Canvas site</a> and another link on my <a href="https://emanlapig.net">homepage</a>.</p></li>
-<li><p><em>Gradescope</em> Problem sets will be submitted to <a href="https://gradescope.com">Gradescope</a></p></li>
-<li><p><em>Textbooks</em> This class will rely upon two texts.</p>
+<li><p><strong>This site</strong> Lecture materials and problem sets will be posted to this site. There will be a link to this page on the <a href="http://canvas.westmont.edu/">Westmont Canvas site</a> and another link on my <a href="https://emanlapig.net">homepage</a>.</p></li>
+<li><p><strong>Textbooks</strong> This class will rely upon two texts.</p>
 <ul>
 <li>The introduction to R will come from the (free) text <a href="https://r4ds.had.co.nz/">R4DS</a></li>
 <li>The material covering will be from Econometrics 6th ed. by A.H. Studenmund and published by Addison-Wesley, which is available at the bookstore</li>
 <li>The calculus material will not rely upon a textbook and many excellent texts exist - please <a href="mailto://emanlapig@westmont">contact the instructor</a> for recommendations</li>
 </ul></li>
-<li><p><em>Lectures</em> The main ideas, techniques, and worked examples will be presented during lectures in a workshop style. Students will need a laptop in each class meeting</p></li>
-<li><p><em>Office hours</em> <a href="https://calendar.x.ai/enricomanlapig">Make an appointment</a></p></li>
+<li><p><strong>Lectures</strong> The main ideas, techniques, and worked examples will be presented during lectures in a workshop style. Students will need a laptop in each class meeting</p></li>
+<li><p><strong>Office hours</strong> Please feel free to <a href="https://calendar.x.ai/enricomanlapig">make an appointment</a></p></li>
 </ol>
 <h1 id="assessment">Assessment</h1>
-<h2 id="examinations-70">Examinations (70%)</h2>
+<h2 id="examinations">Examinations</h2>
 <p>Students will sit three exams (two midterms plus a final) corresponding to the three sections in the course. Examinations are not intended to be cumulative but because the course builds on itself, repetition is unavoidable. Dates, times, locations, and format will be advised although general timing is indicated in the tentative topic schedule below. Examinations are weighted as follows:</p>
 <ol type="1">
-<li><p>Probability &amp; Statistics Review: 30%</p></li>
-<li><p>Linear regression: 30%</p></li>
+<li><p>Probability &amp; Statistics Review: 25%</p></li>
+<li><p>Linear regression: 25%</p></li>
 <li><p>Calculus: 10% (Pass or fail)</p></li>
 </ol>
-<h2 id="problem-sets-30">Problem sets (30%)</h2>
+<p><em>Total grade value: 60%</em></p>
+<h2 id="problem-sets">Problem sets</h2>
 <p>To encourage continuous engagement with the material, students will complete (approximately) two problem sets each week. Students are encouraged to work on these in groups but you must submit individual work.</p>
 <ol type="1">
-<li><p><strong>Formative problem sets</strong> (worth 12.5%) <em>will not</em> be graded for correctness, but rather for both effort and completion</p></li>
-<li><p><strong>Summative problem sets</strong> (worth 12.5%) <em>will</em> be graded for for correctness</p></li>
+<li><p><strong>Formative problem sets</strong> (worth 17.5%) <em>will not</em> be graded for correctness, but rather for both effort and completion</p></li>
+<li><p><strong>Summative problem sets</strong> (worth 17.5%) <em>will</em> be graded for for correctness</p></li>
 </ol>
-<h2 id="participation-5">Participation (5%)</h2>
+<p><em>Total grade value: 35%</em></p>
+<h2 id="participation">Participation</h2>
 <p>To ensure regular accountability and create a welcoming learning community, students will participate in several group activities throughout the semester. These activities will vary from week to week be may include submitting work to public forums, interacting with community partners, and working with groups.</p>
+<p><em>Total grade value: 5%</em></p>
 <h1 id="tentative-schedule">Tentative schedule</h1>
+<p>The schedule below indicates the approximate timing of each topic.</p>
+<h4 id="week-0-san-francisco-intensive">Week 0: San Francisco intensive</h4>
+<p>🌉 <strong><em>San Francisco students will be introduced the material from weeks 1-4 in an intensive, 5-day workshop</em></strong></p>
+<h4 id="week-1-introduction">Week 1: Introduction</h4>
 <ul>
-<li><p>Week 1: Introduction</p>
-<ul>
-<li>Base R and packages</li>
-</ul></li>
-<li><p>Week 2: Introduction to descriptive descriptive statistics</p>
+<li>Base R</li>
+<li>Typesetting in R</li>
+</ul>
+<h4 id="week-2-introduction-to-descriptive-descriptive-statistics">Week 2: Introduction to descriptive descriptive statistics</h4>
 <ul>
 <li>Packages for data manipulation and visualization</li>
-<li>Web scraping</li>
-</ul></li>
-<li><p>Week 3: Reviewing probability theory</p>
+<li>Introduction to web scraping</li>
+</ul>
+<h4 id="week-3-reviewing-probability-theory">Week 3: Reviewing probability theory</h4>
 <ul>
 <li>Key theorems in probability theory</li>
 <li>Monte-carlo simulation</li>
 <li>Quantitative finance</li>
-</ul></li>
-<li><p>Week 4: Reviewing inferential statistics</p>
+</ul>
+<h4 id="week-4-reviewing-inferential-statistics">Week 4: Reviewing inferential statistics</h4>
 <ul>
 <li>Introduces estimators and their properties</li>
-</ul></li>
-<li><p>Week 5: Mid-semester Examination 1</p></li>
-<li><p>Week 6: OLS and the Gauss Markov Theorem</p>
+</ul>
+<h4 id="week-5-mid-semester-examination-1">Week 5: Mid-semester Examination 1</h4>
+<p>🌉 <strong><em>San Francisco students will be introduced to the material in Weeks 6-8 in an intensive, weekend workshop</em></strong></p>
+<h4 id="week-6-ols-and-the-gauss-markov-theorem">Week 6: OLS and the Gauss Markov Theorem</h4>
 <ul>
 <li>Simple and multiple regression</li>
 <li>Variance decomposition</li>
 <li>OLS</li>
-</ul></li>
-<li><p>Week 7: Hypothesis testing and forecasting</p>
+</ul>
+<h4 id="week-7-hypothesis-testing-and-forecasting">Week 7: Hypothesis testing and forecasting</h4>
 <ul>
 <li>Model evaluation</li>
 <li>Significance testing</li>
-</ul></li>
-<li><p>Week 8: Modeling skills</p>
+</ul>
+<h4 id="week-8-modeling-skills">Week 8: Modeling skills</h4>
 <ul>
 <li>Dummy variables</li>
 <li>Log forms</li>
 <li>Interaction</li>
-</ul></li>
-<li><p>Week 9: When Gauss Markov fails Part 1</p>
+</ul>
+<h4 id="week-9-when-gauss-markov-fails-part-1">Week 9: When Gauss Markov fails Part 1</h4>
 <ul>
 <li>Multi-collinearity</li>
 <li>Heteroskedasticity</li>
 <li>Serial-correlation</li>
-</ul></li>
-<li><p>Week 10: Spring Break</p></li>
-<li><p>Week 11: Selected topics</p>
-<ul>
-<li>Categorical data, time series, and/or Endogeneity</li>
-</ul></li>
-<li><p>Week 12: Selected topics</p></li>
-<li><p>Week 13: Mid-semester Examination 2</p></li>
-<li><p>Week 14: Calculus</p></li>
-<li><p>Week 15: Calculus</p></li>
-<li><p>Week 16: Calculus</p></li>
 </ul>
+<p>🌉 <strong><em>San Francisco students will be introduced to all of the material in weeks 9-11 in an intensive, weekend workshop</em></strong></p>
+<h4 id="week-10-spring-break">Week 10: Spring Break</h4>
+<h4 id="weeks-11-and-12-selected-topics">Weeks 11 and 12: Selected topics</h4>
+<ul>
+<li>Topics may include categorical data, time series, endogeneity, or other topics depending upon the interest of the students and instructor</li>
+</ul>
+<h4 id="week-13-mid-semester-examination-2">Week 13: Mid-semester Examination 2</h4>
+<h4 id="week-14-calculus">Week 14: Calculus</h4>
+<h4 id="week-15-calculus">Week 15: Calculus</h4>
+<h4 id="week-16-calculus">Week 16: Calculus</h4>
+<h1 id="policies">Policies</h1>
+<h3 id="attendance">Attendance</h3>
+<p>Your regular attendance at class is important and expected. Significant and/or consistent absence may result in dismissal from the course with a grade of F.</p>
+<h3 id="academic-integrity">Academic integrity</h3>
+<p>Dishonesty of any kind may result in loss of credit for the work involved and the filing of a report with the Provost’s Office. Major or repeated infractions may result in dismissal from the course with a grade of F. Be familiar with the <a href="http://www.westmont.edu/_offices/provost/Plagiarism/academic_integrity_policy.html%7C%7Chttp://www.westmont.edu/_offices/provost/Plagiarism/academic_integrity_policy.html">Westmont’s plagiarism policy</a>.</p>
+<p>Within the context of this course, utilizing resources like Chegg and the work of students that have taken the course in the past are considered violations of academic integrity.</p>
+<h3 id="academic-accommodations">Academic accommodations</h3>
+<p>Students who have been diagnosed with a disability are strongly encouraged to contact the Office of Disability Services as early as possible to discuss appropriate accommodations for this course. Formal accommodations will only be granted for students whose disabilities have been verified by the Office of Disability Services. These accommodations may be necessary to ensure your equal access to this course. Please contact Sheri Noble, Director of Disability Services. (310A Voskuyl Library, (805) 565-6186, <a href="mailto:snoble@westmont.edu" class="email">snoble@westmont.edu</a>) or visit the <a href="%5Bhttp://www.westmont.edu/_offices/disability/%7C%7Chttp://www.westmont.edu/_offices/disability/%5D.">website</a> for more information.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->

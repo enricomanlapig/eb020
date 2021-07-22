@@ -1,8 +1,9 @@
-name: "eb020-research-forecasting"
-title: "EB020 Research & Forecasting"
+name: "eb020"
+title: "EB020"
+theme: theme.css
 baseurl: "https://intro-business-analytics.netlify.app"
 description: |
-  EB020 Research & Forecasting
+  This is the course website of EB020 Research & Forecasting / Introduction to Business Analytics
 include: ["slides/"]
 output_dir: "_site"
 navbar:

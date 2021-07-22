@@ -1,7 +1,7 @@
 ---
-title: "EB020 Research & Forecasting"
+title: "EB020 Introduction to Business Analytics / Research & Forecasting"
 description: |
-  Hello! Welcome aboard!
+  Welcome aboard!
 author:
   - name: Enrico Manlapig
     url: https://emanlapig.net

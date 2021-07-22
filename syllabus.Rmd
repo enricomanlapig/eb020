@@ -1,7 +1,11 @@
 ---
-title: "EB020 Syllabus"
+title: "Syllabus"
 description: |
-  What is this course about?
+  What does this course involve?
+output:
+  distill::distill_article:
+    toc: true
+    toc_float: true
 ---
 
 ```{r setup, include=FALSE}
@@ -11,13 +15,13 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # Course objectives
 
-The overarching goal of this course is to promote a critical attitude towards analytical inquiry in Economics and Business. The course focuses on quantitative analytical methods using specialized software. 
+The overarching goal of this course is to promote a critical attitude towards analytical inquiry in Economics and Business. It introduces students industry standard tools and fundamental ideas so they can engage with different kinds of data in appropriately rigorous ways.
 
 Other objectives of the course include:
 
 * Developing students' analytical, quantitative reasoning, and communication skills
 
-* Encourage critical thinking about data and analysis
+* Encourage critical thinking about data and analytical methods
 
 * Prepare students for future careers in data business and economics
 
@@ -33,102 +37,149 @@ Broadly, the course is organized into three sections.
 
 By the end of this course, students will also be able to perform basic data wrangling and visualization tasks. students will also be able to build and interpret OLS regressions using R. Students will appreciate the common failures of the linear model and be able to detect and correct for them. Students will able to use linear regression models to generate forecasts. 
 
+# Prerequisites
+
+Students must have taken MA005, Introduction to Statistics or equivalent in its entirety.
+
 # Resources
 
-1. *This site* Lecture materials and problem sets will be posted to this site.  There will be a link to this page on the [Westmont Canvas site](http://canvas.westmont.edu/) and another link on my [homepage](https://emanlapig.net). 
+1. **This site** Lecture materials and problem sets will be posted to this site.  There will be a link to this page on the [Westmont Canvas site](http://canvas.westmont.edu/) and another link on my [homepage](https://emanlapig.net). 
 
-2. *Gradescope* Problem sets will be submitted to [Gradescope](https://gradescope.com)
-
-3. *Textbooks* This class will rely upon two texts. 
+1. **Textbooks** This class will rely upon two texts. 
 
     * The introduction to R will come from the (free) text [R4DS](https://r4ds.had.co.nz/)
     * The material covering will be from Econometrics 6th ed. by A.H. Studenmund and published by Addison-Wesley, which is available at the bookstore
     * The calculus material will not rely upon a textbook and many excellent texts exist - please [contact the  instructor](mailto://emanlapig@westmont) for recommendations
 
-4. *Lectures* The main ideas, techniques, and worked examples will be presented during lectures in a workshop style. Students will need a laptop in each class meeting
+1. **Lectures** The main ideas, techniques, and worked examples will be presented during lectures in a workshop style. Students will need a laptop in each class meeting
 
-5. *Office hours* [Make an appointment](https://calendar.x.ai/enricomanlapig)
+1. **Office hours** Please feel free to [make an appointment](https://calendar.x.ai/enricomanlapig)
+
+
+
 
 
 
 
 # Assessment
 
-## Examinations (70%) 
+## Examinations
 
 Students will sit three exams (two midterms plus a final) corresponding to the three sections in the course. Examinations are not intended to be cumulative but because the course builds on itself, repetition is unavoidable. Dates, times, locations, and format will be advised although general timing is indicated in the tentative topic schedule below. Examinations are weighted as follows:
 
-1. Probability & Statistics Review: 30%
+1. Probability & Statistics Review: 25%
 
-2. Linear regression: 30%
+2. Linear regression: 25%
 
 3. Calculus: 10% (Pass or fail)
 
+*Total grade value: 60%*
 
-## Problem sets (30%) 
+
+## Problem sets
 
 To encourage continuous engagement with the material, students will complete (approximately) two problem sets each week. Students are encouraged to work on these in groups but you must submit individual work. 
 
 
-1. **Formative problem sets** (worth 12.5%) *will not* be graded for correctness, but rather for both effort and completion
+1. **Formative problem sets** (worth 17.5%) *will not* be graded for correctness, but rather for both effort and completion
 
-2. **Summative problem sets** (worth 12.5%) *will* be graded for for correctness
+2. **Summative problem sets** (worth 17.5%) *will* be graded for for correctness
 
+*Total grade value: 35%*
 
-## Participation (5%)
+## Participation
 
 To ensure regular accountability and create a welcoming learning community, students will participate in several group activities throughout the semester.  These activities will vary from week to week be may include submitting work to public forums, interacting with community partners, and working with groups.
+
+*Total grade value: 5%*
 
 
 # Tentative schedule
 
-* Week 1: Introduction
-    - Base R and packages 
-    
-* Week 2: Introduction to descriptive descriptive statistics
-    - Packages for data manipulation and visualization
-    - Web scraping
-    
-* Week 3: Reviewing probability theory
-    - Key theorems in probability theory
-    - Monte-carlo simulation
-    - Quantitative finance
-    
-* Week 4: Reviewing inferential statistics
-    - Introduces estimators and their properties
-    
-* Week 5: Mid-semester Examination 1
+The schedule below indicates the approximate timing of each topic.  
 
-* Week 6: OLS and the Gauss Markov Theorem
-    - Simple and multiple regression
-    - Variance decomposition
-    - OLS
-    
-* Week 7: Hypothesis testing and forecasting
-    - Model evaluation
-    - Significance testing
-    
-* Week 8: Modeling skills
-    - Dummy variables
-    - Log forms
-    - Interaction
-    
-* Week 9: When Gauss Markov fails Part 1
-    - Multi-collinearity
-    - Heteroskedasticity
-    - Serial-correlation
-    
-* Week 10: Spring Break
+#### Week 0: San Francisco intensive
 
-* Week 11: Selected topics
-    - Categorical data, time series, and/or Endogeneity
+`r emojifont::emoji("bridge_at_night")` ***San Francisco students will be introduced the material from weeks 1-4 in an intensive, 5-day workshop*** 
+
+#### Week 1: Introduction
+
+* Base R
+* Typesetting in R
     
-* Week 12: Selected topics
+#### Week 2: Introduction to descriptive descriptive statistics
 
-* Week 13: Mid-semester Examination 2
+* Packages for data manipulation and visualization
+* Introduction to web scraping
+    
+#### Week 3: Reviewing probability theory
 
-* Week 14: Calculus
+* Key theorems in probability theory
+* Monte-carlo simulation
+* Quantitative finance
+    
+#### Week 4: Reviewing inferential statistics
 
-* Week 15: Calculus
+* Introduces estimators and their properties
+    
+#### Week 5: Mid-semester Examination 1
 
-* Week 16: Calculus
+`r emojifont::emoji("bridge_at_night")` ***San Francisco students will be introduced to the material in Weeks 6-8 in an intensive, weekend workshop***
+
+#### Week 6: OLS and the Gauss Markov Theorem
+* Simple and multiple regression
+* Variance decomposition
+* OLS
+    
+#### Week 7: Hypothesis testing and forecasting
+* Model evaluation
+* Significance testing
+    
+#### Week 8: Modeling skills
+* Dummy variables
+* Log forms
+* Interaction
+
+
+
+#### Week 9: When Gauss Markov fails Part 1
+* Multi-collinearity
+* Heteroskedasticity
+* Serial-correlation
+
+`r emojifont::emoji("bridge_at_night")` ***San Francisco students will be introduced to all of the material in weeks 9-11 in an intensive, weekend workshop***
+
+
+#### Week 10: Spring Break
+
+#### Weeks 11 and 12: Selected topics
+* Topics may include categorical data, time series, endogeneity, or other topics depending upon the interest of the students and instructor
+
+#### Week 13: Mid-semester Examination 2
+
+#### Week 14: Calculus
+
+#### Week 15: Calculus
+
+#### Week 16: Calculus
+
+
+
+
+
+# Policies
+
+### Attendance
+
+Your regular attendance at class is important and expected. Significant and/or consistent absence may result in dismissal from the course with a grade of F.
+
+### Academic integrity 
+
+Dishonesty of any kind may result in loss of credit for the work involved and the filing of a report with the Provost’s Office. Major or repeated infractions may result in dismissal from the course with a grade of F. Be familiar with the [Westmont’s plagiarism policy](http://www.westmont.edu/_offices/provost/Plagiarism/academic_integrity_policy.html||http://www.westmont.edu/_offices/provost/Plagiarism/academic_integrity_policy.html).
+
+Within the context of this course, utilizing resources like Chegg and the work of students that have taken the course in the past are considered violations of academic integrity.  
+
+### Academic accommodations
+
+Students who have been diagnosed with a disability are strongly encouraged to contact the Office of Disability Services as early as possible to discuss appropriate accommodations for this course. Formal accommodations will only be granted for students whose disabilities have been verified by the Office of Disability Services. These accommodations may be necessary to ensure your equal access to this course. Please contact Sheri Noble, Director of Disability Services. (310A Voskuyl Library, (805) 565-6186, snoble@westmont.edu) or visit the [website]([http://www.westmont.edu/_offices/disability/||http://www.westmont.edu/_offices/disability/].) for more information.
+
