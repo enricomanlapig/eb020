@@ -1,7 +1,16 @@
 ---
 title: "EB020 Research & Forecasting"
 description: |
-  Welcome to the website. I hope you enjoy it!
+  Hello! Welcome aboard!
+author:
+  - name: Enrico Manlapig
+    url: https://emanlapig.net
+    affiliation: Westmont College
+    affiliation_url: https://westmont.edu
+links:
+  - label: '<i class="fab fa-twitter"></i> Twitter'
+    url: "https://twitter.com/EnricoManlapig"
+date: "`r Sys.Date()`"
 site: distill::distill_website
 ---
 
@@ -12,6 +21,11 @@ knitr::opts_chunk$set(echo = FALSE)
 # https://rstudio.github.io/distill/website.html
 
 ```
+
+# About this course
+
+Learn about this course, its objectives, and expectations over in the [syllabus](syllabus.html)
+
 
 # Lecture materials
 

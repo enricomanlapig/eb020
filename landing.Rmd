@@ -1,0 +1,21 @@
+---
+title: "Enrico Manlapig"
+
+image: "profile_pic.png"
+links:
+  - label: Twitter
+    url: "https://twitter.com/EnricoManlapig"
+  - label: GitHub
+    url: "https://github.com/EnricoManlapig"
+  - label: Email
+    url: "mailto:emanlapig@westmont.edu"
+  - label: Calendar
+    url: "https://calendar.x.ai/enricomanlapig"
+output:
+  postcards::trestles
+---
+
+# Welcome to EB020: Introduction to Business Analytics
+I am a classically trained data scientist living in the San Francisco Bay Area. 
+Currently I work on the Oculus team at Facebook. I love talking about baseball, 
+true crime podcasts, and causal inference.
