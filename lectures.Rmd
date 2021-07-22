@@ -1,0 +1,51 @@
+---
+title: "EB020 Introduction to Business Analytics / Research & Forecasting"
+description: |
+  Welcome aboard!
+author:
+  - name: Enrico Manlapig
+    url: https://emanlapig.net
+    affiliation: Westmont College
+    affiliation_url: https://westmont.edu
+links:
+  - label: '<i class="fab fa-twitter"></i> Twitter'
+    url: "https://twitter.com/EnricoManlapig"
+date: "`r Sys.Date()`"
+site: distill::distill_website
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+# Learn more about creating websites with Distill at:
+# https://rstudio.github.io/distill/website.html
+
+```
+
+# About this course
+
+Learn about this course, its objectives, and expectations over in the [syllabus](syllabus.html)
+
+
+# Lecture materials
+
+* [Topic 01 - Introducing R](lectures/Topic01.html)
+
+* [Topic 02 - Introducing RMarkdown](lectures/Topic02.nb.html)
+
+    - [R4DS RMarkdown chapter](https://r4ds.had.co.nz/r-markdown.html)
+
+* [Topic 03 - Introducing dplyr](lectures/Topic03.html)
+  
+    - [R4DS Transformation chapter](https://r4ds.had.co.nz/transform.html)
+
+* [Topic 04 - Introducing ggplot](lectures/Topic04.html)
+
+    - [R4DS Data visualization chapter](https://r4ds.had.co.nz/data-visualisation.html)
+    
+* [Topic 05 - Random variables](lectures/Topic05.html)
+
+    - [R4DS Data visualization chapter](https://r4ds.had.co.nz/data-visualisation.html)
+    
+    
+
