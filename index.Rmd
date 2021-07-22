@@ -23,8 +23,8 @@ site: distill::distill_website
 
 # `r emojifont::emoji("wave")`
 
-# Welcome to Business Research & Forecasting at Westmont College
+### Welcome to *Intro to Business Analytics* (aka *Research & Forecasting*) at Westmont College
 
 
 
-So glad you're on this journey with us. Please go to the [syllabus](syllabus.html) to learn more about the course or the [lecture page](lectures.html) for course materials.
+Im' so glad you're on this journey with us. Please go to the [syllabus](syllabus.html) to learn more about the course or the [lecture page](lectures.html) for course materials.
