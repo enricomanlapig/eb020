@@ -23,8 +23,8 @@ html {
   --aside-size:      12px;
   --fig-cap-size:    13px;
   /*-- Main font colors --*/
-  --title-color:     #F23044;
-  --header-color:    #F23044;
+  --title-color:     #502E39;
+  --header-color:    #B05542;
   --body-color:      rgba(0, 0, 0, 0.8);
   --aside-color:     rgba(0, 0, 0, 0.6);
   --fig-cap-color:   rgba(0, 0, 0, 0.6);
@@ -62,19 +62,30 @@ d-appendix {
 
 .distill-site-header {
   --title-size:       18px;
-  --text-color:       rgba(255, 255, 255, 0.8);
+  --text-color:       #F8F8F8;
   --text-size:        15px;
-  --hover-color:      white;
-  --bkgd-color:       #40415E;
+  --hover-color:      #FFF;
+  --bkgd-color:       #B05542;
 }
 
 .distill-site-footer {
   --text-color:       rgba(255, 255, 255, 0.8);
   --text-size:        15px;
   --hover-color:      white;
-  --bkgd-color:       #42535E;
+  --bkgd-color:       #F6F9EF;
 }
 
 /*-- Additional custom styles --*/
 /* Add any additional CSS rules below                      */
 
+body {
+  background-color: #F8F8F8;
+}
+
+h1 {
+  color: #361F26;
+}
+
+h4 {
+  color: #361F26;
+}
