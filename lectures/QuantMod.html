@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Fun with QuantMod</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Enrico Manlapig" />
+    <meta name="date" content="2021-07-29" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <script src="libs/js-cookie/js.cookie.js"></script>
+    <script src="libs/peerjs/peerjs.min.js"></script>
+    <script src="libs/tiny.toast/toast.min.js"></script>
+    <link href="libs/xaringanExtra-broadcast/broadcast.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-broadcast/broadcast.js"></script>
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+
+
+background-image: url("images/quantmod/stockmarket.png")
+class: left, middle, inverse
+
+# Fun with QuantMod
+
+### Quantitative finance anyone?
+
+### Enrico Manlapig
+
+### Westmont College
+
+### `r Sys.Date()`
+
+
+
+
+
+
+---
+class: center, middle
+# QuantMod is available on CRAN
+
+
+```r
+#install.packages("quantmod")
+*library(quantmod)
+```
+
+
+---
+class: center, middle
+
+# Let's pull some data!!
+
+
+
+
+
+```r
+*getSymbols(c("AAPL","GM"))
+```
+
+--
+
+
+```r
+head(AAPL)
+```
+
+```
+##            AAPL.Open AAPL.High AAPL.Low AAPL.Close AAPL.Volume AAPL.Adjusted
+## 2007-01-03  3.081786  3.092143 2.925000   2.992857  1238319600      2.573566
+## 2007-01-04  3.001786  3.069643 2.993571   3.059286   847260400      2.630688
+## 2007-01-05  3.063214  3.078571 3.014286   3.037500   834741600      2.611954
+## 2007-01-08  3.070000  3.090357 3.045714   3.052500   797106800      2.624853
+## 2007-01-09  3.087500  3.320714 3.041071   3.306071  3349298400      2.842900
+## 2007-01-10  3.383929  3.492857 3.337500   3.464286  2952880000      2.978950
+```
+
+Pay attention! 👀 This is a time series (`xts`) object!
+
+
+
+
+
+
+???
+QuantMod can get data from: yahoo, google, MySQL, FRED, csv, RData, oanda, and av.
+
+Just assign them as source
+
+
+
+---
+
+# Visualize!
+
+☝️ Charting a series requires Open-High-Low-Close series
+
+
+.panelset[
+
+.panel[.panel-name[Basic]
+.pull-left[
+
+```r
+chartSeries(AAPL)
+```
+]
+
+.pull-right[
+![](QuantMod_files/figure-html/unnamed-chunk-1-1.png)&lt;!-- --&gt;
+]
+]
+
+
+
+
+.panel[.panel-name[Themed]
+.pull-left[
+
+```r
+chartSeries(AAPL,
+*           theme = "white")
+```
+]
+
+.pull-right[
+![](QuantMod_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
+]
+]
+
+
+
+.panel[.panel-name[Subsetted]
+.pull-left[
+
+```r
+chartSeries(AAPL, 
+            theme = chartTheme("white"),
+            major.ticks = "months",
+*           subset = "last 2 months")
+```
+
+Alternatively:
+
+
+```r
+chartSeries(AAPL, 
+            theme = chartTheme("white"),
+            major.ticks = "months",
+*           subset = "2021-06-1::")
+```
+
+]
+
+.pull-right[
+![](QuantMod_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
+]
+]
+
+
+
+.panel[.panel-name[Candlestick]
+.pull-left[
+
+```r
+chartSeries(AAPL, 
+            theme = chartTheme("white"),
+            major.ticks = "months",
+            subset = "last 2 months",
+*           type = "candles")
+```
+
+]
+
+.pull-right[
+![](QuantMod_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+]
+]
+
+
+.panel[.panel-name[Matchstick]
+.pull-left[
+
+```r
+chartSeries(AAPL, 
+            theme = chartTheme("white"),
+            major.ticks = "months",
+            subset = "last 2 months",
+*           type = "matchstick")
+```
+
+]
+
+.pull-right[
+![](QuantMod_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+]
+]
+
+
+
+.panel[.panel-name[Line]
+.pull-left[
+
+```r
+chartSeries(AAPL, 
+            theme = chartTheme("white"),
+            major.ticks = "months",
+            subset = "last 2 months",
+*           type = "line")
+```
+
+]
+
+.pull-right[
+![](QuantMod_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+]
+]
+
+]
+
+
+
+
+
+---
+
+
+
+# Technical analysis
+
+[Learn more](http://www.quantmod.com/examples/charting/#technicals)
+
+
+.panelset[
+
+.panel[.panel-name[Moving Avg]
+.pull-left[
+
+```r
+chartSeries(AAPL, 
+            theme = chartTheme("white"),
+            major.ticks = "months",
+            subset = "last 2 months",
+*           TA = c(addSMA()))
+```
+]
+
+.pull-right[
+![](QuantMod_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+]
+]
+
+
+.panel[.panel-name[Bollinger Bands]
+.pull-left[
+
+```r
+chartSeries(AAPL, 
+            theme = chartTheme("white"),
+            major.ticks = "months",
+            subset = "last 2 months",
+*           TA = c(addBBands()))
+```
+]
+
+.pull-right[
+![](QuantMod_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+]
+]
+
+
+.panel[.panel-name[Add GM]
+.pull-left[
+
+```r
+chartSeries(AAPL, 
+            theme = chartTheme("white"),
+            major.ticks = "months",
+            subset = "last 2 months",
+            TA = c(
+              addTA(Cl(AAPL),
+                    col='blue', 
+                    type='l'), 
+              addTA(Cl(GM),
+                    col='red',
+                    type='l')
+            )) 
+```
+]
+
+.pull-right[
+![](QuantMod_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+]
+]
+
+]
+
+
+
+
+---
+name: AAPL_returns
+# Returns
+
+
+### Compute daily returns
+
+
+```r
+AAPL_r &lt;- dailyReturn(AAPL)
+```
+
+--
+
+### Make a dataframe
+
+
+```r
+as.data.frame(AAPL_r) %&gt;%
+  mutate(
+    returns = daily.returns * 100,
+    date = as.Date(index(AAPL_r)),
+    stock = "AAPL") -&gt; df_AAPL_r
+```
+
+
+
+---
+
+# Your turn!
+
+1. [Compute](#AAPL_returns) GM's daily returns and [create](#AAPL_returns) a dataframe called `df_GM_r`
+
+1. Use `bind_rows` to stack (append or bind) the two return dataframes on top of each other
+
+1. Filter the dataset to dates in 2021.  
+
+1. Use `ggplot` to draw 
+
+    1. line charts of the two return series (hint: don't forget to map `color`). Which company seems to be less volatile?  How do you know?
+    1. density plots of the two returns  (hint: don't forget to map `fill`). Which company seems to be less volatile?  How do you know?
+
+1. Use `full_join(df_GM_r, df_AAPL_r, by = "date")` to make a new, wider, data frame with the different stock returns as columns.
+
+    1. Use `ggplot` to draw a scatter plot of both stock's returns. Do they seem to be correlated with each other?  How do you know.
+    
+
+
+???
+
+
+```r
+GM_r &lt;- dailyReturn(GM)
+
+as.data.frame(dailyReturn(GM)) %&gt;% 
+  mutate(
+    returns = daily.returns * 100,
+    date = as.Date(index(GM_r)),
+    stock = "GM") -&gt; df_GM_r
+
+bind_rows(df_GM_r, df_AAPL_r) %&gt;%
+  filter(date &gt;= "2021-01-01") -&gt; df_data
+
+ggplot(df_data, aes(x = date, y = returns)) +
+  geom_line(aes(color = stock),
+            alpha = 0.5) + 
+  theme_minimal() + 
+  labs(title = "APPL seems a bit less riskier")
+```
+
+![](QuantMod_files/figure-html/solution-1.png)&lt;!-- --&gt;
+
+```r
+ggplot(df_data, aes(x = returns)) +
+  geom_density(aes(fill = stock),
+            alpha = 0.5) +
+  theme_minimal() + 
+  labs(title = "APPL seems to be less risky")
+```
+
+![](QuantMod_files/figure-html/solution-2.png)&lt;!-- --&gt;
+
+```r
+full_join(df_GM_r, df_AAPL_r, by = "date") %&gt;%
+  filter(date &gt;= "2021-01-01") %&gt;%
+  rename(r_AAPL = returns.x,
+         r_GM = returns.y) -&gt; df_wide_data
+
+ggplot(df_wide_data,
+       aes(x = r_AAPL,
+           y = r_GM)) +
+  geom_point() +
+  theme_minimal() +
+  labs(title = "They seem to be positively correlated with each other")
+```
+
+![](QuantMod_files/figure-html/solution-3.png)&lt;!-- --&gt;
+
+---
+layout: true
+
+# The ✨ magic ✨ of diversification!
+---
+
+.pull-left[
+
+### Construct a  portfolio
+
+```r
+wt_AAPL &lt;- 0.5
+df_wide_data %&gt;% 
+  filter(date &gt;= "2021-01-01") %&gt;%
+  mutate(
+    r_portfolio = wt_AAPL * r_AAPL +
+      (1-wt_AAPL) * r_GM) %&gt;%
+  select(date, r_AAPL, r_GM, r_portfolio)-&gt; df_wide_data
+```
+]
+---
+
+.pull-left[
+### Look at its distribution of returns
+
+```r
+df_wide_data %&gt;%
+  ggplot() +
+  geom_density(aes(x = r_AAPL,
+                   fill = "AAPL"), 
+               alpha = 0.3) + 
+    geom_density(aes(x = r_GM,
+                   fill = "GM"),
+               alpha = 0.3) + 
+    geom_density(aes(x = r_portfolio,
+                   fill = "Portfolio"),
+               alpha = 0.3) + 
+  theme_minimal() + 
+  labs(
+    title = "Which is the least volatile now?")
+```
+]
+
+.pull-right[
+![](QuantMod_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+
+]
+
+---
+
+
+
+
+.pull-left[
+### Cumulative distributions
+
+```r
+df_wide_data %&gt;%
+  mutate(across(contains("r_"),
+                cume_dist,
+                .names = "cdf_{.col}")) %&gt;%
+  ggplot() + 
+  geom_line(aes(x = r_AAPL, 
+                y = cdf_r_AAPL, 
+                color = "AAPL")) +
+  geom_line(aes(x = r_GM, 
+                y = cdf_r_GM, 
+                color = "GM")) + 
+  geom_line(aes(x = r_portfolio, 
+                y = cdf_r_portfolio, 
+                color = "Portfolio")) +
+  
+  theme_minimal()
+```
+]
+
+.pull-right[
+![](QuantMod_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+
+]
+
+
+???
+Notice how we use `across` to apply a function three times
+Notice how we're using the function `cume_dist` to compute the cdf
+
+---
+
+
+```r
+df_wide_data %&gt;%
+  summarise(
+    across(c("r_AAPL", "r_GM", "r_portfolio"), mean, .names = "mean_{.col}"),
+    across(c("r_AAPL", "r_GM", "r_portfolio"), mean, .names = "sd_{.col}"),
+    correlation = cor(r_AAPL, r_GM)
+  ) %&gt;% 
+  glimpse()
+```
+
+```
+## Rows: 1
+## Columns: 7
+## $ mean_r_AAPL      &lt;dbl&gt; 0.2313064
+## $ mean_r_GM        &lt;dbl&gt; 0.07644608
+## $ mean_r_portfolio &lt;dbl&gt; 0.1538762
+## $ sd_r_AAPL        &lt;dbl&gt; 0.2313064
+## $ sd_r_GM          &lt;dbl&gt; 0.07644608
+## $ sd_r_portfolio   &lt;dbl&gt; 0.1538762
+## $ correlation      &lt;dbl&gt; 0.05295105
+```
+
+
+???
+
+Notice how the across function is applying the function `mean` to multiple columns!
+
+---
+layout: false
+class: middle, center
+# 😮 What just happened?! 😮
+
+--
+
+## `$$\sigma^2_p = w^2_{A} \sigma^2_{A} + w^2_{G} \sigma^2_{G} + 2 w_{A} w_{G} \rho_{A,G} \sigma_{A} \sigma_{G}$$`
+
+
+
+---
+# What else can you do with QuantMod?
+
+.pull-left[
+
+### Get current quote
+
+
+```r
+getQuote("AAPL")
+getQuote("GM")
+```
+
+### Foreign exchange
+
+
+```r
+getFX("AUD/USD")
+chartSeries(AUDUSD)
+```
+
+]
+
+.pull-right[
+![](QuantMod_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
+
+]
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

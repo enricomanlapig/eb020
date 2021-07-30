@@ -1,0 +1,544 @@
+---
+title: "Fun with QuantMod"
+subtitle: "Quantitative finance anyone?"
+author: "Enrico Manlapig"
+institute: "Westmont College"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: 16:9
+    seal: FALSE
+---
+
+background-image: url("images/quantmod/stockmarket.png")
+class: left, middle, inverse
+
+# `r rmarkdown::metadata$title`
+
+### `r rmarkdown::metadata$subtitle`
+
+### `r rmarkdown::metadata$author`
+
+### `r rmarkdown::metadata$institute`
+
+### `r rmarkdown::metadata$date`
+
+
+```{r broadcast, echo=FALSE}
+xaringanExtra::use_broadcast()
+```
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(results = "hide", 
+                      fig.height = 6,
+                      warning = FALSE,
+                      error = FALSE,
+                      message = FALSE)
+
+library(dplyr)
+library(ggplot2)
+#library(palmerpenguins)
+library(emojifont)
+library(flipbookr)
+library(fontawesome)
+library(xaringanExtra)
+library(quantmod)
+use_xaringan_extra(c("panelset", "tachyons"))
+```
+
+---
+class: center, middle
+# QuantMod is available on CRAN
+
+```{r library_quantmod}
+#install.packages("quantmod")
+library(quantmod) #<<
+```
+
+
+---
+class: center, middle
+
+# Let's pull some data!!
+
+
+
+
+```{r get_symbols}
+getSymbols(c("AAPL","GM")) #<<
+```
+
+--
+
+```{r head_appl, results = "html"}
+head(AAPL)
+```
+
+Pay attention! `r emojifont::emoji("eyes")` This is a time series (`xts`) object!
+
+
+
+
+
+
+???
+QuantMod can get data from: yahoo, google, MySQL, FRED, csv, RData, oanda, and av.
+
+Just assign them as source
+
+
+
+---
+
+# Visualize!
+
+`r emoji("point_up")` Charting a series requires Open-High-Low-Close series
+
+
+.panelset[
+
+.panel[.panel-name[Basic]
+.pull-left[
+```{r chart_basic, fig.show = "hide"}
+chartSeries(AAPL)
+```
+]
+
+.pull-right[
+```{r ref.label="chart_basic", echo = FALSE}
+
+```
+]
+]
+
+
+
+
+.panel[.panel-name[Themed]
+.pull-left[
+```{r chart_themed, fig.show = "hide"}
+chartSeries(AAPL,
+            theme = "white") #<<
+```
+]
+
+.pull-right[
+```{r ref.label="chart_themed", echo = FALSE}
+
+```
+]
+]
+
+
+
+.panel[.panel-name[Subsetted]
+.pull-left[
+```{r chart_subset, fig.show = "hide"}
+chartSeries(AAPL, 
+            theme = chartTheme("white"),
+            major.ticks = "months",
+            subset = "last 2 months") #<<
+```
+
+Alternatively:
+
+```{r chart_alt, fig.show = "hide"}
+chartSeries(AAPL, 
+            theme = chartTheme("white"),
+            major.ticks = "months",
+            subset = "2021-06-1::") #<<
+```
+
+]
+
+.pull-right[
+```{r ref.label="chart_subset", echo = FALSE}
+
+```
+]
+]
+
+
+
+.panel[.panel-name[Candlestick]
+.pull-left[
+```{r chart_candle, fig.show = "hide"}
+chartSeries(AAPL, 
+            theme = chartTheme("white"),
+            major.ticks = "months",
+            subset = "last 2 months",
+            type = "candles") #<<
+```
+
+]
+
+.pull-right[
+```{r ref.label="chart_candle", echo = FALSE}
+
+```
+]
+]
+
+
+.panel[.panel-name[Matchstick]
+.pull-left[
+```{r chart_match, fig.show = "hide"}
+chartSeries(AAPL, 
+            theme = chartTheme("white"),
+            major.ticks = "months",
+            subset = "last 2 months",
+            type = "matchstick") #<<
+```
+
+]
+
+.pull-right[
+```{r ref.label="chart_match", echo = FALSE}
+
+```
+]
+]
+
+
+
+.panel[.panel-name[Line]
+.pull-left[
+```{r chart_line, fig.show = "hide"}
+chartSeries(AAPL, 
+            theme = chartTheme("white"),
+            major.ticks = "months",
+            subset = "last 2 months",
+            type = "line") #<<
+```
+
+]
+
+.pull-right[
+```{r ref.label="chart_line", echo = FALSE}
+
+```
+]
+]
+
+]
+
+
+
+
+
+---
+
+
+
+# Technical analysis
+
+[Learn more](http://www.quantmod.com/examples/charting/#technicals)
+
+
+.panelset[
+
+.panel[.panel-name[Moving Avg]
+.pull-left[
+```{r chart_ma, fig.show = "hide"}
+chartSeries(AAPL, 
+            theme = chartTheme("white"),
+            major.ticks = "months",
+            subset = "last 2 months",
+            TA = c(addSMA())) #<<
+```
+]
+
+.pull-right[
+```{r ref.label="chart_ma", echo = FALSE}
+
+```
+]
+]
+
+
+.panel[.panel-name[Bollinger Bands]
+.pull-left[
+```{r chart_bbands, fig.show = "hide"}
+chartSeries(AAPL, 
+            theme = chartTheme("white"),
+            major.ticks = "months",
+            subset = "last 2 months",
+            TA = c(addBBands())) #<<
+```
+]
+
+.pull-right[
+```{r ref.label="chart_bbands", echo = FALSE}
+
+```
+]
+]
+
+
+.panel[.panel-name[Add GM]
+.pull-left[
+```{r chart_add_GM, fig.show = "hide", fig.height=3}
+chartSeries(AAPL, 
+            theme = chartTheme("white"),
+            major.ticks = "months",
+            subset = "last 2 months",
+            TA = c(
+              addTA(Cl(AAPL),
+                    col='blue', 
+                    type='l'), 
+              addTA(Cl(GM),
+                    col='red',
+                    type='l')
+            )) 
+
+
+```
+]
+
+.pull-right[
+```{r ref.label="chart_add_GM", echo = FALSE}
+
+```
+]
+]
+
+]
+
+
+
+
+---
+name: AAPL_returns
+# Returns
+
+
+### Compute daily returns
+
+```{r returns}
+AAPL_r <- dailyReturn(AAPL)
+```
+
+--
+
+### Make a dataframe
+
+```{r create_df}
+as.data.frame(AAPL_r) %>%
+  mutate(
+    returns = daily.returns * 100,
+    date = as.Date(index(AAPL_r)),
+    stock = "AAPL") -> df_AAPL_r
+```
+
+
+
+---
+
+# Your turn!
+
+1. [Compute](#AAPL_returns) GM's daily returns and [create](#AAPL_returns) a dataframe called `df_GM_r`
+
+1. Use `bind_rows` to stack (append or bind) the two return dataframes on top of each other
+
+1. Filter the dataset to dates in 2021.  
+
+1. Use `ggplot` to draw 
+
+    1. line charts of the two return series (hint: don't forget to map `color`). Which company seems to be less volatile?  How do you know?
+    1. density plots of the two returns  (hint: don't forget to map `fill`). Which company seems to be less volatile?  How do you know?
+
+1. Use `full_join(df_GM_r, df_AAPL_r, by = "date")` to make a new, wider, data frame with the different stock returns as columns.
+
+    1. Use `ggplot` to draw a scatter plot of both stock's returns. Do they seem to be correlated with each other?  How do you know.
+    
+
+
+???
+
+```{r solution}
+GM_r <- dailyReturn(GM)
+
+as.data.frame(dailyReturn(GM)) %>% 
+  mutate(
+    returns = daily.returns * 100,
+    date = as.Date(index(GM_r)),
+    stock = "GM") -> df_GM_r
+
+bind_rows(df_GM_r, df_AAPL_r) %>%
+  filter(date >= "2021-01-01") -> df_data
+
+ggplot(df_data, aes(x = date, y = returns)) +
+  geom_line(aes(color = stock),
+            alpha = 0.5) + 
+  theme_minimal() + 
+  labs(title = "APPL seems a bit less riskier")
+
+ggplot(df_data, aes(x = returns)) +
+  geom_density(aes(fill = stock),
+            alpha = 0.5) +
+  theme_minimal() + 
+  labs(title = "APPL seems to be less risky")
+
+full_join(df_GM_r, df_AAPL_r, by = "date") %>%
+  filter(date >= "2021-01-01") %>%
+  rename(r_AAPL = returns.x,
+         r_GM = returns.y) -> df_wide_data
+
+ggplot(df_wide_data,
+       aes(x = r_AAPL,
+           y = r_GM)) +
+  geom_point() +
+  theme_minimal() +
+  labs(title = "They seem to be positively correlated with each other")
+```
+
+---
+layout: true
+
+# The `r emoji("sparkles")` magic `r emoji("sparkles")` of diversification!
+---
+
+.pull-left[
+
+### Construct a  portfolio
+```{r construct_portfolio}
+wt_AAPL <- 0.5
+df_wide_data %>% 
+  filter(date >= "2021-01-01") %>%
+  mutate(
+    r_portfolio = wt_AAPL * r_AAPL +
+      (1-wt_AAPL) * r_GM) %>%
+  select(date, r_AAPL, r_GM, r_portfolio)-> df_wide_data
+```
+]
+---
+
+.pull-left[
+### Look at its distribution of returns
+```{r portfolio_hist, fig.show="hide"}
+df_wide_data %>%
+  ggplot() +
+  geom_density(aes(x = r_AAPL,
+                   fill = "AAPL"), 
+               alpha = 0.3) + 
+    geom_density(aes(x = r_GM,
+                   fill = "GM"),
+               alpha = 0.3) + 
+    geom_density(aes(x = r_portfolio,
+                   fill = "Portfolio"),
+               alpha = 0.3) + 
+  theme_minimal() + 
+  labs(
+    title = "Which is the least volatile now?")
+```
+]
+
+.pull-right[
+```{r ref.label="portfolio_hist", echo = FALSE}
+
+```
+
+]
+
+---
+
+
+
+
+.pull-left[
+### Cumulative distributions
+```{r cume_dist, fig.show="hide"}
+df_wide_data %>%
+  mutate(across(contains("r_"),
+                cume_dist,
+                .names = "cdf_{.col}")) %>%
+  ggplot() + 
+  geom_line(aes(x = r_AAPL, 
+                y = cdf_r_AAPL, 
+                color = "AAPL")) +
+  geom_line(aes(x = r_GM, 
+                y = cdf_r_GM, 
+                color = "GM")) + 
+  geom_line(aes(x = r_portfolio, 
+                y = cdf_r_portfolio, 
+                color = "Portfolio")) +
+  
+  theme_minimal()
+```
+]
+
+.pull-right[
+```{r ref.label="cume_dist", echo = FALSE}
+
+```
+
+]
+
+
+???
+Notice how we use `across` to apply a function three times
+Notice how we're using the function `cume_dist` to compute the cdf
+
+---
+
+```{r, results = "html"}
+df_wide_data %>%
+  summarise(
+    across(c("r_AAPL", "r_GM", "r_portfolio"), mean, .names = "mean_{.col}"),
+    across(c("r_AAPL", "r_GM", "r_portfolio"), mean, .names = "sd_{.col}"),
+    correlation = cor(r_AAPL, r_GM)
+  ) %>% 
+  glimpse()
+```
+
+
+???
+
+Notice how the across function is applying the function `mean` to multiple columns!
+
+---
+layout: false
+class: middle, center
+# `r emoji("open_mouth")` What just happened?! `r emoji("open_mouth")`
+
+--
+
+## $$\sigma^2_p = w^2_{A} \sigma^2_{A} + w^2_{G} \sigma^2_{G} + 2 w_{A} w_{G} \rho_{A,G} \sigma_{A} \sigma_{G}$$
+
+
+
+---
+# What else can you do with QuantMod?
+
+.pull-left[
+
+### Get current quote
+
+```{r get_quotes}
+getQuote("AAPL")
+getQuote("GM")
+```
+
+### Foreign exchange
+
+```{r get_forex, fig.show="hide"}
+getFX("AUD/USD")
+chartSeries(AUDUSD)
+```
+
+]
+
+.pull-right[
+```{r ref.label="get_forex", echo = FALSE}
+
+```
+
+]
+
+
