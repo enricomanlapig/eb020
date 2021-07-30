@@ -47,5 +47,5 @@ Learn about this course, its objectives, and expectations over in the [syllabus]
 
     - [R4DS Data visualization chapter](https://r4ds.had.co.nz/data-visualisation.html)
     
-    
+* [Fun with QuantMod](/lectures/QuantMod.html)
 
