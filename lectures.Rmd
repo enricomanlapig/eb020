@@ -45,7 +45,12 @@ Learn about this course, its objectives, and expectations over in the [syllabus]
     
 * [Topic 05 - Random variables](lectures/Topic05.html)
 
-    - [R4DS Data visualization chapter](https://r4ds.had.co.nz/data-visualisation.html)
+    - Studenmund Chapter 17
     
 * [Fun with QuantMod](/lectures/QuantMod.html)
+
+* [Topic 06 - Reviewing inference](lectures/Topic06.html)
+
+    - Studenmund Chapter 17
+
 
