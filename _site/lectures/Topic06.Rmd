@@ -13,10 +13,10 @@ output:
       ratio: 16:9
     seal: FALSE
 ---
-background-image: url("images/topic05/amusement_park_attraction.jpg")
-class: top, right
+background-image: url("images/topic06/dice_background.png")
+class: top, left
 
-.pull-right[
+.pull-left[
 # `r rmarkdown::metadata$title`
 
 ### `r rmarkdown::metadata$subtitle`
