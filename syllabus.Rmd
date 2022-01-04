@@ -98,9 +98,6 @@ To ensure regular accountability and create a welcoming learning community, stud
 
 The schedule below indicates the approximate timing of each topic.  
 
-#### Week 0: San Francisco intensive
-
-`r emojifont::emoji("bridge_at_night")` ***San Francisco students will be introduced the material from weeks 1-4 in an intensive, 5-day workshop*** 
 
 #### Week 1: Introduction
 
@@ -124,8 +121,6 @@ The schedule below indicates the approximate timing of each topic.
     
 #### Week 5: Mid-semester Examination 1
 
-`r emojifont::emoji("bridge_at_night")` ***San Francisco students will be introduced to the material in Weeks 6-8 in an intensive, weekend workshop***
-
 #### Week 6: OLS and the Gauss Markov Theorem
 * Simple and multiple regression
 * Variance decomposition
@@ -147,7 +142,6 @@ The schedule below indicates the approximate timing of each topic.
 * Heteroskedasticity
 * Serial-correlation
 
-`r emojifont::emoji("bridge_at_night")` ***San Francisco students will be introduced to all of the material in weeks 9-11 in an intensive, weekend workshop***
 
 
 #### Week 10: Spring Break
