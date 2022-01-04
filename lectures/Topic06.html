@@ -4,7 +4,7 @@
     <title>Reviewing inferential statistics</title>
     <meta charset="utf-8" />
     <meta name="author" content="Enrico Manlapig" />
-    <meta name="date" content="2021-08-12" />
+    <meta name="date" content="2022-01-03" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
@@ -383,7 +383,7 @@ A confidence interval is an estimate of an unknown parameter that explicitly rec
 3. Select a confidence level (oftentimes 95%) and identify `\(t^\mbox{crit}(N-1)\)` in a `\(t\)`-Table with `\(N-1\)` degrees of freedom
 &lt;!-- That is, determine the number of standard deviations from zero, this probability represents --&gt;
 
-4. Compute a confidence interval for the population mean as \[\bar{X}\pm t^\mbox{crit}(N-1) \times s.e.(\bar{X})\]
+4. Compute a confidence interval for the population mean as `$$\bar{X}\pm t^\mbox{crit}(N-1) \times \textit{s.e.}(\bar{X})$$`
 &lt;!-- If this is in the rejection region, reject the null in favor of the alternative --&gt;
 
 ---
@@ -404,16 +404,13 @@ Hypothesis testing is about determining if enough evidence exists to convince us
 1. Generate Null and Alternative hyptheses about population parameters
 
 2. Choose a confidence level
-
     + Type I Error: Rejecting a true null
 &lt;!-- Rejecting a true null hypothesis - Even though you observe many Heads, the coin is in fact fair!  --&gt;
     + Type II Error: Failing to reject a false null
 &lt;!-- Not rejecting a false null hypothesis - You observe 100 of every kind of dice outcome in 600 rolls but actually the dice is loaded! --&gt;
-
 &lt;!-- In this step, we are choosing the probability of rejecting a false Null hypthesis --&gt;
 
 3. Compute critical values and sample statistics
-
 &lt;!-- To test a hypothesis, we calculate a sample statistic that determines when the null hypothesis can be rejected depending on the magnitude of that sample statistic relative to a pre-selected critical value (which is found in a statistical table). This procedure is referred to as a decision rule The decision rule is formulated before regression estimates are obtained The range of possible values of the estimates is divided into two regions, an "acceptance" (really, non-rejection) region and a rejection region The critical value effectively separates the "acceptance"/non-rejection region from the rejection region when testing a null hypothesis --&gt;
 
 4. Determine whether the data represents sufficient evidence to reject the Null hypothesis in favor of the alternative
@@ -430,17 +427,18 @@ Sugar sales vary little hovering randomly around a mean sales level of $1.4M per
 | --- | --- |	---	| ---	| ---	| ---	| ---	| ---	| ---	| ---	| --- | --- | --- 
 | $M	| 1.1	| 1.2	| 1.7	| 2.1	| 1.5	| 1.3	| 1.2	| 1.1	| 1.5	| 1.6	| 1.9	| 2.1
 
-Has the rebranding has an effect on sales at the 5% level?
+Has the rebranding had a statistically significant effect on mean sales at the 5% level?
 
 ---
 
 # Inference is very useful!
 
 ## Example continued
-1. Null hypothesis:
-Alternative hypothesis:
+1. Hypotheses:
+    + Null hypothesis:
+    + Alternative hypothesis:
 2. Confidence level: 95%
-3. Critical values for `\(df=12-1\)`: 
+3. Critical values for *df* `\(=12-1\)`
 4. t-calc:
 Conclusion:
 
@@ -457,7 +455,6 @@ Let's illustrate the central limit theorem by simulating a non-normal distributi
 3. Use **replicate** to draw 1000 such samples and to compute their means
 
 4. Use **hist** to visualize the distribution of means
-
 ]
 
 .pull-right[
@@ -472,7 +469,7 @@ df_sim_mean_x &lt;- data.frame(
 
 df_sim_mean_x %&gt;% ggplot(aes(x = x)) + geom_histogram()
 ```
-
+]
 
 ---
 
