@@ -28,3 +28,4 @@ site: distill::distill_website
 
 
 Im' so glad you're on this journey with us. Please go to the [syllabus](syllabus.html) to learn more about the course or the [lecture page](lectures.html) for course materials.
+

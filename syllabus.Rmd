@@ -49,7 +49,7 @@ Students must have taken MA005, Introduction to Statistics or equivalent in its 
 
     * The introduction to R will come from the (free) text [R4DS](https://r4ds.had.co.nz/)
     * The material covering will be from Econometrics 6th ed. by A.H. Studenmund and published by Addison-Wesley, which is available at the bookstore
-    * The calculus material will not rely upon a textbook and many excellent texts exist - please [contact the  instructor](mailto://emanlapig@westmont) for recommendations
+    * The calculus material will not rely upon a textbook but many excellent texts exist - please [contact the  instructor](mailto://emanlapig@westmont) for recommendations
 
 1. **Lectures** The main ideas, techniques, and worked examples will be presented during lectures in a workshop style. Students will need a laptop in each class meeting
 
@@ -78,18 +78,24 @@ Students will sit three exams (two midterms plus a final) corresponding to the t
 
 ## Problem sets
 
-To encourage continuous engagement with the material, students will complete (approximately) two problem sets each week. Students are encouraged to work on these in groups but you must submit individual work. 
+To encourage continuous engagement with the material, students will complete weekly problem sets. Students are encouraged to work on these in groups but you must submit individual work. Submissions should be to Canvas. 
 
 
-1. **Formative problem sets** (worth 17.5%) *will not* be graded for correctness, but rather for both effort and completion
 
-2. **Summative problem sets** (worth 17.5%) *will* be graded for for correctness
 
-*Total grade value: 35%*
+*Total grade value: 25%*
+
+
+## Visualization  
+
+To encourage continuous engagement with material, students will submit weekly visualizations using the weekly [Tidy Tuesday dataset](https://github.com/rfordatascience/tidytuesday). Please post your visualizations to the E&B #Tidy-Tuesday Slack channel
+
+*Total grade value: 10%*
+
 
 ## Participation
 
-To ensure regular accountability and create a welcoming learning community, students will participate in several group activities throughout the semester.  These activities will vary from week to week be may include submitting work to public forums, interacting with community partners, and working with groups.
+Students are expected to engage in class by asking/responding to questions. Participation credit (beyond attendance) is awarded at the end of the semester.
 
 *Total grade value: 5%*
 
@@ -99,7 +105,7 @@ To ensure regular accountability and create a welcoming learning community, stud
 The schedule below indicates the approximate timing of each topic.  
 
 
-#### Week 1: Introduction
+#### Week 1: Working with R
 
 * Base R
 * Typesetting in R
@@ -126,9 +132,9 @@ The schedule below indicates the approximate timing of each topic.
 * Variance decomposition
 * OLS
     
-#### Week 7: Hypothesis testing and forecasting
-* Model evaluation
-* Significance testing
+#### Week 7: Inference
+* Hypothesis testing
+* Forecasting
     
 #### Week 8: Modeling skills
 * Dummy variables
@@ -138,24 +144,26 @@ The schedule below indicates the approximate timing of each topic.
 
 
 #### Week 9: When Gauss Markov fails Part 1
+* Model misspecification
 * Multi-collinearity
-* Heteroskedasticity
-* Serial-correlation
 
 
 
 #### Week 10: Spring Break
 
-#### Weeks 11 and 12: Selected topics
+
+#### Week 11: When Gauss Markov fails Part 2
+* Heteroskedasticity
+* Serial-correlation
+
+#### Weeks 12 and 13: Selected topics
 * Topics may include categorical data, time series, endogeneity, or other topics depending upon the interest of the students and instructor
 
-#### Week 13: Mid-semester Examination 2
+#### Week 14: Mid-semester Examination 2
 
-#### Week 14: Calculus
+#### Week 15 to end: Calculus
 
-#### Week 15: Calculus
 
-#### Week 16: Calculus
 
 
 
@@ -165,15 +173,17 @@ The schedule below indicates the approximate timing of each topic.
 
 ### Attendance
 
-Your regular attendance at class is important and expected. Significant and/or consistent absence may result in dismissal from the course with a grade of F.
+Your regular attendance and active participation in class is very important and expected. Following college Significant unexcused absences (3 or more classes) or lack of participation (missed assignments) or some combination may result in penalties or dismissal from the course in accordance with the college's [attendance policies](https://www.westmont.edu/office-registrar/academic-policies-and-procedures/attendance-policies) as documented below. 
+
+Any absence from a scheduled examination or other assessment must be accompanied by appropriate documentation.
 
 ### Academic integrity 
 
-Dishonesty of any kind may result in loss of credit for the work involved and the filing of a report with the Provost’s Office. Major or repeated infractions may result in dismissal from the course with a grade of F. Be familiar with the [Westmont’s plagiarism policy](http://www.westmont.edu/_offices/provost/Plagiarism/academic_integrity_policy.html||http://www.westmont.edu/_offices/provost/Plagiarism/academic_integrity_policy.html).
+Dishonesty of any kind may result in loss of credit for the work involved and the filing of a report with the Provost’s Office. Major or repeated infractions may result in dismissal from the course with a grade of F. Be familiar with [Westmont’s plagiarism policy](http://www.westmont.edu/_offices/provost/Plagiarism/academic_integrity_policy.html).
 
-Within the context of this course, utilizing resources like Chegg and the work of students that have taken the course in the past are considered violations of academic integrity.  
+Within the context of this class, you are encouraged to work in groups with your classmates. You are welcome to share code, share ideas, and help each other with problem sets and class exercises. You are also welcome to use the internet to find examples, clarify syntax, or clarify concepts. However, you are not to engage with live sources beyond the people in the class for specific help with assignments. For example, utilizing social media for homework help, posting questions to online boards, or participating in online chat forums/boards for help with problem sets or other assignments is considered cheating. Similarly, utilizing outside resources that provide specific solutions (e.g. Chegg, solutions manuals, or the submissions of past students) is also considered cheating.  
 
 ### Academic accommodations
 
-Students who have been diagnosed with a disability are strongly encouraged to contact the Office of Disability Services as early as possible to discuss appropriate accommodations for this course. Formal accommodations will only be granted for students whose disabilities have been verified by the Office of Disability Services. These accommodations may be necessary to ensure your equal access to this course. Please contact Sheri Noble, Director of Disability Services. (310A Voskuyl Library, (805) 565-6186, snoble@westmont.edu) or visit the [website]([http://www.westmont.edu/_offices/disability/||http://www.westmont.edu/_offices/disability/].) for more information.
+Students who have been diagnosed with a disability are strongly encouraged to contact the Office of Disability Services as early as possible to discuss appropriate accommodations for this course. Formal accommodations will only be granted for students whose disabilities have been verified by the Office of Disability Services. These accommodations may be necessary to ensure your equal access to this course. Please contact Sheri Noble, Director of Disability Services. (310A Voskuyl Library, (805) 565-6186, snoble@westmont.edu) or visit the [website]([http://www.westmont.edu/_offices/disability/].) for more information.
 
