@@ -33,7 +33,7 @@ xaringanExtra::use_broadcast()
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
-knitr::opts_chunk$set(results = "hide", 
+knitr::opts_chunk$set(results = "hide",
                       fig.height = 6,
                       warning = FALSE,
                       error = FALSE,
@@ -510,8 +510,12 @@ df_sim_mean_x %>% ggplot(aes(x = x)) + geom_histogram()
 ---
 
 # Try for yourself!
-Try the previous exercise on random variable $Y = \sqrt{X}$
 
+1. Try the previous exercise on random variable $Y$ where $Y = \sqrt{X}$
+
+2. Consider a random variable $Z$ where $Z = X - Y$.  What is the mean (i.e. expected value) of this random variable?
+
+3. Simulate $Z$ 50 times to create a sample.  On the basis of this sample, does your calculation in part 2 seem to make statistical sense? Be careful how you answer!
 
 
 

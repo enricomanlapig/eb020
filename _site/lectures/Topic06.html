@@ -4,7 +4,7 @@
     <title>Reviewing inferential statistics</title>
     <meta charset="utf-8" />
     <meta name="author" content="Enrico Manlapig" />
-    <meta name="date" content="2022-01-03" />
+    <meta name="date" content="2022-01-13" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
@@ -134,8 +134,26 @@ Q2
 
 ```r
 mean(1:6)
+```
+
+```
+## [1] 3.5
+```
+
+```r
 var(1:6)
+```
+
+```
+## [1] 3.5
+```
+
+```r
 sd(1:6)
+```
+
+```
+## [1] 1.870829
 ```
 
 Q3 - this is what inferential statistics is all about!
@@ -442,6 +460,8 @@ Has the rebranding had a statistically significant effect on mean sales at the 5
 4. t-calc:
 5. Conclusion:
 
+Hint: You'll need to compute quantiles of the distribution to get critical values.  Alternatively, you can also compute `\(p\)`-values.
+
 
 ---
 ## Example
@@ -474,8 +494,12 @@ df_sim_mean_x %&gt;% ggplot(aes(x = x)) + geom_histogram()
 ---
 
 # Try for yourself!
-Try the previous exercise on random variable `\(Y = \sqrt{X}\)`
 
+1. Try the previous exercise on random variable `\(Y\)` where `\(Y = \sqrt{X}\)`
+
+2. Consider a random variable `\(Z\)` where `\(Z = X - Y\)`.  What is the mean (i.e. expected value) of this random variable?
+
+3. Simulate `\(Z\)` 50 times to create a sample.  On the basis of this sample, does your calculation in part 2 seem to make statistical sense? Be careful how you answer!
 
 
 

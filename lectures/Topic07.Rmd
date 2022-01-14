@@ -1,0 +1,617 @@
+---
+title: "Introducing OLS"
+author: "Enrico Manlapig"
+institute: "Westmont College"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: 16:9
+    seal: FALSE
+---
+
+background-image: url("images/topic07/pexels-marta-longas-3143085.jpg")
+background-position: right
+background-size: 55%
+background-color: #DBCB52
+
+class: middle, left
+
+.pull-left[
+# `r rmarkdown::metadata$title`
+
+### `r rmarkdown::metadata$subtitle`
+
+### `r rmarkdown::metadata$author`
+
+### `r rmarkdown::metadata$institute`
+
+### `r rmarkdown::metadata$date`
+]
+```{r broadcast, echo=FALSE}
+xaringanExtra::use_broadcast()
+```
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+                      fig.height = 6,
+                      warning = FALSE,
+                      error = FALSE,
+                      message = FALSE,
+                      cache = FALSE)
+library(dplyr)
+library(ggplot2)
+library(palmerpenguins)
+library(emojifont)
+library(flipbookr)
+library(fontawesome)
+library(datasauRus)
+library(xaringanExtra)
+use_xaringan_extra(c("panelset", "tachyons"))
+```
+
+---
+# What is regression?
+
+Regression analysis is a set of techniques for estimating relationships between variables. Social scientists use regression analysis for at least three reasons:
+
+1. Describe reality
+
+1. Generate forecasts
+
+1. Test hypotheses
+
+
+???
+Ultimately, this is a set of techniques for answer questions that you, the researcher, would like to bring to data. 
+
+
+---
+
+# Some examples
+
+1. Demand
+
+1. Keynesian consumption
+
+1. Finance
+
+1. Welfare
+
+1. Production
+
+???
+
+1. DEMAND
+$$Q_{D}	=	f(P_{D}) =	\beta_{0}+\beta_{1}P_{D}$$
+
+Econometrics allows us to bring form to this theoretical relationship. It allows us to be explicit about the specific relationships that the theory has suggested.
+
+Economic theory suggests that $\beta_{1}$ should be negative. Econometrics allows us to answer how negative. 
+
+
+2. Keynesian Consumption
+
+$$C=\beta_{0}+\beta_{1}Y^{D}$$
+
+Keynesian consumption theory tells us that consumption is chosen out of income. A fraction is required for survival and a fraction is consumed out of each dollar we earn.
+
+In this case, $\beta_{1}$ is the Marginal Propensity to Consume. It should be positive and between 0 and 1. $\beta_{0}$ is autonomous consumption. It should be positive but less than $Y^{D}$.
+
+
+
+3. Finance
+
+$$
+\begin{align*}
+(r_{A}-r_{f})	&\propto	(r_{m}-r_{f}) \\
+(r_{A}-r_{f})	&=	\beta(r_{m}-r_{f}) \\
+Y	&=	\beta X
+\end{align*}
+$$
+
+Finance tells us that the return of an asset (e.g. stock) is proportional to the return on the market (S&P500). Econometrics can tell us how sensitive the asset is to the market. In fact, this level of sensitivity is precisely one of the measures risk we talked about in our last topic - undiversifiable risk.
+
+
+
+4. Welfare
+
+$$
+\begin{align*}
+\mbox{DWL}	&\propto	t^{2} \\
+\mbox{DWL}	&=	\beta_{1}t^{2} \\
+\mbox{DWL}	&=	\beta_{1}X 
+\end{align*}
+$$
+where $X=t^{2}$
+
+Theory tells us that the higher the tax we impose on our goods and services, the larger the inefficiency we introduce into the market. 
+
+
+5. Production
+$$
+\begin{align*}
+Q	&=	\alpha L^{\beta_{1}} \\
+\ln Q	&=	\beta_{0}+\beta_{1}\ln L \\
+Y	&=	\beta_{0}+\beta_{1}X
+\end{align*}
+$$
+
+where $\beta_{0}=\ln\alpha$, $Y=\ln Q$, and $X=\ln L$
+
+Theory tells that the more labor we devote to production, the more output we should get.
+
+
+
+Lots of areas in and business are approachable through regression analysis. We are going to focus on linear models. These relationships, although seemingly non-linear, can easily converted into linear models either by renaming variables or by performing simple transformations. See above.
+
+
+
+
+
+---
+# Different kinds of models
+
+.panelset[
+.panel[.panel-name[Economic Models]
+
+1. Demand 
+$$\mathbb{E}(Q|P)=\beta_{0}+\beta_{1}P$$
+
+1. Finance
+$$
+\begin{align*}
+\mathbb{E} (r_a - r_f | r_m - r_f) &= \beta (r_m - r_f) \\
+\mathbb{E} (Y|X) &= \beta X 
+\end{align*}
+$$
+
+
+]
+
+.panel[.panel-name[Econometric Models]
+
+
+1. Demand 
+$$Q=\beta_{0}+\beta_{1}P + \varepsilon$$
+
+1. Finance
+$$
+\begin{align*}
+r_{a}-r_{f}	&=	\beta(r_{m}-r_{f}) + \varepsilon \\
+R_a &= \beta R_m + \varepsilon
+\end{align*}
+$$
+
+
+]
+
+
+.panel[.panel-name[Estimated Models]
+
+1. Demand 
+$$
+\begin{align*}
+\hat{Q} &= \hat{\beta}_{0}+\hat{\beta}_{1}P \\
+Q &= \hat{\beta}_{0}+\hat{\beta}_{1}P + e \\
+Q &= \hat{Q} + \hat\varepsilon \\
+Q &= \hat{Q} + e
+\end{align*}
+$$
+
+1. Finance
+$$
+\begin{align*}
+\widehat{r_{a}-r_{f}}	&=	\hat\beta(r_{m}-r_{f}) \\
+\hat{R}_a &= \hat{\beta} R_m + \hat{\varepsilon} \\
+\hat{R}_a &= \hat{\beta} R_m + e
+\end{align*}
+$$
+
+
+]
+
+]
+
+
+
+
+???
+
+## Economic models
+
+Economic models are abstractions from reality. They involve a set of assumptions that attempt to distill reality into a few key features.
+
+### Demand
+
+In this story, theory is telling us about the relationship between prices and quantities. Quantity, the left hand side variable, is called the dependent variable whereas price, the right hand side variable, is called the independent variable. 
+
+This kind of language feels like we are asserting causality. Quantity depends on price. But this is not really the case. We need economic theory and common sense to make this leap from correlated to causal relationship - more on this later.
+
+We call the $\betas$ the coefficients of the model. 
+
+* $\beta_{0}$ is the intercept or constant term
+
+* $\beta_{1}$ is the slope coefficient. In a linear model, it tells us the average amount $Q$ will increase by when $P$ increases by one unit.
+
+
+
+### Finance
+
+Notice that the dependent variable is the risk premium - it's a function of two other variables: $r_a - r_f | r_m - r_f$
+
+Do any of these represent reality? No! There are many things left out. Income, advertising, oil prices, inflation, interest rates etc. But the theory is silent about these. The world - and the data - contain this stuff so we will need a way to recognize their influence.
+
+
+## Econometric models are a representation of reality. It decomposes variation in the dependent variable into variation explained by the economic regression model (also called the deterministic component) but also recognizes the importance of other (unobserved) factors called error. This error is assumed to be random or stochastic. 
+
+The deterministic portion indicates that the value of $Y$ is "determined" by a given value of $X$ (which is assumed to be non-stochastic). It can be thought of as the expected value of $Y$ given $X$—namely $E(Y|X)$—i.e. the mean (or average) value of the Ys associated with a particular value of X. This is also denoted the conditional expectation (that is, expectation of Y conditional on X).
+
+
+### Demand
+
+In this case, quantity demanded ($Q$) depends on a deterministic or structural component defined by theory ($\beta_{0}+\beta_{1}P$) and a stochastic component, given by $\varepsilon$. The $i$ notation indicates individual observations. So $Q$ and $P$ vary across observations, whereas $\beta_{0}$ and $\beta_{1}$ are constant across observations.
+
+In general, why might the stock return be different from what economic theory suggests for today? Perhaps sentiment? Having a bad day? Weather? News release? In this case, $t$ represents time. 
+---
+
+# Where does error come from?
+
+### Variables omitted from the model `r emojifont::emoji("scream_cat")`
+
+### Measurement error `r emojifont::emoji("dizzy_face")`
+
+### Model misspecification `r emojifont::emoji("imp")`
+
+### Randomness `r emojifont::emoji("game_die")`
+
+???
+
+If any of these happen, the value observed in the market will differ from what the model predicts.
+
+---
+class: center, middle
+# A bit more notation `r emojifont::emoji("pouting_cat")`
+
+
+### Cross section
+
+$$
+Q_i = \beta_0 + \beta_1 P_i + \varepsilon_i
+$$
+
+### Time series
+$$
+Q_t = \beta_0 + \beta_1 P_t + \varepsilon_t
+$$
+
+### Panel data
+$$Q_{i,t} = \beta_{0} + \beta_{1} P_{i,t} + \varepsilon_t$$
+
+---
+# Your turn!
+
+What kind of models are these? Name the different elements. 
+
+1. $\mathbb{E}(Q^{S}|P)=\beta_{0}+\beta_{1}P$
+
+2. $Y=\beta_{0}+\beta_{1}X+\varepsilon$
+
+3. $\mbox{Sales}_{t}=\beta_{0}+\beta_{1}\mbox{Sales}_{t-1}+\varepsilon_{t}$
+
+4. $\mbox{Unemployment}_{t}=\hat{\beta}_{0}+\hat{\beta}_{1}\mbox{Inflation}_{t}+e_{t}$
+
+5. $\mbox{Attitude}_{it}=\beta_{0}+\beta_{1}\mbox{Activity}_{it}+\varepsilon_{it}$
+
+6. $\mathbb{E}(Q|L)=\beta_{0}+\beta_{1}\ln L$
+
+7. $\widehat{\text{Population}}_{t}=300+0.1_{1}t$
+
+8. $\mbox{Height}_{i}=\beta_{0}+\beta_{1}\mbox{Weight}_{i}+\varepsilon_{i}$
+
+9. $\widehat{\mbox{Bonus}}_{i}=\hat{\beta}_{0}+\hat{\beta}_{1}\mbox{Sales}_{i}$
+
+
+---
+class: middle, center
+
+# Introducing Ordinary Least Squares
+
+
+---
+class: middle, center
+# The Ordinary Least Squares algorithm estimates model parameters by minimizing **the sum of squared errors**
+
+
+
+???
+
+*Linear Regression* in general is a family of algorithms employed in supervised machine learning.
+
+By parameters, we mean intercepts, slopes, errors etc
+
+
+---
+# What do you think?
+
+What is the relationship between `bill_length_mm` and `body_mass_g`?
+
+1. Load the `palmerpenguins`, `dplyr`, and `ggplot2` libraries
+2. From the `palmerpenguins` dataset, visualize `bill_length_mm` and `body_mass_g` using a `geom_point` chart with `bill_length_mm` on the vertical axis
+3. Based on your visualization, can you *guess* what $\hat\beta_0$ and $\hat\beta_1$ must be in this estimated model? 
+$$\text{bill_length_mm} = \hat\beta_0 + \hat\beta_1 \text{body_mass_g} + e$$
+4. Add `geom_abline(intercept = [your intercept guess], slope = [your slope guess], color = "red")` to plot your line to visualize your guess
+5. Use `mutate()` to compute fitted values and errors and `summarise` to compute the sum of square errors
+
+
+???
+```{r penguin_data}
+library(palmerpenguins)
+
+penguins %>%
+  select(bill_length_mm, body_mass_g) %>%
+  filter(complete.cases(.)) %>%
+  head()
+
+penguins %>%
+  select(bill_length_mm, body_mass_g) %>%
+  filter(complete.cases(.)) %>%
+  ggplot(aes(x = bill_length_mm,
+             y = body_mass_g)) +
+  geom_point() +
+  ylim(-1000,6000) +
+  theme_minimal() +
+  geom_abline(aes(intercept = 3000, slope = 0.005), color = "red")
+
+
+```
+
+---
+class: center
+# Variance decomposition
+
+## Total Sum of Squares
+$$SST = \sum_i^n (\hat{Y} - \bar{Y})^2$$
+
+.pull-left[
+## Sum of Squares Regression
+$$SSR = \sum_i^n (\hat{Y}_i - \bar{Y})^2$$
+]
+
+.pull-right[
+## Sum of Squares Error
+$$SSE = \sum_i^n (\hat{Y}_i - \bar{Y})^2$$
+]
+
+
+???
+Regression splits the variation of the dependent variable into explainable and unexplainable portions
+
+```{r penguin_pic}
+anova(lm(bill_length_mm ~ body_mass_g, data = penguins))
+sum(penguins$bill_depth_mm^2, na.rm = TRUE)
+```
+
+
+
+---
+class: center
+
+# Variance decomposition is powerful! `r emojifont::emoji("muscle")`
+
+## $$SST = SSR + SSE$$
+
+.pull-left[
+## Coefficient of Determination
+
+$$R^2 = \frac{SSR}{SST} = 1 - \frac{SSE}{SST}$$
+]
+
+
+.pull-right[
+## Standard Error
+$$\text{Standard Error} = s = \sqrt{\frac{SSE}{n-k}}$$ 
+where $k$ is the number of coefficients being estimated
+]
+
+---
+class: center, middle
+
+# OLS seeks to minimize $SSE$
+
+For one variable...
+
+$$
+\begin{align*}
+\hat{\beta}_{1}	&=\frac{\sum_{i=1}^{N}(X_{i}-\bar{X})(Y_{i}-\bar{Y})}{\sum_{i=1}^{N}(X_{i}-\bar{X})^{2}} 
+= \frac{SSXY}{SSX} \\
+\hat{\beta}_{0}	&=\bar{Y}-\hat{\beta}_{1}\bar{X}
+\end{align*}
+$$
+
+---
+
+# Running OLS regressions in R
+
+
+```{r}
+lm(mpg ~ disp, data = mtcars)
+```
+
+
+
+
+### `r emo::ji("check")` Try it on palmer penguins! 
+
+Regress `bill_length_mm` against `body_mass_g` `r emo::ji("penguin")` 
+
+???
+OLS tries to minimize the sum of squared residuals of the vertical distance between the residuals (i.e. the estimated error terms) and the estimated regression line. This is attractive for at least three reasons:
+
+* Relatively easy to use
+
+* The goal of minimizing RSS is intuitively / theoretically appealing - we want the estimated regression equation to be as close as possible to the observed data
+
+* OLS estimates have a number of useful characteristics
+
+
+
+
+---
+`r chunk_reveal("lm_illustration", break_type = "rotate", title = "# Running OLS regressions in R")`
+```{r lm_illustration, include = FALSE}
+head(mtcars) #ROTATE
+
+car_reg <- lm(mpg ~ disp, 
+              data = mtcars) 
+car_reg #ROTATE
+
+summary(car_reg) #ROTATE
+
+```
+
+---
+
+# Multiple linear regression
+
+
+### $$Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_K X_K + \varepsilon$$
+
+
+### Some examples
+
+1. $\mathbb{E}(\text{FinancialAid}|\text{SAT,Race,ParentIncome})=\beta_{0}+\beta_{1}\text{SAT}+\beta_{2}\text{Race}+\beta_{3}\text{ParentIncome}$
+
+2. $\text{CarPrice}=\beta_{0}+\beta_{1}\text{EngineSize}+\beta_{2}\text{AdvertisingSpend}+\beta_{3}\text{Wheelbase}+\varepsilon$
+
+3. $\widehat{\text{GDP}_t}=300+0.1_{1}t-0.9\text{Unemployment}-0.3\text{InterstRates}+0.1\text{PopulationGrowth}$
+
+### `r emo::ji("check")` Try it on palmer penguins! `r emo::ji("penguin")`
+
+
+
+
+
+
+???
+
+The main The main difference between the single regression and multiple regression is the interpretation of the slope coefficients. 
+
+A multiple regression coefficient indicates the change in the dependent variable associated with a one-unit increase in the independent variable holding the other independent variables constant. Note that omitted (and relevant) variables are therefore not held constant.
+
+The intercept term, $\beta_0$, is the value of $Y$ when all the $X$s and the error term equal zero Nevertheless, the underlying principle of minimizing the summed squared residuals remains the same.
+
+---
+`r chunk_reveal("lm_mult_illustration", break_type = "rotate", title = "# Running multiple regressions in R")`
+```{r lm_mult_illustration, include = FALSE}
+car_mult <- lm(mpg ~ disp + hp, 
+              data = mtcars) 
+car_mult #ROTATE
+
+summary(car_mult) #ROTATE
+
+```
+
+---
+
+# The `lm` object is bigger than it looks
+.pull-left[
+* Query the structure of the object with `str()`
+* Extract the `coefficients`, the `residuals` and the `fitted.values`
+* You can extract parameters from `summary(lm())` too! 
+]
+
+.pull-right[
+![](https://media.giphy.com/media/GUhxglEk24PqTBPylw/giphy.gif)
+]
+
+
+---
+# Remember $R^2$?
+
+* $R^2$ tells us how much variation the model can explain
+
+    * $R^2 = \frac{SSR}{SST}$
+    * Extract $R^2$ from a `summary()` of the `lm()` object `summary(car_mult)$r.squared`
+    
+* $R^2$ is popular because it is very convenient
+    
+    * $R^2$ always takes values between 0 an 1
+    * $R^2 = 1$ means that all of the variation in the dependent variable is explained by the model
+    * $R^2 = 0$ means that none of the variation in the dependent variable is explained by the model
+
+* But... $R^2$ always increases with the number of variables in the model... `r emo::ji("grimace")`
+
+??? 
+
+The problem is one of over-fitting.
+
+---
+`r chunk_reveal("datasaurus", break_type = "rotate", title = "# All of these have the same $R^2$")`
+```{r datasaurus, include = FALSE}
+datasaurus_dozen %>%
+  filter(dataset == "dots") %>% #ROTATE
+  filter(dataset == "v_lines") %>% #ROTATE
+  filter(dataset == "high_lines") %>% #ROTATE
+  filter(dataset == "slant_up") %>% #ROTATE
+  filter(dataset == "slant_down") %>% #ROTATE
+  filter(dataset == "x_shape") %>% #ROTATE
+  filter(dataset == "star") %>% #ROTATE
+  filter(dataset == "bullseye") %>% #ROTATE
+  filter(dataset == "dino") %>% #ROTATE
+  ggplot(aes(x = x, 
+             y = y)) +
+  geom_point() +
+  geom_smooth(method = "lm", 
+              color = "red", 
+              se = FALSE) +
+  theme_minimal()
+```
+
+???
+All of these datasets has the same $R^2$ 
+
+
+
+---
+
+# Alternatives to $R^2$
+
+* Adjusted $R^2$: $$\bar{R}^2 = \frac{n-1}{n-K-1}[R^2 - \frac{K}{n-1}]$$
+
+    * Output along with $R^2$ with `summary()`
+    
+* Akaike Information Criterion (AIC)
+
+    * `AIC()`
+    
+* Schwarz Bayseian Crition (BIC)
+
+    * `BIC()`
+    
+### `r emo::ji("check")` Try them out on palmer penguins! `r emo::ji("penguin")`
+
+
+
+
+---
+Have a look at `str(car_mult)`
+
+
+https://pudding.cool/2018/08/pockets/
+```{r, include=FALSE}
+df <- read.csv("https://raw.githubusercontent.com/the-pudding/data/master/pockets/measurements.csv")
+
+
+# This data is from 
+```
+
+
+
+
+

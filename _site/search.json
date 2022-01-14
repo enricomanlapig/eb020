@@ -18,8 +18,8 @@
         }
       ],
       "date": "`r Sys.Date()`",
-      "contents": "\nAbout this course\nLearn about this course, its objectives, and expectations over in the syllabus\nLecture materials\nTopic 01 - Introducing R\nTopic 02 - Introducing RMarkdown\nR4DS RMarkdown chapter\n\nTopic 03 - Introducing dplyr\nR4DS Transformation chapter\n\nTopic 04 - Introducing ggplot\nR4DS Data visualization chapter\n\nTopic 05 - Random variables\nStudenmund Chapter 17\n\nFun with QuantMod\nTopic 06 - Reviewing inference\nStudenmund Chapter 17\n\n\n\n\n",
-      "last_modified": "2022-01-03T22:48:07-08:00"
+      "contents": "\r\nAbout this course\r\nLearn about this course, its objectives, and expectations over in the syllabus\r\nLecture materials\r\nTopic 01 - Introducing R\r\nTopic 02 - Introducing RMarkdown\r\nR4DS RMarkdown chapter\r\n\r\nTopic 03 - Introducing dplyr\r\nR4DS Transformation chapter\r\n\r\nTopic 04 - Introducing ggplot\r\nR4DS Data visualization chapter\r\n\r\nTopic 05 - Random variables\r\nStudenmund Chapter 17\r\n\r\nFun with QuantMod\r\nTopic 06 - Reviewing inference\r\nStudenmund Chapter 17\r\n\r\nTopic 07 - OLS Regression\r\nStudenmund Chapters 1 & 2\r\n\r\n\r\n\r\n\r\n",
+      "last_modified": "2022-01-13T16:58:32-08:00"
     },
     {
       "path": "syllabus.html",

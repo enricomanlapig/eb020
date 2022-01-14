@@ -53,4 +53,8 @@ Learn about this course, its objectives, and expectations over in the [syllabus]
 
     - Studenmund Chapter 17
 
+* [Topic 07 - OLS Regression](lectures/Topic07.html)
+
+    - Studenmund Chapters 1 & 2
+
 
