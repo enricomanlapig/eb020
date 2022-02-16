@@ -1,0 +1,376 @@
+---
+title: "The Gauss Markov Theorem"
+author: "Enrico Manlapig"
+institute: "Westmont College"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: 16:9
+    seal: FALSE
+---
+
+background-image: url("images/topic08/pexels-karolina-grabowska-4219520.jpg")
+background-position: right
+background-size: cover
+
+
+class: bottom, left
+
+.pull-left[
+# `r rmarkdown::metadata$title`
+
+### `r rmarkdown::metadata$subtitle`
+
+### `r rmarkdown::metadata$author`
+
+### `r rmarkdown::metadata$institute`
+
+### `r rmarkdown::metadata$date`
+]
+```{r broadcast, echo=FALSE}
+xaringanExtra::use_broadcast()
+```
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+                      fig.height = 6,
+                      warning = FALSE,
+                      error = FALSE,
+                      message = FALSE,
+                      cache = FALSE)
+library(dplyr)
+library(ggplot2)
+library(palmerpenguins)
+library(emojifont)
+library(flipbookr)
+library(fontawesome)
+library(xaringanExtra)
+use_xaringan_extra(c("panelset", "tachyons"))
+```
+
+---
+
+class: middle
+
+# The regression analysis process
+
+### 1. Specify the model
+
+--
+
+### 2. Hypothesize the signs
+
+--
+
+### 3. Collect data
+
+--
+
+### 4. Estimate and evaluate the coefficients
+
+--
+
+### 5. Document the results
+
+
+
+???
+Regression is a supervised machine learning technique for scaled data.
+
+Remember the estimated coefficients,$\hat{\beta}$, are themselves random variables with distributions and therefore expectations and variances.
+
+To understand their properties we have to impose some assumptions on the model. These are not abstractions like the economic model. These are assumptions about the distributions of the underlying random variables. The assumptions we impose are critical for interpreting the econometric model appropriately.
+
+
+---
+class: center, middle, inverse
+
+# A1 - LINEARITY
+
+### $$Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_K X_K + \varepsilon$$
+
+--
+
+### Check out those coefficients! `r emo::ji("triangular_ruler")`
+
+--
+
+### Look at the error term! `r emo::ji("plus")`
+
+--
+
+### Is it correctly specified? `r emo::ji("thinking")`
+
+
+
+???
+* This model is linear in the coefficients
+* Additive in the error term
+* We are assuming this is right!
+
+
+---
+
+# Linear models are very flexible! `r emo::ji("strong")`
+
+.pull-left[
+### 1. Taxes and inefficiency $$\mathbb{E}(DWL|T) =\beta_0 + \beta_1 T^2$$
+
+### 2. Production $$\mathbb{E}(Q|K,L) = \beta_0 K^{\beta_1} L^{\beta_2}$$
+]
+
+
+.pull-right[
+!["girl with flexible leg"](https://media.giphy.com/media/11XbdJtdis7m6I/giphy.gif)
+]
+
+???
+
+* The *Dead Weight Loss* (or excess burden of a tax) is proportional to the square of the tax rate (assuming roughly linear demand)
+
+* Production is commonly modeled as a function of capital $K$ and labor $L$.  This functional form is called *Cobb-Douglas*.  It's very convenient because it can be written linearly in the following way:
+
+$$
+\begin{aligned}
+\ln{\mathbb{E}(Q|K,L)} & =\ln{\beta_{0}K^{\beta_{1}}L^{\beta_{2}}} \\
+\ln{\mathbb{E}(Q|K,L)} & =\ln{\beta_{0}} + \beta_{1} \ln{K} + \beta_{2} \ln{L} 
+\end{aligned}
+$$
+
+
+
+---
+class: center, middle, inverse
+
+# A2 ERRORS HAVE MEAN ZERO
+
+### $$\mathbb{E} \varepsilon_i = 0 \quad \forall i$$
+
+???
+We are assuming that errors are unpredictable, purely chance events, that are not systematic.  Formally, we are assuming
+
+Note that this must be true for every $i$, not just across $i$.
+
+Note that this is for every $i$, not just across $i$s. How can you tell the difference between an error with non-zero mean and a non-zero intercept?
+
+---
+
+# Fiddle with the intercept!
+
+.pull-left[
+```{r, eval = FALSE}
+num_obs <- 1000
+slope <- 4
+intercept <- 50
+
+set.seed(1)
+
+data.frame(
+  x = rnorm(n = num_obs, 
+            mean = 500, sd = 1),
+  error = rnorm(n = num_obs, 
+                mean = 0, sd = 1)) %>%
+  
+  mutate(
+    y = intercept + slope * x + error
+  ) %>%
+  
+  ggplot(aes(x = x, y = y)) +
+  geom_point(color = "red") +
+  geom_smooth(method = "lm", color = "red")
+```
+]
+
+.pull-right[
+1. Simulate another dependent variable, $\hat y$, with $\beta_0 = 0$ and $\mathbb{E} \varepsilon = 50$?
+
+2. What do you observe?
+]
+
+
+
+
+---
+class: center, middle, inverse
+
+# A3 THE EXPLANATORY VARIABLES AND THE ERROR TERM ARE UNCORRELATED
+
+### $$\text{COV}(X_i, \varepsilon_i) = \mathbb{E}(X_i \times \varepsilon_i) = 0 \quad \forall i$$
+
+???
+This assumption is important because it means that explanatory variable attributed to $X$ really came from $X$ and not from the error term. 
+
+If $X$ and $\varepsilon$ were correlated, then the estimated coefficient on $X$ is over attributing the effect to $X$. $\hat{\beta}_{X}$ is not the true relationship between $Y$ and $X$. 
+
+---
+class: center, middle, inverse
+
+# Under A1-A3...
+
+--
+
+# ... the OLS estimator is a linear function of the data and unbiassed
+
+
+# ... the OLS estimator is also consistent
+
+???
+Remember, we are thinking of linear estimators like the sample mean $$\bar{x}=\frac{\sum x}{n}$$ and disallow estimators like the geometric average $$\tilde{x}= \sqrt[n]{x^{1}x^{2}\cdots x^{n}}$$
+
+---
+class: center, middle, inverse
+
+# A4 ERRORS ARE SERIALLY UNCORRELATED
+
+### $$\text{Cov}(\varepsilon_t, \varepsilon_{t-1}) = 0 \quad \forall t$$
+
+???
+If this assumption is violated, the estimate of the standard error must be too high because additional explanatory power is contained in the errors themselves. The errors are able to explain themselves so the truly unexplainable portion is less than it seems. We will look at this more in the future. Draw positive and negative serial.
+
+
+
+---
+# Let's see
+
+.pull-left[
+```{r, echo = FALSE}
+num_obs <- 100
+serial_coef <- 0.9
+my_X <- c(1:num_obs)
+error <- arima.sim(list(order = c(1,0,0), ar = serial_coef), n = num_obs, sd = 1)
+ggplot(data.frame(my_X,
+                  error), 
+       aes(x = my_X,
+           y = error)) +
+  ylim(-10,10) +
+  geom_line() +
+  labs(title = "Positive Serial Correlation",
+       x = "t",
+       y = "Error") +
+  theme_classic()
+```
+]
+
+.pull-right[
+```{r, echo = FALSE}
+num_obs <- 100
+serial_coef <- -0.9
+error <- arima.sim(list(order = c(1,0,0), ar = serial_coef), n = num_obs, sd = 1)
+my_X <- c(1:num_obs)
+ggplot(data.frame(my_X,
+                  error), 
+       aes(my_X,
+           error)) +
+  geom_line() +
+  ylim(-10,10) +
+  labs(title = "Negative Serial Correlation",
+       y = "Error",
+       x = "t") +
+  theme_classic()
+```
+
+]
+
+---
+class: center, middle, inverse
+
+# A5 HOMOSKEDASTIC ERRORS
+
+### $$\text{Var} (\varepsilon_i) = \sigma^2 \quad \forall i$$
+
+---
+
+# Let's see
+
+.pull-left[
+```{r, echo = FALSE}
+num_obs <- 100
+hetero_param <- 1.2
+slope_coef <- 0.4
+my_X <- c(1:num_obs)
+my_Y <- rnorm(num_obs, mean = my_X * 2, sd = 3)
+ggplot(data.frame(my_X, my_Y), aes(my_X, my_Y)) +
+  geom_line() +
+  labs(title = "Homoskedastic errors",
+       x = "X",
+       y = "Y") +
+    theme_classic()
+
+```
+]
+
+.pull-right[
+```{r, echo = FALSE}
+num_obs <- 100
+hetero_param <- 1.2
+slope_coef <- 0.4
+my_X <- c(1:num_obs)
+my_Y <- rnorm(num_obs, mean = my_X * 2, sd = hetero_param * my_X)
+ggplot(data.frame(my_X, my_Y), aes(my_X, my_Y)) +
+  geom_line() +
+  labs(title = "Heteroskedastic errors",
+       x = "X",
+       y = "Y") +
+  theme_classic()
+```
+]
+
+---
+class: center, middle, inverse
+
+# A6 THE EXPLANATORY VARIABLES ARE NON-TRIVIAL AND NON-COLLINEAR
+
+### $$X_i \neq a + bX_j \quad \forall a,b,i \neq j$$
+
+???
+If this assumption is violated, how do you hold $X_{1}$ constant while interpreting/estimating $X_{2}$? You can't!
+
+---
+class:center, middle, inverse
+
+# A7 ERRORS ARE NORMALLY DISTRIBUTED (OPTIONAL)
+
+### $$\varepsilon_i \sim N(0, \sigma^2) \quad \forall i$$
+
+???
+* Remember, $\hat{\beta}$ is itself a random variable
+* This means it has a distribution, which we call the sampling distribution
+* We can summarize the distribution by its mean and variance
+* A7 ensures $\hat{\beta}$ has nice properties
+
+
+
+
+---
+class: center, middle
+
+### The Gauss Markov Theorem
+
+# Gauss Markov Theorem
+
+## Under A1-A6, the OLS estimator is **the minimum variance, linear unbiassed estimator**
+
+\note{Under A1-A6, the OLS estimator is B.L.U.E.}
+
+---
+
+# One more time
+
+
+* A1 The model is linear in the coefficiens and correctly specified
+* A2 Errors have mean zero
+* A3 Errors are uncorrelated with the explanatory variables
+    - Under A1-A3, the OLS estimators are linear and unbiassed
+* A4 Errors are serially uncorrelated
+* A5 Errors are homoskedastic
+* A6 Explanatory variables are non-trivial and non-collinear
+    - Under A1-A6, the OLS estimators are BLUE
+* A7 Errors are normally distributed
+
+

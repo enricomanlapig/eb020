@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>The Gauss Markov Theorem</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Enrico Manlapig" />
+    <meta name="date" content="2022-02-15" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <script src="libs/js-cookie/js.cookie.js"></script>
+    <script src="libs/peerjs/peerjs.min.js"></script>
+    <script src="libs/tiny.toast/toast.min.js"></script>
+    <link href="libs/xaringanExtra-broadcast/broadcast.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-broadcast/broadcast.js"></script>
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+
+
+background-image: url("images/topic08/pexels-karolina-grabowska-4219520.jpg")
+background-position: right
+background-size: cover
+
+
+class: bottom, left
+
+.pull-left[
+# The Gauss Markov Theorem
+
+### 
+
+### Enrico Manlapig
+
+### Westmont College
+
+### `r Sys.Date()`
+]
+
+
+
+
+---
+
+class: middle
+
+# The regression analysis process
+
+### 1. Specify the model
+
+--
+
+### 2. Hypothesize the signs
+
+--
+
+### 3. Collect data
+
+--
+
+### 4. Estimate and evaluate the coefficients
+
+--
+
+### 5. Document the results
+
+
+
+???
+Regression is a supervised machine learning technique for scaled data.
+
+Remember the estimated coefficients,$\hat{\beta}$, are themselves random variables with distributions and therefore expectations and variances.
+
+To understand their properties we have to impose some assumptions on the model. These are not abstractions like the economic model. These are assumptions about the distributions of the underlying random variables. The assumptions we impose are critical for interpreting the econometric model appropriately.
+
+
+---
+class: center, middle, inverse
+
+# A1 - LINEARITY
+
+### `$$Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_K X_K + \varepsilon$$`
+
+--
+
+### Check out those coefficients! 📐
+
+--
+
+### Look at the error term! ➕
+
+--
+
+### Is it correctly specified? 🤔
+
+
+
+???
+* This model is linear in the coefficients
+* Additive in the error term
+* We are assuming this is right!
+
+
+---
+
+# Linear models are very flexible! 💪
+
+.pull-left[
+### 1. Taxes and inefficiency `$$\mathbb{E}(DWL|T) =\beta_0 + \beta_1 T^2$$`
+
+### 2. Production `$$\mathbb{E}(Q|K,L) = \beta_0 K^{\beta_1} L^{\beta_2}$$`
+]
+
+
+.pull-right[
+!["girl with flexible leg"](https://media.giphy.com/media/11XbdJtdis7m6I/giphy.gif)
+]
+
+???
+
+* The *Dead Weight Loss* (or excess burden of a tax) is proportional to the square of the tax rate (assuming roughly linear demand)
+
+* Production is commonly modeled as a function of capital `\(K\)` and labor `\(L\)`.  This functional form is called *Cobb-Douglas*.  It's very convenient because it can be written linearly in the following way:
+
+$$
+`\begin{aligned}
+\ln{\mathbb{E}(Q|K,L)} &amp; =\ln{\beta_{0}K^{\beta_{1}}L^{\beta_{2}}} \\
+\ln{\mathbb{E}(Q|K,L)} &amp; =\ln{\beta_{0}} + \beta_{1} \ln{K} + \beta_{2} \ln{L} 
+\end{aligned}`
+$$
+
+
+
+---
+class: center, middle, inverse
+
+# A2 ERRORS HAVE MEAN ZERO
+
+### `$$\mathbb{E} \varepsilon_i = 0 \quad \forall i$$`
+
+???
+We are assuming that errors are unpredictable, purely chance events, that are not systematic.  Formally, we are assuming
+
+Note that this must be true for every `\(i\)`, not just across `\(i\)`.
+
+Note that this is for every `\(i\)`, not just across `\(i\)`s. How can you tell the difference between an error with non-zero mean and a non-zero intercept?
+
+---
+
+# Fiddle with the intercept!
+
+.pull-left[
+
+```r
+num_obs &lt;- 1000
+slope &lt;- 4
+intercept &lt;- 50
+
+set.seed(1)
+
+data.frame(
+  x = rnorm(n = num_obs, 
+            mean = 500, sd = 1),
+  error = rnorm(n = num_obs, 
+                mean = 0, sd = 1)) %&gt;%
+  
+  mutate(
+    y = intercept + slope * x + error
+  ) %&gt;%
+  
+  ggplot(aes(x = x, y = y)) +
+  geom_point(color = "red") +
+  geom_smooth(method = "lm", color = "red")
+```
+]
+
+.pull-right[
+1. Simulate another dependent variable, `\(\hat y\)`, with `\(\beta_0 = 0\)` and `\(\mathbb{E} \varepsilon = 50\)`?
+
+2. What do you observe?
+]
+
+
+
+
+---
+class: center, middle, inverse
+
+# A3 THE EXPLANATORY VARIABLES AND THE ERROR TERM ARE UNCORRELATED
+
+### `$$\text{COV}(X_i, \varepsilon_i) = \mathbb{E}(X_i \times \varepsilon_i) = 0 \quad \forall i$$`
+
+???
+This assumption is important because it means that explanatory variable attributed to `\(X\)` really came from `\(X\)` and not from the error term. 
+
+If `\(X\)` and `\(\varepsilon\)` were correlated, then the estimated coefficient on `\(X\)` is over attributing the effect to `\(X\)`. `\(\hat{\beta}_{X}\)` is not the true relationship between `\(Y\)` and `\(X\)`. 
+
+---
+class: center, middle, inverse
+
+# Under A1-A3...
+
+--
+
+# ... the OLS estimator is a linear function of the data and unbiassed
+
+
+# ... the OLS estimator is also consistent
+
+???
+Remember, we are thinking of linear estimators like the sample mean `$$\bar{x}=\frac{\sum x}{n}$$` and disallow estimators like the geometric average `$$\tilde{x}= \sqrt[n]{x^{1}x^{2}\cdots x^{n}}$$`
+
+---
+class: center, middle, inverse
+
+# A4 ERRORS ARE SERIALLY UNCORRELATED
+
+### `$$\text{Cov}(\varepsilon_t, \varepsilon_{t-1}) = 0 \quad \forall t$$`
+
+???
+If this assumption is violated, the estimate of the standard error must be too high because additional explanatory power is contained in the errors themselves. The errors are able to explain themselves so the truly unexplainable portion is less than it seems. We will look at this more in the future. Draw positive and negative serial.
+
+
+
+---
+# Let's see
+
+.pull-left[
+![](Topic08_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
+]
+
+.pull-right[
+![](Topic08_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
+
+]
+
+---
+class: center, middle, inverse
+
+# A5 HOMOSKEDASTIC ERRORS
+
+### `$$\text{Var} (\varepsilon_i) = \sigma^2 \quad \forall i$$`
+
+---
+
+# Let's see
+
+.pull-left[
+![](Topic08_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+]
+
+.pull-right[
+![](Topic08_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+]
+
+---
+class: center, middle, inverse
+
+# A6 THE EXPLANATORY VARIABLES ARE NON-TRIVIAL AND NON-COLLINEAR
+
+### `$$X_i \neq a + bX_j \quad \forall a,b,i \neq j$$`
+
+???
+If this assumption is violated, how do you hold `\(X_{1}\)` constant while interpreting/estimating `\(X_{2}\)`? You can't!
+
+---
+class:center, middle, inverse
+
+# A7 ERRORS ARE NORMALLY DISTRIBUTED (OPTIONAL)
+
+### `$$\varepsilon_i \sim N(0, \sigma^2) \quad \forall i$$`
+
+???
+* Remember, `\(\hat{\beta}\)` is itself a random variable
+* This means it has a distribution, which we call the sampling distribution
+* We can summarize the distribution by its mean and variance
+* A7 ensures `\(\hat{\beta}\)` has nice properties
+
+
+
+
+---
+class: center, middle
+
+### The Gauss Markov Theorem
+
+# Gauss Markov Theorem
+
+## Under A1-A6, the OLS estimator is **the minimum variance, linear unbiassed estimator**
+
+\note{Under A1-A6, the OLS estimator is B.L.U.E.}
+
+---
+
+# One more time
+
+
+* A1 The model is linear in the coefficiens and correctly specified
+* A2 Errors have mean zero
+* A3 Errors are uncorrelated with the explanatory variables
+    - Under A1-A3, the OLS estimators are linear and unbiassed
+* A4 Errors are serially uncorrelated
+* A5 Errors are homoskedastic
+* A6 Explanatory variables are non-trivial and non-collinear
+    - Under A1-A6, the OLS estimators are BLUE
+* A7 Errors are normally distributed
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
