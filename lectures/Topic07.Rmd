@@ -547,7 +547,7 @@ summary(car_mult) #ROTATE
 
 * But... $R^2$ always increases with the number of variables in the model... `r emo::ji("grimace")`
 
-??? 
+???
 
 The problem is one of over-fitting.
 
