@@ -18,8 +18,8 @@
         }
       ],
       "date": "`r Sys.Date()`",
-      "contents": "\r\nAbout this course\r\nLearn about this course, its objectives, and expectations over in the syllabus\r\nLecture materials\r\nTopic 01 - Introducing R\r\nTopic 02 - Introducing RMarkdown\r\nR4DS RMarkdown chapter\r\n\r\nTopic 03 - Introducing dplyr\r\nR4DS Transformation chapter\r\n\r\nTopic 04 - Introducing ggplot\r\nR4DS Data visualization chapter\r\n\r\nTopic 05 - Random variables\r\nStudenmund Chapter 17\r\n\r\nFun with QuantMod\r\nTopic 06 - Reviewing inference\r\nStudenmund Chapter 17\r\n\r\nTopic 07 - OLS Regression\r\nStudenmund Chapters 1 & 2\r\n\r\nTopic 08 - Gauss Markov\r\nStudenmund Chapters 3 & 4\r\n\r\n\r\n\r\n\r\n",
-      "last_modified": "2022-02-15T17:22:31-08:00"
+      "contents": "\r\nAbout this course\r\nLearn about this course, its objectives, and expectations over in the syllabus\r\nLecture materials\r\nTopic 01 - Introducing R\r\nTopic 02 - Introducing RMarkdown\r\nR4DS RMarkdown chapter\r\n\r\nTopic 03 - Introducing dplyr\r\nR4DS Transformation chapter\r\n\r\nTopic 04 - Introducing ggplot\r\nR4DS Data visualization chapter\r\n\r\nTopic 05 - Random variables\r\nStudenmund Chapter 17\r\n\r\nFun with QuantMod\r\nTopic 06 - Reviewing inference\r\nStudenmund Chapter 17\r\n\r\nTopic 07 - OLS Regression\r\nStudenmund Chapters 1 & 2\r\n\r\nTopic 08 - Gauss Markov\r\nStudenmund Chapters 3 & 4\r\n\r\n[Topic 09 - Modeling]\r\nStudenmund Chapters 6 & 7\r\n\r\nTopic 10 - Failures of the Gauss Markov Assumptions\r\nStudenmund Chapters 8, 9, and 10\r\n\r\n\r\n\r\n\r\n",
+      "last_modified": "2022-04-02T23:15:04-07:00"
     },
     {
       "path": "syllabus.html",

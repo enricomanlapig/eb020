@@ -61,4 +61,12 @@ Learn about this course, its objectives, and expectations over in the [syllabus]
 
     - Studenmund Chapters 3 & 4
 
+* [Topic 09 - Modeling]
+
+    - Studenmund Chapters 6 & 7
+
+* [Topic 10 - Failures of the Gauss Markov Assumptions](Topic10.html)
+
+    - Studenmund Chapters 8, 9, and 10
+
 
