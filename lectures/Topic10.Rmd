@@ -1,0 +1,453 @@
+---
+title: "Addressing failures of the OLS assumptiosn"
+subtitle: "Detection and correction"
+author: "Enrico Manlapig"
+institute: "Westmont College"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+
+
+class: center, middle
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(fig.height = 6,
+                      warning = FALSE,
+                      error = FALSE,
+                      message = FALSE)
+library(dplyr)
+library(ggplot2)
+library(plotly)
+library(sandwich)
+library(lmtest)
+library(nlme)
+```
+
+# The classical Gauss Markov Assumptions
+
+--
+
+### A1 - Linearity and model is well specified
+
+--
+
+### A2 - $\mathbb{E} \varepsilon_i = 0 \qquad \forall i$
+
+--
+
+### A3 - $\text{COV}(X,\varepsilon) = \qquad \forall x$
+
+--
+
+### A4 - $\text{COV}(\varepsilon_i, \varepsilon_j) = 0 \qquad \forall i,j$
+
+--
+
+### A5 - $\text{VAR} (\varepsilon_i) = \sigma^2 \qquad \forall i$
+
+--
+
+### A6 - $X$ non-trivial and non-collinear
+
+--
+
+### A7 - $\varepsilon_i \sim N(0,\sigma^2) \qquad \forall i$
+
+
+---
+
+# Multicollinearity
+
+### 1. Simulate some data
+
+```{r}
+num_obs <- 500
+
+x1 <- rnorm(num_obs, mean = 1, sd = 1)
+x2 <- rnorm(num_obs, mean = 1, sd = 1)
+error <- rnorm(num_obs, mean = 0, sd = 3)
+
+y = 2 + 3*x1 + 4*x2 + error
+
+df <- data.frame(y, x1, x2, error)
+```
+
+
+
+---
+
+# Multicollinearity
+
+### 2. Visualize
+
+.pull-left[
+```{r plotly_graph, error=FALSE, fig.show='hide', message=FALSE, warning=FALSE}
+#install.packages("plotly")
+#library(plotly)
+
+plot_ly(data = df, 
+        x = ~x1, 
+        y = ~x2, 
+        z = ~y, 
+        type = "scatter3d", 
+        mode = "markers", 
+        color = ~error)
+```
+]
+
+
+.pull-right[
+```{r ref.label = "plotly_graph", echo = FALSE}
+
+```
+]
+
+---
+
+# Multicollinearity
+
+### 3. Create some multicollinearity and run a regression
+
+Let $x_3 = 2 x_1 + 3 x_2 + \phi$
+
+```{r}
+df$x3 = 2 * x1 + 2 * x2 + rnorm(num_obs, mean = 0, sd = 0.1)
+df %>% mutate(y = 2*x1 + 3*x2 + 4*x3 + error) -> df
+summary(lm(y ~ x1 + x2 + x3, data = df))
+```
+
+
+### 4. Fiddle with $\sigma^2_{\varepsilon}$ and $\sigma^2_{\phi}$
+
+---
+# Multicollinearity
+
+* Tests
+* Model behavior
+* Goodness of fit
+* Interpretation
+* Response
+
+
+
+---
+# Serial correlation
+
+### Causes
+
+* Pure serial correlation
+* Misspecification
+
+
+### Consequences
+
+* If no lagged $y$s...
+* If lagged $y$s... 
+
+---
+# Serial correlation
+
+### Let's simulate
+
+```{r, warnings = FALSE, message = FALSE}
+df %>% mutate(
+  id = 1:num_obs,
+  serial_error = 0.5 * dplyr::lag(error, order_by = id) + error,
+  
+  serial_y = 2 * x1 + 3* x2 + serial_error
+) -> df
+
+lm_serial <- lm(serial_y ~ x1 + x2, data = df)
+```
+
+---
+
+# Serial correlation
+
+### Let's simulate
+
+```{r, echo = FALSE}
+summary(lm_serial)
+```
+
+
+
+---
+# Serial correlation - Detecting
+
+### Durbin Watson
+
+* Null: No first order serial
+* Alternative: First order serial
+
+$$d=\frac{\sum_{2}^{T}(e_{t}-e_{t-1})^{2}}{\sum_{1}^{T}e_{t}^{2}}$$
+
+* Positive Serial if $d = 0$
+* Negative serial if $d= 4$
+* No serial if $d = 2$
+
+### Breusch Godfrey Test
+
+General idea is to estimate $e_t = \rho e_{t-1} + u_t$ 
+
+* Null: No serial
+* Alternative: Serial
+
+
+---
+# Serial correlation - Detecting
+```{r, warnings = FALSE, message=FALSE}
+#install.packages("lmtest")
+library(lmtest)
+dwtest(lm_serial)
+bgtest(lm_serial)
+```
+
+
+---
+# Serial correlation - Correcting
+
+* Generalized least squares
+
+If $\varepsilon_t = \rho \varepsilon_{t-1} + u_t$ then define $\tilde{y}_t = y_t - \rho y_{t-1}$
+
+* Cochrane Orcutt procedure
+
+* Non-linear models
+
+* Newey-West Corrections
+
+???
+
+### Cochrane-Ocrutt:
+
+* Step 1: Regress original econometric model by OLS
+
+* Step 2: Estimate \rho by estimating e_{t}=\rho e_{t-1}+u_{t}
+
+* Step 3: Perform GLS transformation 
+
+* Step 4: Reestimate coefficients and save residuals
+
+* Step 5: Return to Step 2. That is, reestimate \rho using newly computed residuals. Continue until coefficient estimates converge
+
+
+
+---
+
+### Restricted Maximum Likelihood
+
+```{r, warnings = FALSE, message=FALSE}
+library(nlme)
+gls(serial_y ~ x1 + x2, 
+    data = df %>%
+      filter(complete.cases(.)),
+    correlation = corAR1(form = ~1))
+
+
+```
+
+
+### Newey West
+
+```{r, warnings = FALSE}
+#install.packages("sandwich")
+library(sandwich)
+lm_serial
+coeftest(lm_serial, vcov = NeweyWest(lm_serial))
+```
+
+
+
+
+
+
+---
+# Heteroskedasticity
+
+### Causes
+
+* Pure heteroskedasticity
+* Misspecification
+
+
+### Consequences
+
+* Pure heteroskedasticity
+* Misspecification
+
+
+???
+
+Nonlinear models can generate hetero.
+
+Also omitted variables.
+
+Suppose the true relationship is
+$$Y=\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_3 + \varepsilon$$
+
+but we erroneously estimate
+$$Y=\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \phi$$
+so
+$$\phi = \beta_3 X_3 + \varepsilon$$
+Then if $X_3$ is heteroskedastic, then $\phi$ is, too! 
+
+
+---
+# Heteroskedasticity - Simulate
+.pull-left[
+```{r}
+df %>%
+  arrange(y) %>%
+  mutate(
+    id = 1:num_obs,
+    hetero_error = ifelse(id >= num_obs/2, 5, 1) * error,
+    hetero_y = 2*x1 + 3*x2 + hetero_error
+  ) -> df
+
+lm_hetero <- lm(hetero_y ~ x1 + x2, data = df)
+```
+]
+
+.pull-right[
+```{r ref.label="hetero_graph", echo = FALSE}
+
+```
+]
+
+
+???
+
+```{r hetero_graph, fig.show = "hide"}
+plot_ly(data = df, 
+        x = ~x1, 
+        y = ~x2, 
+        z = ~hetero_y, 
+        type = "scatter3d", 
+        mode = "markers", 
+        color = ~error)
+```
+
+
+---
+# Heteroskedasticity - Simulate
+
+```{r}
+summary(lm_hetero)
+```
+
+
+
+
+
+---
+# Heteroskedasticity - Detection
+
+### Breusch-Pagan test
+
+1. Estimate the econometric model of interest
+$$Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \varepsilon$$
+
+2. Estimate an auxiliary model on the residuals
+$$\varepsilon^2 = \alpha_0 +\alpha_1 X_1 + \alpha_2 X_2 + u$$
+
+3. Test the null hypothesis that
+
+    - $H_0$ : $\alpha_1 = \alpha_2 = 0$ 
+    - $H_A$ : At least one is non-zero
+    
+The test statistic is $nR^2 \sim \chi^2$  with degrees of freedom equal to the number of explanatory variables.
+
+---
+
+```{r}
+#install.packages("lmtest")
+library(lmtest)
+bptest(lm_hetero)
+#bptest(hetero_y ~ x1 + x2, data = df)
+```
+
+---
+# Heteroskedasticity - Detection
+
+### White test
+
+1. Estimate the econometric model of interest
+$$Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \varepsilon$$
+
+2. Estimate an auxiliary model on the residuals
+$$\varepsilon^2 = \alpha_0 +\alpha_1 X_1 + \alpha_2 X_2 + \alpha_3 X_1 X_2 + \alpha_4 X_1^2 + \alpha_5 X_2^2+ u$$
+
+3. Test the null hypothesis that
+
+    - $H_0$ : $\alpha_1 = \alpha_2 = \alpha_3 = \alpha_4 = \alpha_5 = 0$ 
+    - $H_A$ : At least one is non-zero
+    
+The test statistic is $nR^2 ~ \chi^2$  with degrees of freedom equal to the number of explanatory variables.
+
+---
+
+```{r}
+#install.packages("lmtest")
+library(lmtest)
+bptest(lm_hetero, ~ x1 + x2 + I(x1^2) + I(x2^2) + I(x1 * x2), data = df)
+```
+
+---
+# Heteroskedasticity - Correction
+
+### Weighted least squares
+
+Suppose $\text{VAR}(\varepsilon_i) = \sigma^2 X_3^2$, then define 
+$$\tilde{Y} = \frac{Y}{X_3}$$
+
+
+
+
+???
+
+$$\frac{Y}{X_3} = \beta_0 \frac{1}{X_3} + \beta_1 \frac{X_1}{X_3} + \beta_2 \frac{X_3}{X_3} + \frac{\varepsilon}{X_3}$$
+
+so $$u = \frac{e}{X_3}$$ and $$\text{VAR}(u) = \frac{\sigma^2 X^2_3}{X^2_3} = \sigma^2$$
+
+Requires that you know the proportionality factor and that you are sure of the form of the hetero. Can be hard.
+
+Running OLS on the corrected model should be BLUE.
+
+However, requires knowledge of the exact form of the hetero and interpretation is tricky.  Some common cases include:
+
+* Per capital data
+* Inflation adjusted terms
+* Log terms / Percent terms helps
+
+---
+
+# Heteroskedasticity
+
+### Newey West Corrections
+
+```{r}
+library(lmtest)
+coeftest(lm_hetero, vcov = vcovHC(lm_hetero))
+```
+
+
+
+
+---
+
+# Heteroskedascity AND Serial correlation?
+
+```{r}
+library(lmtest)
+coeftest(lm_hetero, vcov = vcovHAC(lm_hetero))
+```
+
