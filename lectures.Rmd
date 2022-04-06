@@ -61,7 +61,7 @@ Learn about this course, its objectives, and expectations over in the [syllabus]
 
     - Studenmund Chapters 3 & 4
 
-* [Topic 09 - Modeling](No slides)
+* Topic 09 - Modeling (No slides for this one - sorry! `r emo::ji("sob")`)
 
     - Studenmund Chapters 6 & 7
 
